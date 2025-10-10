@@ -492,6 +492,12 @@ const Index = () => {
         </div>
       )}
 
+      <section className="py-20 px-4 bg-minecraft-stone/5 flex items-center justify-center">
+        <h2 className="font-pixel text-4xl sm:text-6xl text-center text-minecraft-stone animate-pulse">
+          Дальше - Больше
+        </h2>
+      </section>
+
       <footer className="bg-minecraft-stone border-t-4 border-minecraft-brown py-8 px-4">
         <div className="container mx-auto text-center">
           <p className="font-pixel text-[10px] text-white/80">
