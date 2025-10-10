@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -453,7 +454,8 @@ const Index = () => {
             {gallery.map((image, index) => (
               <div 
                 key={index}
-                className="aspect-square overflow-hidden border-4 border-minecraft-stone hover:scale-105 transition-transform duration-300"
+                onClick={() => setSelectedImage(image)}
+                className="aspect-square overflow-hidden border-4 border-minecraft-stone hover:scale-105 transition-transform duration-300 cursor-pointer"
               >
                 <img 
                   src={image}
@@ -463,6 +465,39 @@ const Index = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 w-12 h-12 bg-minecraft-stone hover:bg-minecraft-stone/80 border-4 border-white flex items-center justify-center transition-colors"
+          >
+            <Icon name="X" size={24} className="text-white" />
+          </button>
+          <img 
+            src={selectedImage}
+            alt="Full size"
+            className="max-w-full max-h-full object-contain border-4 border-minecraft-stone"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
+      <section id="contact" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center">
+        <div className="container mx-auto">
+          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+            КОНТАКТЫ
+          </h2>
+          <div className="max-w-2xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl text-center">
+            <p className="font-sans text-lg text-minecraft-stone/80 mb-8">
+              Хотите присоединиться к нашим сезонам или задать вопрос? 
+              Свяжитесь с нами в Telegram!
+            </p>
         </div>
       </section>
 
