@@ -94,7 +94,14 @@ const Index = () => {
     }
   ];
 
-  const inDevelopmentSeasons: any[] = [];
+  const inDevelopmentSeasons = [
+    {
+      title: "Название в Разработке",
+      description: "Сезон в разработке.",
+      image: "https://cdn.poehali.dev/files/043facda-aabc-4c99-95de-fefe4956e6e9.jpg",
+      audio: null
+    }
+  ];
 
   const team = [
     {
