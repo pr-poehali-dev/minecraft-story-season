@@ -108,13 +108,15 @@ const Index = () => {
       name: "Tempus",
       role: "Разработчик & Сюжетист",
       telegram: "@dfenger",
-      description: "Создаю механики и сюжетные линии для наших сезонов"
+      description: "Создаю механики и сюжетные линии для наших сезонов",
+      avatar: "https://cdn.poehali.dev/files/4d3abc8c-f272-41a6-8537-6df57b65cd0c.jpg"
     },
     {
       name: "KirkaShadow",
       role: "Разработчик & Строитель",
       telegram: "@KIRKA30",
-      description: "Воплощаю идеи в жизнь через строительство и дизайн"
+      description: "Воплощаю идеи в жизнь через строительство и дизайн",
+      avatar: null
     }
   ];
 
@@ -405,8 +407,16 @@ const Index = () => {
                 className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300"
               >
                 <CardContent className="p-8 text-center">
-                  <div className="w-24 h-24 bg-minecraft-brown border-4 border-minecraft-stone mx-auto mb-6 flex items-center justify-center">
-                    <Icon name="User" size={48} className="text-white" />
+                  <div className="w-24 h-24 bg-minecraft-brown border-4 border-minecraft-stone mx-auto mb-6 flex items-center justify-center overflow-hidden">
+                    {member.avatar ? (
+                      <img 
+                        src={member.avatar} 
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Icon name="User" size={48} className="text-white" />
+                    )}
                   </div>
                   <h3 className="font-pixel text-lg mb-2 text-minecraft-brown">
                     {member.name}
