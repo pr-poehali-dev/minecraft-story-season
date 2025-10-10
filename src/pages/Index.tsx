@@ -42,6 +42,18 @@ const Index = () => {
     }
   ];
 
+  const sideSeasons = [
+    {
+      title: "Побочный сезон 1: Моральное Осознание",
+      description: (
+        <>
+          Попадание главного героя в мир, где время течёт не прямолинейно вместе с основным временем, углублённое познание в мирохождении и <a href="/terms#iskra" className="font-bold hover:text-minecraft-grass transition-colors">Искры²</a>.
+        </>
+      ),
+      image: "https://cdn.poehali.dev/files/e147159b-eeba-4661-a7ba-3229e0400cba.jpg"
+    }
+  ];
+
   const team = [
     {
       name: "Tempus",
@@ -212,10 +224,29 @@ const Index = () => {
               </h3>
               <div className="h-1 flex-1 bg-minecraft-grass max-w-xs"></div>
             </div>
-            <div className="text-center py-12">
-              <p className="font-pixel text-sm text-minecraft-stone/60">
-                СКОРО ЗДЕСЬ ПОЯВЯТСЯ НОВЫЕ ИСТОРИИ...
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {sideSeasons.map((season, index) => (
+                <Card 
+                  key={index}
+                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group"
+                >
+                  <div className="overflow-hidden">
+                    <img 
+                      src={season.image}
+                      alt={season.title}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="font-pixel text-sm mb-4 text-minecraft-grass">
+                      {season.title}
+                    </h3>
+                    <div className="font-sans text-sm text-minecraft-stone/80">
+                      {season.description}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </div>

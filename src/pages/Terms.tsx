@@ -64,6 +64,47 @@ const Terms = () => {
             </CardContent>
           </Card>
 
+          <Card id="iskra" className="border-4 border-minecraft-stone bg-white shadow-xl mb-8">
+            <CardContent className="p-8">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-16 h-16 bg-minecraft-grass border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
+                  <Icon name="Sparkles" size={32} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-pixel text-xl mb-4 text-minecraft-grass">
+                    ИСКРА
+                  </h3>
+                  <div className="space-y-4 font-sans text-base text-minecraft-stone/90">
+                    <p>
+                      <strong>Искра</strong> (также «Орган межпространственного перемещения») — материальный орган в мире мироходцев.
+                    </p>
+                    <p>
+                      Позволяет опытным мироходцам контролируемо перемещаться между мирами, а неопытным — неконтролируемо, через сильные эмоции (например, страх).
+                    </p>
+                    <p>
+                      Даёт возможность адаптироваться к мирам, куда происходит перемещение, например, понимать и говорить почти на любом языке.
+                    </p>
+                    <p>
+                      В зависимости от силы Искры, её владелец может изменять свой генетический код и подстраиваться под почти любой мир, обретая новые способности и модифицируя своё тело.
+                    </p>
+                    <p>
+                      Сильная Искра может обладать своим сознанием, отдельным от сознания мироходца.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 p-4 bg-minecraft-grass/20 border-2 border-minecraft-grass rounded">
+                <p className="font-pixel text-xs text-minecraft-grass mb-2">
+                  ПОЯВЛЕНИЕ В СЕЗОНАХ:
+                </p>
+                <p className="font-sans text-sm text-minecraft-stone/80">
+                  Побочный сезон 1: Моральное Осознание — углублённое познание в мирохождении и Искры
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="text-center">
             <Button
               onClick={() => navigate("/")}
