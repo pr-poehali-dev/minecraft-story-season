@@ -394,12 +394,19 @@ const Index = () => {
                 <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
                   Версия для компьютеров на Windows
                 </p>
-                <Button 
-                  className="w-full font-pixel text-xs bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black h-auto py-3"
-                  disabled
+                <a 
+                  href="https://minecraft-downloads.net/MinecraftInstaller.exe"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
                 >
-                  Ссылка скоро появится
-                </Button>
+                  <Button 
+                    className="w-full font-pixel text-xs bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black h-auto py-3"
+                  >
+                    <Icon name="Download" size={16} className="mr-2" />
+                    СКАЧАТЬ
+                  </Button>
+                </a>
               </div>
 
               <div className="border-4 border-minecraft-brown p-6 bg-minecraft-brown/5 hover:bg-minecraft-brown/10 transition-colors">
