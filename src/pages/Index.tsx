@@ -39,6 +39,11 @@ const Index = () => {
         </>
       ),
       image: "https://cdn.poehali.dev/files/739a4a01-9179-4d2e-a262-7b163ce825a3.jpg"
+    },
+    {
+      title: "Сезон 4: Тени: Новая звезда",
+      description: "Самый долгий сезон в проработке. Много новых проработанных механик, персонажей, заданий и победа в войне.",
+      image: "https://cdn.poehali.dev/files/88d30fd0-33bf-4996-bc49-feb138386c10.jpg"
     }
   ];
 
