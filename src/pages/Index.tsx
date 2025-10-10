@@ -141,7 +141,7 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <h1 className="font-pixel text-xs sm:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
             <div className="flex gap-2 sm:gap-4 flex-wrap justify-end">
-              {["home", "seasons", "about", "team", "gallery", "contact"].map((section) => (
+              {["home", "seasons", "about", "team", "gallery"].map((section) => (
                 <Button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -157,7 +157,6 @@ const Index = () => {
                   {section === "about" && "О НАС"}
                   {section === "team" && "КОМАНДА"}
                   {section === "gallery" && "ГАЛЕРЕЯ"}
-                  {section === "contact" && "КОНТАКТЫ"}
                 </Button>
               ))}
             </div>
@@ -492,42 +491,6 @@ const Index = () => {
           />
         </div>
       )}
-
-      <section id="contact" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center">
-        <div className="container mx-auto">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
-            КОНТАКТЫ
-          </h2>
-          <div className="max-w-2xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl text-center">
-            <p className="font-sans text-lg text-minecraft-stone/80 mb-8">
-              Хотите присоединиться к нашим сезонам или задать вопрос? 
-              Свяжитесь с нами в Telegram!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="https://t.me/dfenger"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="font-pixel text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-4 border-black px-6 py-4 h-auto w-full sm:w-auto">
-                  <Icon name="Send" size={16} className="mr-2" />
-                  TEMPUS
-                </Button>
-              </a>
-              <a 
-                href="https://t.me/KIRKA30"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="font-pixel text-xs bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black px-6 py-4 h-auto w-full sm:w-auto">
-                  <Icon name="Send" size={16} className="mr-2" />
-                  KIRKASHADOW
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <footer className="bg-minecraft-stone border-t-4 border-minecraft-brown py-8 px-4">
         <div className="container mx-auto text-center">
