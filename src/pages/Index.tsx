@@ -142,7 +142,7 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <h1 className="font-pixel text-xs sm:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
             <div className="flex gap-2 sm:gap-4 flex-wrap justify-end">
-              {["home", "seasons", "about", "team", "gallery"].map((section) => (
+              {["home", "seasons", "download", "about", "team", "gallery"].map((section) => (
                 <Button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -155,6 +155,7 @@ const Index = () => {
                 >
                   {section === "home" && "ГЛАВНАЯ"}
                   {section === "seasons" && "СЕЗОНЫ"}
+                  {section === "download" && "СКАЧАТЬ"}
                   {section === "about" && "О НАС"}
                   {section === "team" && "КОМАНДА"}
                   {section === "gallery" && "ГАЛЕРЕЯ"}
@@ -372,6 +373,84 @@ const Index = () => {
               </div>
             </div>
           )}
+        </div>
+      </section>
+
+      <section id="download" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center">
+        <div className="container mx-auto">
+          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+            СКАЧАТЬ MINECRAFT
+          </h2>
+          <div className="max-w-4xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl">
+            <p className="font-sans text-lg text-minecraft-stone/80 text-center mb-8">
+              Выберите подходящую версию Minecraft для вашей платформы
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="border-4 border-minecraft-grass p-6 bg-minecraft-grass/5 hover:bg-minecraft-grass/10 transition-colors">
+                <div className="flex items-center gap-4 mb-4">
+                  <Icon name="Monitor" size={32} className="text-minecraft-grass" />
+                  <h3 className="font-pixel text-lg text-minecraft-stone">Windows</h3>
+                </div>
+                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                  Версия для компьютеров на Windows
+                </p>
+                <Button 
+                  className="w-full font-pixel text-xs bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black h-auto py-3"
+                  disabled
+                >
+                  Ссылка скоро появится
+                </Button>
+              </div>
+
+              <div className="border-4 border-minecraft-brown p-6 bg-minecraft-brown/5 hover:bg-minecraft-brown/10 transition-colors">
+                <div className="flex items-center gap-4 mb-4">
+                  <Icon name="Apple" size={32} className="text-minecraft-brown" />
+                  <h3 className="font-pixel text-lg text-minecraft-stone">macOS</h3>
+                </div>
+                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                  Версия для компьютеров на macOS
+                </p>
+                <Button 
+                  className="w-full font-pixel text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-4 border-black h-auto py-3"
+                  disabled
+                >
+                  Ссылка скоро появится
+                </Button>
+              </div>
+
+              <div className="border-4 border-minecraft-sky p-6 bg-minecraft-sky/5 hover:bg-minecraft-sky/10 transition-colors">
+                <div className="flex items-center gap-4 mb-4">
+                  <Icon name="Smartphone" size={32} className="text-minecraft-sky" />
+                  <h3 className="font-pixel text-lg text-minecraft-stone">Android</h3>
+                </div>
+                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                  Pocket Edition для Android устройств
+                </p>
+                <Button 
+                  className="w-full font-pixel text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-4 border-black h-auto py-3"
+                  disabled
+                >
+                  Ссылка скоро появится
+                </Button>
+              </div>
+
+              <div className="border-4 border-minecraft-stone p-6 bg-minecraft-stone/5 hover:bg-minecraft-stone/10 transition-colors">
+                <div className="flex items-center gap-4 mb-4">
+                  <Icon name="Smartphone" size={32} className="text-minecraft-stone" />
+                  <h3 className="font-pixel text-lg text-minecraft-stone">iOS</h3>
+                </div>
+                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                  Pocket Edition для iPhone и iPad
+                </p>
+                <Button 
+                  className="w-full font-pixel text-xs bg-minecraft-stone text-white hover:bg-minecraft-stone/80 border-4 border-black h-auto py-3"
+                  disabled
+                >
+                  Ссылка скоро появится
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
