@@ -30,6 +30,15 @@ const Index = () => {
       title: "Сезон 2: MineDocs II",
       description: "Попадание в параллельную реальность, новые персонажи, разрыв мира и отношений, улучшение качества сезона.",
       image: "https://cdn.poehali.dev/files/9753b439-61d8-4066-ad05-57318a24442f.jpg"
+    },
+    {
+      title: "Сезон 3: Сердце Миров",
+      description: (
+        <>
+          Новый главный персонаж, большие предательства, заражение <a href="/terms" className="font-bold hover:text-minecraft-brown transition-colors">Скинтом¹</a>, получение чужого солнца, возвращение домой.
+        </>
+      ),
+      image: "https://cdn.poehali.dev/files/739a4a01-9179-4d2e-a262-7b163ce825a3.jpg"
     }
   ];
 
@@ -186,9 +195,9 @@ const Index = () => {
                     <h3 className="font-pixel text-sm mb-4 text-minecraft-brown">
                       {season.title}
                     </h3>
-                    <p className="font-sans text-sm text-minecraft-stone/80">
+                    <div className="font-sans text-sm text-minecraft-stone/80">
                       {season.description}
-                    </p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
