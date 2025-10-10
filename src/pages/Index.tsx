@@ -120,12 +120,7 @@ const Index = () => {
     }
   ];
 
-  const gallery = [
-    "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/f6e98770-55be-476e-8457-0990c6ab6f91.jpg",
-    "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d31a6596-7f48-43ad-8444-b578ba56cf02.jpg",
-    "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/8a65f593-8271-4771-9248-baa13b301e13.jpg",
-    "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/f6e98770-55be-476e-8457-0990c6ab6f91.jpg",
-  ];
+  const gallery: string[] = [];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20">
