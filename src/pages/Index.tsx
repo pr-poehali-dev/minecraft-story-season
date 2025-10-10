@@ -110,7 +110,7 @@ const Index = () => {
           </div>
           <div className="mt-12 animate-float">
             <img 
-              src="https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/8a65f593-8271-4771-9248-baa13b301e13.jpg"
+              src="https://cdn.poehali.dev/files/52a192e4-420c-42f2-be29-f58ba27d00c4.png"
               alt="Minecraft World"
               className="rounded-lg border-4 border-minecraft-stone shadow-2xl mx-auto max-w-4xl w-full"
             />
