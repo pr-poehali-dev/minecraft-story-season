@@ -498,19 +498,6 @@ const Index = () => {
               Хотите присоединиться к нашим сезонам или задать вопрос? 
               Свяжитесь с нами в Telegram!
             </p>
-        </div>
-      </section>
-
-      <section id="contact" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center">
-        <div className="container mx-auto">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
-            КОНТАКТЫ
-          </h2>
-          <div className="max-w-2xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl text-center">
-            <p className="font-sans text-lg text-minecraft-stone/80 mb-8">
-              Хотите присоединиться к нашим сезонам или задать вопрос? 
-              Свяжитесь с нами в Telegram!
-            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
                 href="https://t.me/dfenger"
