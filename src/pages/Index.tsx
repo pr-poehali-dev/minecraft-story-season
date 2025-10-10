@@ -492,10 +492,18 @@ const Index = () => {
         </div>
       )}
 
-      <section className="py-20 px-4 bg-minecraft-stone/5 flex items-center justify-center">
-        <h2 className="font-pixel text-4xl sm:text-6xl text-center text-minecraft-stone animate-pulse">
-          Дальше - Больше
-        </h2>
+      <section className="py-20 px-4 bg-minecraft-stone/5">
+        <div className="container mx-auto text-center">
+          <h2 className="font-pixel text-4xl sm:text-6xl text-minecraft-stone animate-pulse mb-8">
+            Дальше - Больше
+          </h2>
+          <div className="max-w-2xl mx-auto bg-white border-4 border-minecraft-grass p-8 sm:p-12 rounded-lg shadow-xl">
+            <Icon name="Shirt" size={64} className="mx-auto mb-6 text-minecraft-grass" />
+            <p className="font-pixel text-xl sm:text-2xl text-minecraft-stone">
+              Скоро будет эксклюзивный мерч.
+            </p>
+          </div>
+        </div>
       </section>
 
       <footer className="bg-minecraft-stone border-t-4 border-minecraft-brown py-8 px-4">
