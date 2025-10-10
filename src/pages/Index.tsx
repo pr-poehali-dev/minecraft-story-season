@@ -411,11 +411,11 @@ const Index = () => {
 
               <div className="border-4 border-minecraft-brown p-6 bg-minecraft-brown/5 hover:bg-minecraft-brown/10 transition-colors">
                 <div className="flex items-center gap-4 mb-4">
-                  <Icon name="Apple" size={32} className="text-minecraft-brown" />
-                  <h3 className="font-pixel text-lg text-minecraft-stone">macOS</h3>
+                  <Icon name="Boxes" size={32} className="text-minecraft-brown" />
+                  <h3 className="font-pixel text-lg text-minecraft-stone">mcpeHub</h3>
                 </div>
                 <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
-                  Версия для компьютеров на macOS
+                  Универсальный лаунчер для всех платформ
                 </p>
                 <Button 
                   className="w-full font-pixel text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-4 border-black h-auto py-3"
