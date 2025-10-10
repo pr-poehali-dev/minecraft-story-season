@@ -64,6 +64,16 @@ const Index = () => {
         artist: "Lena Raine (Minecraft)",
         url: "https://rus.hitmotop.com/song/77781995"
       }
+    },
+    {
+      title: "Сезон 7: Отражение Реалей",
+      description: "Новое Время не помогает, парадоксы остались, решить не удалось. Главные герои спасаются от стирания, а вот луч, луча больше нет.",
+      image: "https://cdn.poehali.dev/files/d8140562-0820-411a-92e8-42099ccfa9a6.png",
+      audio: {
+        title: "Aria Math",
+        artist: "C418 (Minecraft)",
+        url: "https://rus.hitmotop.com/song/63298811"
+      }
     }
   ];
 
