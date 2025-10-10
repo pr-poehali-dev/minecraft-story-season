@@ -120,32 +120,57 @@ const Index = () => {
 
       <section id="seasons" className="min-h-screen py-20 px-4 bg-minecraft-stone/10">
         <div className="container mx-auto">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-16 text-minecraft-stone">
             НАШИ СЕЗОНЫ
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {seasons.map((season, index) => (
-              <Card 
-                key={index}
-                className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group"
-              >
-                <div className="overflow-hidden">
-                  <img 
-                    src={season.image}
-                    alt={season.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="font-pixel text-sm mb-4 text-minecraft-brown">
-                    {season.title}
-                  </h3>
-                  <p className="font-sans text-sm text-minecraft-stone/80">
-                    {season.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+
+          <div className="mb-16">
+            <div className="flex items-center justify-center mb-8">
+              <div className="h-1 flex-1 bg-minecraft-brown max-w-xs"></div>
+              <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-brown">
+                ОСНОВНОЙ СЮЖЕТ
+              </h3>
+              <div className="h-1 flex-1 bg-minecraft-brown max-w-xs"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {seasons.map((season, index) => (
+                <Card 
+                  key={index}
+                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group"
+                >
+                  <div className="overflow-hidden">
+                    <img 
+                      src={season.image}
+                      alt={season.title}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="font-pixel text-sm mb-4 text-minecraft-brown">
+                      {season.title}
+                    </h3>
+                    <p className="font-sans text-sm text-minecraft-stone/80">
+                      {season.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-center mb-8">
+              <div className="h-1 flex-1 bg-minecraft-grass max-w-xs"></div>
+              <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-grass">
+                ПОБОЧНЫЕ СЕЗОНЫ
+              </h3>
+              <div className="h-1 flex-1 bg-minecraft-grass max-w-xs"></div>
+            </div>
+            <div className="text-center py-12">
+              <p className="font-pixel text-sm text-minecraft-stone/60">
+                СКОРО ЗДЕСЬ ПОЯВЯТСЯ НОВЫЕ ИСТОРИИ...
+              </p>
+            </div>
           </div>
         </div>
       </section>
