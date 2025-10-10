@@ -471,6 +471,11 @@ const Index = () => {
                 </Button>
               </div>
             </div>
+            <div className="mt-8 text-center">
+              <p className="font-pixel text-sm text-minecraft-stone/70 bg-yellow-100 border-4 border-yellow-500 p-4 inline-block">
+                Игра платная, никого не навязываем скачивать!!!
+              </p>
+            </div>
           </div>
         </div>
       </section>
