@@ -94,6 +94,8 @@ const Index = () => {
     }
   ];
 
+  const inDevelopmentSeasons: any[] = [];
+
   const team = [
     {
       name: "Tempus",
@@ -267,7 +269,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div>
+          <div className="mb-16">
             <div className="flex items-center justify-center mb-8">
               <div className="h-1 flex-1 bg-minecraft-grass max-w-xs"></div>
               <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-grass">
@@ -300,6 +302,56 @@ const Index = () => {
               ))}
             </div>
           </div>
+
+          {inDevelopmentSeasons.length > 0 && (
+            <div>
+              <div className="flex items-center justify-center mb-8">
+                <div className="h-1 flex-1 bg-minecraft-sky max-w-xs"></div>
+                <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-sky">
+                  СЕЗОНЫ В РАЗРАБОТКЕ
+                </h3>
+                <div className="h-1 flex-1 bg-minecraft-sky max-w-xs"></div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {inDevelopmentSeasons.map((season, index) => (
+                  <Card 
+                    key={index}
+                    className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group relative"
+                  >
+                    <div className="absolute top-2 right-2 z-10 bg-minecraft-sky text-white font-pixel text-[8px] px-2 py-1 border-2 border-black">
+                      В РАЗРАБОТКЕ
+                    </div>
+                    <div className="overflow-hidden">
+                      <img 
+                        src={season.image}
+                        alt={season.title}
+                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardContent className="p-6">
+                      <h3 className="font-pixel text-sm mb-4 text-minecraft-sky">
+                        {season.title}
+                      </h3>
+                      <div className="font-sans text-sm text-minecraft-stone/80 mb-4">
+                        {season.description}
+                      </div>
+                      {season.audio && (
+                        <a
+                          href={season.audio.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 font-pixel text-[10px] bg-minecraft-stone text-white px-4 py-2 border-2 border-black hover:bg-minecraft-stone/80 transition-colors"
+                        >
+                          <Icon name="Music" size={14} />
+                          {season.audio.title} - {season.audio.artist}
+                        </a>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
