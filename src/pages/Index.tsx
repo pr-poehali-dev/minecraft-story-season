@@ -6,6 +6,7 @@ import { useState } from "react";
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -217,7 +218,8 @@ const Index = () => {
               {startSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group"
+                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
+                  onClick={() => setSelectedSeason(index)}
                 >
                   <div className="overflow-hidden">
                     <img 
@@ -251,7 +253,8 @@ const Index = () => {
               {mainSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group"
+                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
+                  onClick={() => setSelectedSeason(index + startSeasons.length)}
                 >
                   <div className="overflow-hidden">
                     <img 
@@ -489,6 +492,40 @@ const Index = () => {
             className="max-w-full max-h-full object-contain border-4 border-minecraft-stone"
             onClick={(e) => e.stopPropagation()}
           />
+        </div>
+      )}
+
+      {selectedSeason !== null && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in overflow-y-auto"
+          onClick={() => setSelectedSeason(null)}
+        >
+          <div 
+            className="bg-white border-4 border-minecraft-stone rounded-lg max-w-3xl w-full my-8 animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative">
+              <button
+                onClick={() => setSelectedSeason(null)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 bg-minecraft-stone hover:bg-minecraft-stone/80 border-4 border-white flex items-center justify-center transition-colors"
+              >
+                <Icon name="X" size={20} className="text-white" />
+              </button>
+              <img 
+                src={selectedSeason < startSeasons.length ? startSeasons[selectedSeason].image : mainSeasons[selectedSeason - startSeasons.length].image}
+                alt="Season"
+                className="w-full h-64 object-cover border-b-4 border-minecraft-stone"
+              />
+            </div>
+            <div className="p-8">
+              <h3 className="font-pixel text-xl sm:text-2xl mb-4 text-minecraft-brown">
+                {selectedSeason < startSeasons.length ? startSeasons[selectedSeason].title : mainSeasons[selectedSeason - startSeasons.length].title}
+              </h3>
+              <p className="font-sans text-base text-minecraft-stone/80 leading-relaxed">
+                {selectedSeason < startSeasons.length ? startSeasons[selectedSeason].description : mainSeasons[selectedSeason - startSeasons.length].description}
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
