@@ -22,7 +22,7 @@ const Index = () => {
 
   const mainSeasons = [
     {
-      title: "Сезон 2: Война кланов",
+      title: "Сезон 1: Война кланов",
       description: "Эпические битвы между игровыми фракциями. Строительство крепостей и защита территорий.",
       image: "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d31a6596-7f48-43ad-8444-b578ba56cf02.jpg"
     },
