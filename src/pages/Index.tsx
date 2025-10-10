@@ -27,7 +27,7 @@ const Index = () => {
       image: "https://cdn.poehali.dev/files/4519a809-af89-4c24-9f48-8cc379b28dfc.jpg"
     },
     {
-      title: "Сезон 3: Новые земли",
+      title: "Сезон 2: Новые земли",
       description: "Исследование неизведанных территорий и открытие новых биомов. Приключения продолжаются.",
       image: "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d31a6596-7f48-43ad-8444-b578ba56cf02.jpg"
     }
