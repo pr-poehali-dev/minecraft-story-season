@@ -417,12 +417,19 @@ const Index = () => {
                 <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
                   Универсальный лаунчер для всех платформ
                 </p>
-                <Button 
-                  className="w-full font-pixel text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-4 border-black h-auto py-3"
-                  disabled
+                <a 
+                  href="https://mcpehub.org/engine/dlfile.php?id=49382"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
                 >
-                  Ссылка скоро появится
-                </Button>
+                  <Button 
+                    className="w-full font-pixel text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-4 border-black h-auto py-3"
+                  >
+                    <Icon name="Download" size={16} className="mr-2" />
+                    СКАЧАТЬ
+                  </Button>
+                </a>
               </div>
 
               <div className="border-4 border-minecraft-sky p-6 bg-minecraft-sky/5 hover:bg-minecraft-sky/10 transition-colors">
