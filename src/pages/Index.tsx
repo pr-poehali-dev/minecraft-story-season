@@ -56,6 +56,11 @@ const Index = () => {
         </>
       ),
       image: "https://cdn.poehali.dev/files/e147159b-eeba-4661-a7ba-3229e0400cba.jpg"
+    },
+    {
+      title: "Побочный сезон 2: Моральное Осознание: Альтер - Эго",
+      description: "Игра за Альтернативную версию главного героя. Очень короткий сезон, но очень интересный сезон.",
+      image: "https://cdn.poehali.dev/files/06d6610f-c986-4a23-b000-b0ada6608fd6.jpg"
     }
   ];
 
