@@ -14,9 +14,9 @@ const Index = () => {
 
   const seasons = [
     {
-      title: "Сезон 1: Начало",
-      description: "Первый сюжетный сезон, где всё только начиналось. Основание первых поселений и начало великого приключения.",
-      image: "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d31a6596-7f48-43ad-8444-b578ba56cf02.jpg"
+      title: "Сезон 1: Новое поколение",
+      description: "Первый сюжетный сезон, где всё только начиналось. Основание новых знакомств, потери и новые начинания.",
+      image: "https://cdn.poehali.dev/files/6a1f8c7f-4c0b-4bcd-b6ee-6a6e7582afc7.jpg"
     },
     {
       title: "Сезон 2: Война кланов",
