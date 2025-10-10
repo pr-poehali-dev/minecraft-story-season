@@ -433,12 +433,19 @@ const Index = () => {
                 <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
                   Pocket Edition для Android устройств
                 </p>
-                <Button 
-                  className="w-full font-pixel text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-4 border-black h-auto py-3"
-                  disabled
+                <a 
+                  href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe&hl=ru"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
                 >
-                  Ссылка скоро появится
-                </Button>
+                  <Button 
+                    className="w-full font-pixel text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-4 border-black h-auto py-3"
+                  >
+                    <Icon name="Download" size={16} className="mr-2" />
+                    СКАЧАТЬ
+                  </Button>
+                </a>
               </div>
 
               <div className="border-4 border-minecraft-stone p-6 bg-minecraft-stone/5 hover:bg-minecraft-stone/10 transition-colors">
