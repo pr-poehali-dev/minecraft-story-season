@@ -72,7 +72,7 @@ const Index = () => {
       audio: {
         title: "Aria Math",
         artist: "C418 (Minecraft)",
-        url: "https://rus.hitmotop.com/song/63298811"
+        url: "https://rus.hitmotop.com/song/78407789"
       }
     }
   ];
