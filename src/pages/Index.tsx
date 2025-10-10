@@ -299,7 +299,8 @@ const Index = () => {
               {sideSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group"
+                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
+                  onClick={() => setSelectedSeason(startSeasons.length + mainSeasons.length + index)}
                 >
                   <div className="overflow-hidden">
                     <img 
@@ -334,7 +335,8 @@ const Index = () => {
                 {inDevelopmentSeasons.map((season, index) => (
                   <Card 
                     key={index}
-                    className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group relative"
+                    className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group relative cursor-pointer"
+                    onClick={() => setSelectedSeason(startSeasons.length + mainSeasons.length + sideSeasons.length + index)}
                   >
                     <div className="absolute top-2 right-2 z-10 bg-minecraft-sky text-white font-pixel text-[8px] px-2 py-1 border-2 border-black">
                       В РАЗРАБОТКЕ
@@ -495,39 +497,55 @@ const Index = () => {
         </div>
       )}
 
-      {selectedSeason !== null && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in overflow-y-auto"
-          onClick={() => setSelectedSeason(null)}
-        >
+      {selectedSeason !== null && (() => {
+        const allSeasons = [...startSeasons, ...mainSeasons, ...sideSeasons, ...inDevelopmentSeasons];
+        const season = allSeasons[selectedSeason];
+        
+        return (
           <div 
-            className="bg-white border-4 border-minecraft-stone rounded-lg max-w-3xl w-full my-8 animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in overflow-y-auto"
+            onClick={() => setSelectedSeason(null)}
           >
-            <div className="relative">
-              <button
-                onClick={() => setSelectedSeason(null)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 bg-minecraft-stone hover:bg-minecraft-stone/80 border-4 border-white flex items-center justify-center transition-colors"
-              >
-                <Icon name="X" size={20} className="text-white" />
-              </button>
-              <img 
-                src={selectedSeason < startSeasons.length ? startSeasons[selectedSeason].image : mainSeasons[selectedSeason - startSeasons.length].image}
-                alt="Season"
-                className="w-full h-64 object-cover border-b-4 border-minecraft-stone"
-              />
-            </div>
-            <div className="p-8">
-              <h3 className="font-pixel text-xl sm:text-2xl mb-4 text-minecraft-brown">
-                {selectedSeason < startSeasons.length ? startSeasons[selectedSeason].title : mainSeasons[selectedSeason - startSeasons.length].title}
-              </h3>
-              <p className="font-sans text-base text-minecraft-stone/80 leading-relaxed">
-                {selectedSeason < startSeasons.length ? startSeasons[selectedSeason].description : mainSeasons[selectedSeason - startSeasons.length].description}
-              </p>
+            <div 
+              className="bg-white border-4 border-minecraft-stone rounded-lg max-w-3xl w-full my-8 animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <button
+                  onClick={() => setSelectedSeason(null)}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-minecraft-stone hover:bg-minecraft-stone/80 border-4 border-white flex items-center justify-center transition-colors"
+                >
+                  <Icon name="X" size={20} className="text-white" />
+                </button>
+                <img 
+                  src={season.image}
+                  alt="Season"
+                  className="w-full h-64 object-cover border-b-4 border-minecraft-stone"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="font-pixel text-xl sm:text-2xl mb-4 text-minecraft-brown">
+                  {season.title}
+                </h3>
+                <div className="font-sans text-base text-minecraft-stone/80 leading-relaxed mb-4">
+                  {season.description}
+                </div>
+                {season.audio && (
+                  <a
+                    href={season.audio.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-pixel text-xs bg-minecraft-stone text-white px-4 py-3 border-2 border-black hover:bg-minecraft-stone/80 transition-colors"
+                  >
+                    <Icon name="Music" size={16} />
+                    {season.audio.title} - {season.audio.artist}
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       <section className="py-20 px-4 bg-minecraft-stone/5">
         <div className="container mx-auto text-center">
