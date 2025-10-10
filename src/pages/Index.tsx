@@ -139,7 +139,7 @@ const Index = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-minecraft-stone/95 backdrop-blur-sm border-b-4 border-minecraft-brown shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="font-pixel text-xs sm:text-sm text-white">MINECRAFT SEASONS</h1>
+            <h1 className="font-pixel text-xs sm:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
             <div className="flex gap-2 sm:gap-4 flex-wrap justify-end">
               {["home", "seasons", "about", "team", "gallery", "contact"].map((section) => (
                 <Button
@@ -169,7 +169,7 @@ const Index = () => {
         <div className="container mx-auto text-center">
           <div className="mb-8 animate-fade-in">
             <h2 className="font-pixel text-2xl sm:text-4xl md:text-6xl mb-6 text-minecraft-stone drop-shadow-lg">
-              MINECRAFT SEASONS
+              СЮЖЕТНЫЕ СЕЗОНЫ
             </h2>
             <p className="font-sans text-lg sm:text-xl md:text-2xl text-minecraft-stone/80 mb-8 max-w-3xl mx-auto">
               Сюжетные сезоны, созданные с любовью к игре и вниманием к деталям
@@ -532,7 +532,7 @@ const Index = () => {
       <footer className="bg-minecraft-stone border-t-4 border-minecraft-brown py-8 px-4">
         <div className="container mx-auto text-center">
           <p className="font-pixel text-[10px] text-white/80">
-            © 2025 MINECRAFT SEASONS | MADE WITH ❤️
+            © 2025 СЮЖЕТНЫЕ СЕЗОНЫ | MADE WITH ❤️
           </p>
         </div>
       </footer>
