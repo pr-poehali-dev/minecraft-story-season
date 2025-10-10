@@ -24,12 +24,14 @@ const Index = () => {
     {
       title: "Сезон 1: MineDocs",
       description: "Новые знакомства, предательства, эмоции, и конечно новые механики.",
-      image: "https://cdn.poehali.dev/files/4519a809-af89-4c24-9f48-8cc379b28dfc.jpg"
+      image: "https://cdn.poehali.dev/files/4519a809-af89-4c24-9f48-8cc379b28dfc.jpg",
+      audio: null
     },
     {
       title: "Сезон 2: MineDocs II",
       description: "Попадание в параллельную реальность, новые персонажи, разрыв мира и отношений, улучшение качества сезона.",
-      image: "https://cdn.poehali.dev/files/9753b439-61d8-4066-ad05-57318a24442f.jpg"
+      image: "https://cdn.poehali.dev/files/9753b439-61d8-4066-ad05-57318a24442f.jpg",
+      audio: null
     },
     {
       title: "Сезон 3: Сердце Миров",
@@ -38,22 +40,30 @@ const Index = () => {
           Новый главный персонаж, большие предательства, заражение <a href="/terms" className="font-bold hover:text-minecraft-brown transition-colors">Скинтом¹</a>, получение чужого солнца, возвращение домой.
         </>
       ),
-      image: "https://cdn.poehali.dev/files/739a4a01-9179-4d2e-a262-7b163ce825a3.jpg"
+      image: "https://cdn.poehali.dev/files/739a4a01-9179-4d2e-a262-7b163ce825a3.jpg",
+      audio: null
     },
     {
       title: "Сезон 4: Тени: Новая звезда",
       description: "Самый долгий сезон в проработке. Много новых проработанных механик, персонажей, заданий и победа в войне.",
-      image: "https://cdn.poehali.dev/files/88d30fd0-33bf-4996-bc49-feb138386c10.jpg"
+      image: "https://cdn.poehali.dev/files/88d30fd0-33bf-4996-bc49-feb138386c10.jpg",
+      audio: null
     },
     {
       title: "Сезон 5: Разлом Времени",
       description: "Первый сезон, где углублённо поднимается понятие времени. Разломы, конец времени, временные ветки, но, это только начало.",
-      image: "https://cdn.poehali.dev/files/55eb3131-f5bb-4556-bcb3-f46fcaf2e43f.jpg"
+      image: "https://cdn.poehali.dev/files/55eb3131-f5bb-4556-bcb3-f46fcaf2e43f.jpg",
+      audio: null
     },
     {
       title: "Сезон 6: Осколки Неизбежности",
-      description: "Тяжёлый сезон в плане эмоций, много потерь и мало хорошего. После совмещения всех веток в одну началось новое время. В сезоне и титрах использовался аудиофрагмент: Creator.",
-      image: "https://cdn.poehali.dev/files/a4010045-bc19-4345-b864-3a2e3b0b901c.png"
+      description: "Тяжёлый сезон в плане эмоций, много потерь и мало хорошего. После совмещения всех веток в одну началось новое время.",
+      image: "https://cdn.poehali.dev/files/a4010045-bc19-4345-b864-3a2e3b0b901c.png",
+      audio: {
+        title: "Creator",
+        artist: "Lena Raine (Minecraft)",
+        url: "https://rus.hitmotop.com/song/77781995"
+      }
     }
   ];
 
@@ -227,9 +237,20 @@ const Index = () => {
                     <h3 className="font-pixel text-sm mb-4 text-minecraft-brown">
                       {season.title}
                     </h3>
-                    <div className="font-sans text-sm text-minecraft-stone/80">
+                    <div className="font-sans text-sm text-minecraft-stone/80 mb-4">
                       {season.description}
                     </div>
+                    {season.audio && (
+                      <a
+                        href={season.audio.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 font-pixel text-[10px] bg-minecraft-stone text-white px-4 py-2 border-2 border-black hover:bg-minecraft-stone/80 transition-colors"
+                      >
+                        <Icon name="Music" size={14} />
+                        {season.audio.title} - {season.audio.artist}
+                      </a>
+                    )}
                   </CardContent>
                 </Card>
               ))}
