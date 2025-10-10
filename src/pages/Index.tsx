@@ -116,7 +116,7 @@ const Index = () => {
       role: "Разработчик & Строитель",
       telegram: "@KIRKA30",
       description: "Воплощаю идеи в жизнь через строительство и дизайн",
-      avatar: null
+      avatar: "https://cdn.poehali.dev/files/f81084ff-a0ab-4513-aee4-4365b3fda356.jpg"
     }
   ];
 
