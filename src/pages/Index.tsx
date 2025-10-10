@@ -14,7 +14,7 @@ const Index = () => {
 
   const startSeasons = [
     {
-      title: "Сезон 1: Новое поколение",
+      title: "Тестовый сезон: Новое поколение",
       description: "Первый сюжетный сезон, где всё только начиналось. Основание новых знакомств, потери и новые начинания.",
       image: "https://cdn.poehali.dev/files/6a1f8c7f-4c0b-4bcd-b6ee-6a6e7582afc7.jpg"
     }
