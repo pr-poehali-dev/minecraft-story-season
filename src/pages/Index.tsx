@@ -1157,7 +1157,7 @@ const Index = () => {
           }`}>
             ГАЛЕРЕЯ
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto">
             {gallery.map((image, index) => (
               <div 
                 key={index}
@@ -1165,12 +1165,16 @@ const Index = () => {
                   setSelectedImage(image);
                   setViewedImages(prev => new Set(prev).add(index));
                 }}
-                className="aspect-square overflow-hidden border-2 sm:border-4 border-minecraft-stone hover:scale-105 transition-transform duration-300 cursor-pointer"
+                className={`overflow-hidden border-4 sm:border-6 hover:scale-[1.02] transition-all duration-300 cursor-pointer ${
+                  isDarkTheme
+                    ? 'border-purple-500 shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)]'
+                    : 'border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.3)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
+                }`}
               >
                 <img 
                   src={image}
                   alt={`Gallery ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
             ))}
