@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 import { useState, useEffect } from "react";
+import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/theme";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -10,7 +11,7 @@ const Index = () => {
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [showMemorial, setShowMemorial] = useState(false);
   const [showDownloads, setShowDownloads] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(getInitialTheme);
   const [showAchievement, setShowAchievement] = useState(false);
   const [showAchievementsPage, setShowAchievementsPage] = useState(false);
   const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
@@ -50,6 +51,18 @@ const Index = () => {
 
   const hasSecretAchievement = unlockedAchievements.includes('story-seasons-master');
   const achievements = hasSecretAchievement ? [...baseAchievements, secretAchievement] : baseAchievements;
+
+  useEffect(() => {
+    const unsubscribe = listenToSystemThemeChanges((isDark) => {
+      setIsDarkTheme(isDark);
+    });
+    
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    saveTheme(isDarkTheme);
+  }, [isDarkTheme]);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
