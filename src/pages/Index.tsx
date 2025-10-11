@@ -170,8 +170,16 @@ const Index = () => {
       </nav>
 
       <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-4 relative">
+        <div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
+          }}
+        ></div>
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-full max-w-4xl h-full bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+          <div className="w-full max-w-4xl h-full bg-gradient-to-b from-transparent via-minecraft-sky/10 to-transparent"></div>
         </div>
         <div className="container mx-auto text-center relative z-10">
           <div className="mb-8 animate-fade-in">
