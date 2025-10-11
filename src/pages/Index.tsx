@@ -907,10 +907,10 @@ const Index = () => {
                   Pocket Edition для iPhone и iPad
                 </p>
                 <Button 
-                  className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-stone text-white hover:bg-minecraft-stone/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3 px-2"
+                  className="w-full font-pixel text-[8px] sm:text-xs bg-minecraft-stone text-white hover:bg-minecraft-stone/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3 px-1"
                   disabled
                 >
-                  <span className="break-words">Ссылка скоро появится</span>
+                  <span className="break-words leading-tight">Скоро появится</span>
                 </Button>
               </div>
             </div>
