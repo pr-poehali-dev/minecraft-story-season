@@ -18,6 +18,7 @@ const Index = () => {
   const [viewedSeasons, setViewedSeasons] = useState<Set<number>>(new Set());
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
+  const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
 
   const achievements = [
     {
@@ -31,6 +32,12 @@ const Index = () => {
       title: "Бесконечность - не предел!",
       description: "Просмотрели все сезоны проекта",
       icon: "Infinity"
+    },
+    {
+      id: "tretyakov-gallery",
+      title: "Третьяковская галерея",
+      description: "Просмотрели 3 скриншота в галерее",
+      icon: "Image"
     }
   ];
 
@@ -79,6 +86,24 @@ const Index = () => {
       }
     }
   }, [viewedSeasons]);
+
+  useEffect(() => {
+    if (viewedImages.size >= 3) {
+      const hasGalleryAchievement = unlockedAchievements.includes('tretyakov-gallery');
+      if (!hasGalleryAchievement) {
+        setTimeout(() => {
+          const achievement = achievements[2];
+          setCurrentAchievement(achievement);
+          setShowAchievement(true);
+          const newUnlocked = [...unlockedAchievements, 'tretyakov-gallery'];
+          setUnlockedAchievements(newUnlocked);
+          localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+          setHasViewedAchievements(false);
+          setTimeout(() => setShowAchievement(false), 5000);
+        }, 500);
+      }
+    }
+  }, [viewedImages]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -890,7 +915,10 @@ const Index = () => {
             {gallery.map((image, index) => (
               <div 
                 key={index}
-                onClick={() => setSelectedImage(image)}
+                onClick={() => {
+                  setSelectedImage(image);
+                  setViewedImages(prev => new Set(prev).add(index));
+                }}
                 className="aspect-square overflow-hidden border-4 border-minecraft-stone hover:scale-105 transition-transform duration-300 cursor-pointer"
               >
                 <img 
@@ -1081,7 +1109,7 @@ const Index = () => {
                         <p className={`font-sans text-xs sm:text-sm break-words ${
                           isUnlocked ? 'text-white' : 'text-gray-600'
                         }`}>
-                          {isUnlocked ? achievement.description : '???'}
+                          {isUnlocked ? achievement.description : 'Заблокировано'}
                         </p>
                       </div>
                     </div>
