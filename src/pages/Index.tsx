@@ -241,8 +241,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="seasons" className="min-h-screen py-20 px-4 bg-minecraft-stone/10">
-        <div className="container mx-auto">
+      <section id="seasons" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 relative">
+        <div 
+          className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
+          }}
+        ></div>
+        <div className="container mx-auto relative z-10">
           <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-16 text-minecraft-stone">
             НАШИ СЕЗОНЫ
           </h2>
@@ -416,8 +424,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="download" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center">
-        <div className="container mx-auto">
+      <section id="download" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center relative">
+        <div 
+          className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
+          }}
+        ></div>
+        <div className="container mx-auto relative z-10">
           <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
             СКАЧАТЬ MINECRAFT
           </h2>
@@ -533,8 +549,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="about" className="min-h-screen py-20 px-4 flex items-center">
-        <div className="container mx-auto">
+      <section id="about" className="min-h-screen py-20 px-4 flex items-center relative">
+        <div 
+          className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
+          }}
+        ></div>
+        <div className="container mx-auto relative z-10">
           <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
             О ПРОЕКТЕ
           </h2>
@@ -564,8 +588,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className="min-h-screen py-20 px-4 bg-minecraft-stone/10">
-        <div className="container mx-auto">
+      <section id="team" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 relative">
+        <div 
+          className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
+          }}
+        ></div>
+        <div className="container mx-auto relative z-10">
           <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
             КОМАНДА
           </h2>
@@ -664,8 +696,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="gallery" className="min-h-screen py-20 px-4">
-        <div className="container mx-auto">
+      <section id="gallery" className="min-h-screen py-20 px-4 relative">
+        <div 
+          className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
+          }}
+        ></div>
+        <div className="container mx-auto relative z-10">
           <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
             ГАЛЕРЕЯ
           </h2>
