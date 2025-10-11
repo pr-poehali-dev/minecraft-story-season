@@ -298,17 +298,6 @@ const Index = () => {
               </h3>
               <div className="h-1 flex-1 bg-minecraft-brown max-w-xs"></div>
             </div>
-            
-            <div className="flex justify-center mb-8">
-              <div className="animate-float">
-                <img 
-                  src="https://cdn.poehali.dev/files/30de0417-8c81-415f-9a7a-ede575fdf51b.png"
-                  alt="Main Character"
-                  className="w-32 h-auto drop-shadow-2xl hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {mainSeasons.map((season, index) => (
                 <Card 
