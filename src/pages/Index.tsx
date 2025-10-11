@@ -1261,20 +1261,6 @@ const Index = () => {
         );
       })()}
 
-      <section className="py-12 sm:py-16 md:py-20 px-4 bg-minecraft-stone/5">
-        <div className="container mx-auto text-center">
-          <h2 className="font-pixel text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-minecraft-stone animate-pulse mb-6 sm:mb-8 px-4">
-            Дальше - Больше
-          </h2>
-          <div className="max-w-2xl mx-auto bg-white border-2 sm:border-4 border-minecraft-grass p-6 sm:p-8 md:p-12 rounded-lg shadow-xl">
-            <Icon name="Shirt" size={48} className="mx-auto mb-4 sm:mb-6 text-minecraft-grass sm:w-16 sm:h-16" />
-            <p className="font-pixel text-base sm:text-xl md:text-2xl text-minecraft-stone px-2">
-              Скоро будет эксклюзивный мерч.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <footer className="bg-minecraft-stone border-t-2 sm:border-t-4 border-minecraft-brown py-6 sm:py-8 px-4">
         <div className="container mx-auto text-center">
           <p className="font-pixel text-[8px] sm:text-[10px] text-white/80 px-2">
