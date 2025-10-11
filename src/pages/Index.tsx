@@ -20,7 +20,7 @@ const Index = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
 
-  const achievements = [
+  const baseAchievements = [
     {
       id: "993-reality",
       title: "993 - реальность",
@@ -41,6 +41,16 @@ const Index = () => {
     }
   ];
 
+  const secretAchievement = {
+    id: "story-seasons-master",
+    title: "Сюжетные сезоны",
+    description: "Получили все достижения!",
+    icon: "Trophy"
+  };
+
+  const hasSecretAchievement = unlockedAchievements.includes('story-seasons-master');
+  const achievements = hasSecretAchievement ? [...baseAchievements, secretAchievement] : baseAchievements;
+
   useEffect(() => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
     const hasViewed = localStorage.getItem('achievements-viewed');
@@ -54,7 +64,7 @@ const Index = () => {
       setUnlockedAchievements(JSON.parse(savedAchievements));
     } else if (!hasVisited) {
       setTimeout(() => {
-        const achievement = achievements[0];
+        const achievement = baseAchievements[0];
         setCurrentAchievement(achievement);
         setShowAchievement(true);
         const newUnlocked = ['993-reality'];
@@ -74,7 +84,7 @@ const Index = () => {
       const hasInfinityAchievement = unlockedAchievements.includes('infinity-limit');
       if (!hasInfinityAchievement) {
         setTimeout(() => {
-          const achievement = achievements[1];
+          const achievement = baseAchievements[1];
           setCurrentAchievement(achievement);
           setShowAchievement(true);
           const newUnlocked = [...unlockedAchievements, 'infinity-limit'];
@@ -92,7 +102,7 @@ const Index = () => {
       const hasGalleryAchievement = unlockedAchievements.includes('tretyakov-gallery');
       if (!hasGalleryAchievement) {
         setTimeout(() => {
-          const achievement = achievements[2];
+          const achievement = baseAchievements[2];
           setCurrentAchievement(achievement);
           setShowAchievement(true);
           const newUnlocked = [...unlockedAchievements, 'tretyakov-gallery'];
@@ -104,6 +114,24 @@ const Index = () => {
       }
     }
   }, [viewedImages]);
+
+  useEffect(() => {
+    const requiredAchievements = ['993-reality', 'infinity-limit', 'tretyakov-gallery'];
+    const hasAllBase = requiredAchievements.every(id => unlockedAchievements.includes(id));
+    const hasSecret = unlockedAchievements.includes('story-seasons-master');
+    
+    if (hasAllBase && !hasSecret) {
+      setTimeout(() => {
+        setCurrentAchievement(secretAchievement);
+        setShowAchievement(true);
+        const newUnlocked = [...unlockedAchievements, 'story-seasons-master'];
+        setUnlockedAchievements(newUnlocked);
+        localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        setHasViewedAchievements(false);
+        setTimeout(() => setShowAchievement(false), 5000);
+      }, 1000);
+    }
+  }, [unlockedAchievements]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
