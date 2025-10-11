@@ -48,8 +48,7 @@ const Index = () => {
     id: "story-seasons-master",
     title: "Сюжетные сезоны",
     description: "Получили все достижения!",
-    icon: "Trophy",
-    image: "https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d9f7c81e-a8d0-48f2-85d8-47ff71dc13c0.jpg"
+    icon: "Trophy"
   };
 
   const hasSecretAchievement = unlockedAchievements.includes('story-seasons-master');
@@ -546,23 +545,9 @@ const Index = () => {
           <div className="mb-16">
             <div className="flex items-center justify-center mb-8">
               <div className="h-1 flex-1 max-w-xs transition-colors" style={{ backgroundColor: '#f4bc09' }}></div>
-              <div className="flex items-center gap-3 sm:gap-4">
-                <img 
-                  src="https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d9f7c81e-a8d0-48f2-85d8-47ff71dc13c0.jpg"
-                  alt="Compass"
-                  className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 pixelated"
-                  style={{ imageRendering: 'pixelated' }}
-                />
-                <h3 className="font-pixel text-xl sm:text-3xl transition-colors" style={{ color: '#f4bc09' }}>
-                  ОСНОВНОЙ СЮЖЕТ
-                </h3>
-                <img 
-                  src="https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d9f7c81e-a8d0-48f2-85d8-47ff71dc13c0.jpg"
-                  alt="Compass"
-                  className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 pixelated"
-                  style={{ imageRendering: 'pixelated' }}
-                />
-              </div>
+              <h3 className="font-pixel text-xl sm:text-3xl mx-6 transition-colors" style={{ color: '#f4bc09' }}>
+                ОСНОВНОЙ СЮЖЕТ
+              </h3>
               <div className="h-1 flex-1 max-w-xs transition-colors" style={{ backgroundColor: '#f4bc09' }}></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
@@ -1291,23 +1276,9 @@ const Index = () => {
 
       <footer className="bg-minecraft-stone border-t-2 sm:border-t-4 border-minecraft-brown py-6 sm:py-8 px-4">
         <div className="container mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 sm:gap-3">
-            <img 
-              src="https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d9f7c81e-a8d0-48f2-85d8-47ff71dc13c0.jpg"
-              alt="Compass"
-              className="w-4 h-4 sm:w-5 sm:h-5 pixelated"
-              style={{ imageRendering: 'pixelated' }}
-            />
-            <p className="font-pixel text-[8px] sm:text-[10px] text-white/80">
-              © 2025 СЮЖЕТНЫЕ СЕЗОНЫ | MADE WITH ❤️
-            </p>
-            <img 
-              src="https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d9f7c81e-a8d0-48f2-85d8-47ff71dc13c0.jpg"
-              alt="Compass"
-              className="w-4 h-4 sm:w-5 sm:h-5 pixelated"
-              style={{ imageRendering: 'pixelated' }}
-            />
-          </div>
+          <p className="font-pixel text-[8px] sm:text-[10px] text-white/80 px-2">
+            © 2025 СЮЖЕТНЫЕ СЕЗОНЫ | MADE WITH ❤️
+          </p>
         </div>
       </footer>
 
@@ -1373,20 +1344,11 @@ const Index = () => {
                           ? 'bg-minecraft-grass border-black' 
                           : 'bg-gray-800 border-gray-600'
                       }`}>
-                        {achievement.id === 'story-seasons-master' && isUnlocked ? (
-                          <img 
-                            src="https://cdn.poehali.dev/projects/cb2138fb-26b1-4687-838b-d6e86f1d844d/files/d9f7c81e-a8d0-48f2-85d8-47ff71dc13c0.jpg"
-                            alt={achievement.title}
-                            className="w-full h-full object-cover pixelated p-1"
-                            style={{ imageRendering: 'pixelated' }}
-                          />
-                        ) : (
-                          <Icon 
-                            name={isUnlocked ? achievement.icon as any : "Lock"} 
-                            size={20} 
-                            className={`${isUnlocked ? "text-white" : "text-gray-600"} sm:w-6 sm:h-6 md:w-8 md:h-8`}
-                          />
-                        )}
+                        <Icon 
+                          name={isUnlocked ? achievement.icon as any : "Lock"} 
+                          size={20} 
+                          className={`${isUnlocked ? "text-white" : "text-gray-600"} sm:w-6 sm:h-6 md:w-8 md:h-8`}
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-pixel text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 break-words ${
