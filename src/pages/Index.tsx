@@ -810,13 +810,13 @@ const Index = () => {
           {selectedMember !== null && (
             <div 
               className={`fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
-                isClosing ? 'opacity-0' : 'opacity-100'
+                isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
               }`}
               onClick={handleCloseModal}
             >
               <div 
                 className={`bg-white border-4 border-minecraft-stone max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
-                  isClosing ? 'scale-90' : 'scale-100'
+                  isClosing ? 'scale-90' : 'scale-100 animate-scale-in'
                 }`}
                 onClick={(e) => e.stopPropagation()}
               >
