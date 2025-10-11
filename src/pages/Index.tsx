@@ -10,6 +10,7 @@ const Index = () => {
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [showMemorial, setShowMemorial] = useState(false);
   const [showDownloads, setShowDownloads] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -139,11 +140,29 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-minecraft-stone/95 backdrop-blur-sm border-b-4 border-minecraft-brown shadow-lg">
+    <div className={`min-h-screen transition-colors duration-500 ${
+      isDarkTheme 
+        ? 'bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900' 
+        : 'bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20'
+    }`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 ${
+        isDarkTheme 
+          ? 'bg-gray-950/95 border-gray-700' 
+          : 'bg-minecraft-stone/95 border-minecraft-brown'
+      }`}>
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className="font-pixel text-xs sm:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
+            <button
+              onClick={() => setIsDarkTheme(!isDarkTheme)}
+              className={`font-pixel text-xs px-3 py-2 border-2 rounded transition-colors ${
+                isDarkTheme
+                  ? 'bg-yellow-500 text-black border-yellow-600 hover:bg-yellow-400'
+                  : 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
+              }`}
+            >
+              <Icon name={isDarkTheme ? "Sun" : "Moon"} size={16} />
+            </button>
             <div className="flex gap-2 sm:gap-4 flex-wrap justify-end">
               {["home", "seasons", "download", "about", "team", "gallery"].map((section) => (
                 <Button
@@ -183,10 +202,14 @@ const Index = () => {
         </div>
         <div className="container mx-auto text-center relative z-10">
           <div className="mb-8 animate-fade-in">
-            <h2 className="font-pixel text-2xl sm:text-4xl md:text-6xl mb-6 text-minecraft-stone drop-shadow-lg">
+            <h2 className={`font-pixel text-2xl sm:text-4xl md:text-6xl mb-6 drop-shadow-lg transition-colors ${
+              isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            }`}>
               СЮЖЕТНЫЕ СЕЗОНЫ
             </h2>
-            <p className="font-sans text-lg sm:text-xl md:text-2xl text-minecraft-stone/80 mb-8 max-w-3xl mx-auto">
+            <p className={`font-sans text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto transition-colors ${
+              isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+            }`}>
               Сюжетные сезоны, созданные с любовью к игре и вниманием к деталям
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
@@ -241,7 +264,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="seasons" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 relative">
+      <section id="seasons" className={`min-h-screen py-20 px-4 relative transition-colors duration-500 ${
+        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
+      }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -251,7 +276,9 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-16 text-minecraft-stone">
+          <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-16 transition-colors ${
+            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+          }`}>
             НАШИ СЕЗОНЫ
           </h2>
 
@@ -424,7 +451,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="download" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 flex items-center relative">
+      <section id="download" className={`min-h-screen py-20 px-4 flex items-center relative transition-colors duration-500 ${
+        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
+      }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -434,7 +463,9 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+          <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
+            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+          }`}>
             СКАЧАТЬ MINECRAFT
           </h2>
           
@@ -549,7 +580,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="about" className="min-h-screen py-20 px-4 flex items-center relative">
+      <section id="about" className={`min-h-screen py-20 px-4 flex items-center relative transition-colors duration-500 ${
+        isDarkTheme ? 'bg-transparent' : 'bg-transparent'
+      }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -559,11 +592,17 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+          <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
+            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+          }`}>
             О ПРОЕКТЕ
           </h2>
-          <div className="max-w-4xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl">
-            <div className="space-y-6 font-sans text-lg text-minecraft-stone/90">
+          <div className={`max-w-4xl mx-auto border-4 p-8 sm:p-12 rounded-lg shadow-xl transition-colors ${
+            isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-white border-minecraft-stone'
+          }`}>
+            <div className={`space-y-6 font-sans text-lg transition-colors ${
+              isDarkTheme ? 'text-gray-200' : 'text-minecraft-stone/90'
+            }`}>
               <p>
                 Мы создаём уникальные сюжетные сезоны в Minecraft, где каждая постройка, каждое событие 
                 и каждый персонаж играют важную роль в общей истории.
@@ -588,7 +627,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className="min-h-screen py-20 px-4 bg-minecraft-stone/10 relative">
+      <section id="team" className={`min-h-screen py-20 px-4 relative transition-colors duration-500 ${
+        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
+      }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -598,7 +639,9 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+          <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
+            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+          }`}>
             КОМАНДА
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -696,7 +739,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="gallery" className="min-h-screen py-20 px-4 relative">
+      <section id="gallery" className={`min-h-screen py-20 px-4 relative transition-colors duration-500 ${
+        isDarkTheme ? 'bg-transparent' : 'bg-transparent'
+      }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -706,7 +751,9 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
+          <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
+            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+          }`}>
             ГАЛЕРЕЯ
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
