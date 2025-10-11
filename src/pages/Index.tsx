@@ -591,35 +591,52 @@ const Index = () => {
 
           <div className="mb-16">
             <div className="flex items-center justify-center mb-8">
-              <div className="h-1 flex-1 bg-minecraft-grass max-w-xs"></div>
-              <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-grass">
+              <div className={`h-1 flex-1 max-w-xs transition-colors ${
+                isDarkTheme ? 'bg-green-400' : 'bg-minecraft-grass'
+              }`}></div>
+              <h3 className={`font-pixel text-xl sm:text-3xl mx-6 transition-colors ${
+                isDarkTheme ? 'text-green-400' : 'text-minecraft-grass'
+              }`}>
                 ПОБОЧНЫЕ СЕЗОНЫ
               </h3>
-              <div className="h-1 flex-1 bg-minecraft-grass max-w-xs"></div>
+              <div className={`h-1 flex-1 max-w-xs transition-colors ${
+                isDarkTheme ? 'bg-green-400' : 'bg-minecraft-grass'
+              }`}></div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto">
               {sideSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
+                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer ${
+                    isDarkTheme
+                      ? 'bg-gray-900 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)]'
+                      : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
+                  }`}
                   onClick={() => {
                     const seasonIndex = startSeasons.length + mainSeasons.length + index;
                     setSelectedSeason(seasonIndex);
                     setViewedSeasons(prev => new Set(prev).add(seasonIndex));
                   }}
                 >
+                  <div className={`absolute top-0 left-0 right-0 h-2 ${
+                    isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass'
+                  }`}></div>
                   <div className="overflow-hidden">
                     <img 
                       src={season.image}
                       alt={season.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-48 sm:h-52 lg:h-56 object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-pixel text-xs sm:text-sm mb-2 sm:mb-4 text-minecraft-grass">
+                  <CardContent className="p-6 lg:p-8">
+                    <h3 className={`font-pixel text-xs sm:text-sm lg:text-base mb-2 sm:mb-4 transition-colors ${
+                      isDarkTheme ? 'text-green-400' : 'text-minecraft-grass'
+                    }`}>
                       {season.title}
                     </h3>
-                    <div className="font-sans text-xs sm:text-sm text-minecraft-stone/80">
+                    <div className={`font-sans text-xs sm:text-sm transition-colors ${
+                      isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                    }`}>
                       {season.description}
                     </div>
                   </CardContent>
