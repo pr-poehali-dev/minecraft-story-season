@@ -648,38 +648,59 @@ const Index = () => {
           {inDevelopmentSeasons.length > 0 && (
             <div>
               <div className="flex items-center justify-center mb-8">
-                <div className="h-1 flex-1 bg-minecraft-sky max-w-xs"></div>
-                <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-sky">
+                <div className={`h-1 flex-1 max-w-xs transition-colors ${
+                  isDarkTheme ? 'bg-purple-400' : 'bg-minecraft-sky'
+                }`}></div>
+                <h3 className={`font-pixel text-xl sm:text-3xl mx-6 transition-colors ${
+                  isDarkTheme ? 'text-purple-400' : 'text-minecraft-sky'
+                }`}>
                   СЕЗОНЫ В РАЗРАБОТКЕ
                 </h3>
-                <div className="h-1 flex-1 bg-minecraft-sky max-w-xs"></div>
+                <div className={`h-1 flex-1 max-w-xs transition-colors ${
+                  isDarkTheme ? 'bg-purple-400' : 'bg-minecraft-sky'
+                }`}></div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+              <div className="flex justify-center">
                 {inDevelopmentSeasons.map((season, index) => (
                   <Card 
                     key={index}
-                    className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group relative cursor-pointer"
+                    className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer w-full sm:max-w-md lg:max-w-2xl ${
+                      isDarkTheme
+                        ? 'bg-gray-900 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]'
+                        : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
+                    }`}
                     onClick={() => {
                       const seasonIndex = startSeasons.length + mainSeasons.length + sideSeasons.length + index;
                       setSelectedSeason(seasonIndex);
                       setViewedSeasons(prev => new Set(prev).add(seasonIndex));
                     }}
                   >
-                    <div className="absolute top-2 right-2 z-10 bg-minecraft-sky text-white font-pixel text-[8px] px-2 py-1 border-2 border-black">
+                    <div className={`absolute top-0 left-0 right-0 h-2 ${
+                      isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500' : 'bg-minecraft-sky'
+                    }`}></div>
+                    <div className={`absolute top-2 right-2 z-10 font-pixel text-[8px] sm:text-[10px] px-2 sm:px-3 py-1 sm:py-1.5 border-2 transition-colors ${
+                      isDarkTheme
+                        ? 'bg-purple-600 text-white border-purple-400'
+                        : 'bg-minecraft-sky text-white border-black'
+                    }`}>
                       В РАЗРАБОТКЕ
                     </div>
                     <div className="overflow-hidden">
                       <img 
                         src={season.image}
                         alt={season.title}
-                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                        className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                     </div>
-                    <CardContent className="p-6">
-                      <h3 className="font-pixel text-sm mb-4 text-minecraft-sky">
+                    <CardContent className="p-6 lg:p-8">
+                      <h3 className={`font-pixel text-sm sm:text-base lg:text-lg mb-4 transition-colors ${
+                        isDarkTheme ? 'text-purple-400' : 'text-minecraft-sky'
+                      }`}>
                         {season.title}
                       </h3>
-                      <div className="font-sans text-sm text-minecraft-stone/80 mb-4">
+                      <div className={`font-sans text-sm sm:text-base mb-4 transition-colors ${
+                        isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                      }`}>
                         {season.description}
                       </div>
                       {season.audio && (
@@ -687,7 +708,11 @@ const Index = () => {
                           href={season.audio.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 font-pixel text-[10px] bg-minecraft-stone text-white px-4 py-2 border-2 border-black hover:bg-minecraft-stone/80 transition-colors"
+                          className={`inline-flex items-center gap-2 font-pixel text-[10px] sm:text-xs px-4 py-2 border-2 transition-colors ${
+                            isDarkTheme
+                              ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
+                              : 'bg-minecraft-stone text-white border-black hover:bg-minecraft-stone/80'
+                          }`}
                         >
                           <Icon name="Music" size={14} />
                           {season.audio.title} - {season.audio.artist}
