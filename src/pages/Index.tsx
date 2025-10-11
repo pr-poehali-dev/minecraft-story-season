@@ -7,6 +7,7 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
+  const [selectedMember, setSelectedMember] = useState<number | null>(null);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -520,7 +521,8 @@ const Index = () => {
             {team.map((member, index) => (
               <Card 
                 key={index}
-                className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300"
+                onClick={() => setSelectedMember(index)}
+                className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 cursor-pointer"
               >
                 <CardContent className="p-8 text-center">
                   <div className="w-24 h-24 bg-minecraft-brown border-4 border-minecraft-stone mx-auto mb-6 flex items-center justify-center overflow-hidden">
@@ -543,19 +545,70 @@ const Index = () => {
                   <p className="font-sans text-sm text-minecraft-stone/80 mb-4">
                     {member.description}
                   </p>
-                  <a 
-                    href={`https://t.me/${member.telegram.replace('@', '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-pixel text-xs bg-minecraft-sky text-white px-4 py-2 border-2 border-black hover:bg-minecraft-sky/80 transition-colors"
-                  >
+                  <div className="inline-flex items-center gap-2 font-pixel text-xs bg-minecraft-sky text-white px-4 py-2 border-2 border-black">
                     <Icon name="Send" size={16} />
                     {member.telegram}
-                  </a>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+
+          {selectedMember !== null && (
+            <div 
+              className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
+              onClick={() => setSelectedMember(null)}
+            >
+              <div 
+                className="bg-white border-4 border-minecraft-stone max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-6">
+                    <h3 className="font-pixel text-2xl text-minecraft-brown">
+                      {team[selectedMember].name}
+                    </h3>
+                    <button 
+                      onClick={() => setSelectedMember(null)}
+                      className="text-minecraft-stone hover:text-minecraft-brown transition-colors"
+                    >
+                      <Icon name="X" size={24} />
+                    </button>
+                  </div>
+                  
+                  <div className="w-48 h-48 bg-minecraft-brown border-4 border-minecraft-stone mx-auto mb-6 flex items-center justify-center overflow-hidden">
+                    {team[selectedMember].avatar ? (
+                      <img 
+                        src={team[selectedMember].avatar} 
+                        alt={team[selectedMember].name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Icon name="User" size={96} className="text-white" />
+                    )}
+                  </div>
+                  
+                  <div className="text-center space-y-4">
+                    <p className="font-sans text-lg text-minecraft-stone/60">
+                      {team[selectedMember].role}
+                    </p>
+                    <p className="font-sans text-base text-minecraft-stone/80">
+                      {team[selectedMember].description}
+                    </p>
+                    <a 
+                      href={`https://t.me/${team[selectedMember].telegram.replace('@', '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-pixel text-sm bg-minecraft-sky text-white px-6 py-3 border-4 border-black hover:bg-minecraft-sky/80 transition-colors mt-6"
+                    >
+                      <Icon name="Send" size={20} />
+                      Написать {team[selectedMember].telegram}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
