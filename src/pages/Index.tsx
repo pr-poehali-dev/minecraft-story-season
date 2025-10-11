@@ -12,7 +12,7 @@ const Index = () => {
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [showMemorial, setShowMemorial] = useState(false);
-  const [showDownloads, setShowDownloads] = useState(false);
+  const [showDownloads, setShowDownloads] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(getInitialTheme);
   const [showAchievement, setShowAchievement] = useState(false);
   const [showAchievementsPage, setShowAchievementsPage] = useState(false);
@@ -775,17 +775,36 @@ const Index = () => {
           </div>
 
           {showDownloads && (
-          <div className="max-w-4xl mx-auto bg-white border-2 sm:border-4 border-minecraft-stone p-4 sm:p-6 md:p-8 lg:p-12 rounded-lg shadow-xl mt-6 sm:mt-8 animate-fade-in">
-            <p className="font-sans text-sm sm:text-base md:text-lg text-minecraft-stone/80 text-center mb-6 sm:mb-8 px-2">
+          <div className={`relative max-w-4xl mx-auto border-4 sm:border-6 lg:border-8 p-4 sm:p-6 md:p-8 lg:p-12 rounded-lg mt-6 sm:mt-8 animate-fade-in transition-all overflow-hidden ${
+            isDarkTheme
+              ? 'bg-gray-900 border-minecraft-grass shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+              : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)]'
+          }`}>
+            <div className={`absolute top-0 left-0 right-0 h-2 ${
+              isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass'
+            }`}></div>
+            <p className={`font-sans text-sm sm:text-base md:text-lg text-center mb-6 sm:mb-8 px-2 transition-colors ${
+              isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+            }`}>
               Выберите подходящую версию Minecraft для вашей платформы
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              <div className="border-2 sm:border-4 border-minecraft-grass p-4 sm:p-6 bg-minecraft-grass/5 hover:bg-minecraft-grass/10 transition-colors">
+              <div className={`border-2 sm:border-4 p-4 sm:p-6 transition-colors ${
+                isDarkTheme
+                  ? 'border-green-500 bg-green-900/20 hover:bg-green-900/30'
+                  : 'border-minecraft-grass bg-minecraft-grass/5 hover:bg-minecraft-grass/10'
+              }`}>
                 <div className="flex items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                  <Icon name="Monitor" size={24} className="text-minecraft-grass sm:w-8 sm:h-8" />
-                  <h3 className="font-pixel text-sm sm:text-base md:text-lg text-minecraft-stone">Windows</h3>
+                  <Icon name="Monitor" size={24} className={`sm:w-8 sm:h-8 ${
+                    isDarkTheme ? 'text-green-400' : 'text-minecraft-grass'
+                  }`} />
+                  <h3 className={`font-pixel text-sm sm:text-base md:text-lg transition-colors ${
+                    isDarkTheme ? 'text-green-400' : 'text-minecraft-stone'
+                  }`}>Windows</h3>
                 </div>
-                <p className="font-sans text-xs sm:text-sm text-minecraft-stone/70 mb-3 sm:mb-4">
+                <p className={`font-sans text-xs sm:text-sm mb-3 sm:mb-4 transition-colors ${
+                  isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/70'
+                }`}>
                   Версия для компьютеров на Windows
                 </p>
                 <a 
@@ -803,12 +822,22 @@ const Index = () => {
                 </a>
               </div>
 
-              <div className="border-4 border-minecraft-brown p-6 bg-minecraft-brown/5 hover:bg-minecraft-brown/10 transition-colors">
+              <div className={`border-2 sm:border-4 p-4 sm:p-6 transition-colors ${
+                isDarkTheme
+                  ? 'border-yellow-500 bg-yellow-900/20 hover:bg-yellow-900/30'
+                  : 'border-minecraft-brown bg-minecraft-brown/5 hover:bg-minecraft-brown/10'
+              }`}>
                 <div className="flex items-center gap-4 mb-4">
-                  <Icon name="Boxes" size={32} className="text-minecraft-brown" />
-                  <h3 className="font-pixel text-lg text-minecraft-stone">mcpeHub</h3>
+                  <Icon name="Boxes" size={24} className={`sm:w-8 sm:h-8 ${
+                    isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                  }`} />
+                  <h3 className={`font-pixel text-sm sm:text-base md:text-lg transition-colors ${
+                    isDarkTheme ? 'text-yellow-400' : 'text-minecraft-stone'
+                  }`}>mcpeHub</h3>
                 </div>
-                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                <p className={`font-sans text-xs sm:text-sm mb-3 sm:mb-4 transition-colors ${
+                  isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/70'
+                }`}>
                   Универсальный лаунчер для всех платформ
                 </p>
                 <a 
@@ -818,7 +847,7 @@ const Index = () => {
                   className="block w-full"
                 >
                   <Button 
-                    className="w-full font-pixel text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-4 border-black h-auto py-3"
+                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3"
                   >
                     <Icon name="Download" size={16} className="mr-2" />
                     СКАЧАТЬ
@@ -826,12 +855,22 @@ const Index = () => {
                 </a>
               </div>
 
-              <div className="border-4 border-minecraft-sky p-6 bg-minecraft-sky/5 hover:bg-minecraft-sky/10 transition-colors">
+              <div className={`border-2 sm:border-4 p-4 sm:p-6 transition-colors ${
+                isDarkTheme
+                  ? 'border-cyan-500 bg-cyan-900/20 hover:bg-cyan-900/30'
+                  : 'border-minecraft-sky bg-minecraft-sky/5 hover:bg-minecraft-sky/10'
+              }`}>
                 <div className="flex items-center gap-4 mb-4">
-                  <Icon name="Smartphone" size={32} className="text-minecraft-sky" />
-                  <h3 className="font-pixel text-lg text-minecraft-stone">Android</h3>
+                  <Icon name="Smartphone" size={24} className={`sm:w-8 sm:h-8 ${
+                    isDarkTheme ? 'text-cyan-400' : 'text-minecraft-sky'
+                  }`} />
+                  <h3 className={`font-pixel text-sm sm:text-base md:text-lg transition-colors ${
+                    isDarkTheme ? 'text-cyan-400' : 'text-minecraft-stone'
+                  }`}>Android</h3>
                 </div>
-                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                <p className={`font-sans text-xs sm:text-sm mb-3 sm:mb-4 transition-colors ${
+                  isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/70'
+                }`}>
                   Pocket Edition для Android устройств
                 </p>
                 <a 
@@ -841,7 +880,7 @@ const Index = () => {
                   className="block w-full"
                 >
                   <Button 
-                    className="w-full font-pixel text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-4 border-black h-auto py-3"
+                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3"
                   >
                     <Icon name="Download" size={16} className="mr-2" />
                     СКАЧАТЬ
@@ -849,16 +888,26 @@ const Index = () => {
                 </a>
               </div>
 
-              <div className="border-4 border-minecraft-stone p-6 bg-minecraft-stone/5 hover:bg-minecraft-stone/10 transition-colors">
+              <div className={`border-2 sm:border-4 p-4 sm:p-6 transition-colors ${
+                isDarkTheme
+                  ? 'border-gray-500 bg-gray-800/50 hover:bg-gray-800/70'
+                  : 'border-minecraft-stone bg-minecraft-stone/5 hover:bg-minecraft-stone/10'
+              }`}>
                 <div className="flex items-center gap-4 mb-4">
-                  <Icon name="Smartphone" size={32} className="text-minecraft-stone" />
-                  <h3 className="font-pixel text-lg text-minecraft-stone">iOS</h3>
+                  <Icon name="Smartphone" size={24} className={`sm:w-8 sm:h-8 ${
+                    isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone'
+                  }`} />
+                  <h3 className={`font-pixel text-sm sm:text-base md:text-lg transition-colors ${
+                    isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone'
+                  }`}>iOS</h3>
                 </div>
-                <p className="font-sans text-sm text-minecraft-stone/70 mb-4">
+                <p className={`font-sans text-xs sm:text-sm mb-3 sm:mb-4 transition-colors ${
+                  isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/70'
+                }`}>
                   Pocket Edition для iPhone и iPad
                 </p>
                 <Button 
-                  className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-stone text-white hover:bg-minecraft-stone/80 border-4 border-black h-auto py-3 px-2"
+                  className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-stone text-white hover:bg-minecraft-stone/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3 px-2"
                   disabled
                 >
                   <span className="break-words">Ссылка скоро появится</span>
@@ -866,7 +915,11 @@ const Index = () => {
               </div>
             </div>
             <div className="mt-6 sm:mt-8 text-center px-4">
-              <p className="font-pixel text-[10px] sm:text-xs md:text-sm text-minecraft-stone/70 bg-yellow-100 border-2 sm:border-4 border-yellow-500 p-2 sm:p-3 md:p-4 inline-block">
+              <p className={`font-pixel text-[10px] sm:text-xs md:text-sm border-2 sm:border-4 p-2 sm:p-3 md:p-4 inline-block transition-colors ${
+                isDarkTheme
+                  ? 'text-yellow-300 bg-yellow-900/30 border-yellow-500'
+                  : 'text-minecraft-stone/70 bg-yellow-100 border-yellow-500'
+              }`}>
                 Игра платная, никого не навязываем скачивать!!!
               </p>
             </div>
