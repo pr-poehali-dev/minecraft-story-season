@@ -17,6 +17,7 @@ const Index = () => {
   const [hasViewedAchievements, setHasViewedAchievements] = useState(false);
   const [viewedSeasons, setViewedSeasons] = useState<Set<number>>(new Set());
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   const achievements = [
     {
@@ -78,6 +79,30 @@ const Index = () => {
       }
     }
   }, [viewedSeasons]);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    if (selectedImage || selectedSeason !== null || selectedMember !== null || showAchievementsPage) {
+      window.addEventListener('keydown', handleEscape);
+      return () => window.removeEventListener('keydown', handleEscape);
+    }
+  }, [selectedImage, selectedSeason, selectedMember, showAchievementsPage]);
+
+  const handleCloseModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedImage(null);
+      setSelectedSeason(null);
+      setSelectedMember(null);
+      setShowAchievementsPage(false);
+      setIsClosing(false);
+    }, 300);
+  };
 
   const openAchievementsPage = () => {
     setShowAchievementsPage(true);
@@ -784,11 +809,15 @@ const Index = () => {
 
           {selectedMember !== null && (
             <div 
-              className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
-              onClick={() => setSelectedMember(null)}
+              className={`fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+                isClosing ? 'opacity-0' : 'opacity-100'
+              }`}
+              onClick={handleCloseModal}
             >
               <div 
-                className="bg-white border-4 border-minecraft-stone max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className={`bg-white border-4 border-minecraft-stone max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
+                  isClosing ? 'scale-90' : 'scale-100'
+                }`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-8">
@@ -797,7 +826,7 @@ const Index = () => {
                       {team[selectedMember].name}
                     </h3>
                     <button 
-                      onClick={() => setSelectedMember(null)}
+                      onClick={handleCloseModal}
                       className="text-minecraft-stone hover:text-minecraft-brown transition-colors"
                     >
                       <Icon name="X" size={24} />
@@ -877,11 +906,13 @@ const Index = () => {
 
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
+          className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
+            isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+          }`}
+          onClick={handleCloseModal}
         >
           <button
-            onClick={() => setSelectedImage(null)}
+            onClick={handleCloseModal}
             className="absolute top-4 right-4 w-12 h-12 bg-minecraft-stone hover:bg-minecraft-stone/80 border-4 border-white flex items-center justify-center transition-colors"
           >
             <Icon name="X" size={24} className="text-white" />
@@ -889,7 +920,9 @@ const Index = () => {
           <img 
             src={selectedImage}
             alt="Full size"
-            className="max-w-full max-h-full object-contain border-4 border-minecraft-stone"
+            className={`max-w-full max-h-full object-contain border-4 border-minecraft-stone transition-transform duration-300 ${
+              isClosing ? 'scale-90' : 'scale-100'
+            }`}
             onClick={(e) => e.stopPropagation()}
           />
         </div>
@@ -901,16 +934,20 @@ const Index = () => {
         
         return (
           <div 
-            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in overflow-y-auto"
-            onClick={() => setSelectedSeason(null)}
+            className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${
+              isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+            }`}
+            onClick={handleCloseModal}
           >
             <div 
-              className="bg-white border-4 border-minecraft-stone rounded-lg max-w-3xl w-full my-8 animate-scale-in"
+              className={`bg-white border-4 border-minecraft-stone rounded-lg max-w-3xl w-full my-8 transition-transform duration-300 ${
+                isClosing ? 'scale-90' : 'scale-100 animate-scale-in'
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
                 <button
-                  onClick={() => setSelectedSeason(null)}
+                  onClick={handleCloseModal}
                   className="absolute top-4 right-4 z-10 w-10 h-10 bg-minecraft-stone hover:bg-minecraft-stone/80 border-4 border-white flex items-center justify-center transition-colors"
                 >
                   <Icon name="X" size={20} className="text-white" />
@@ -988,11 +1025,15 @@ const Index = () => {
 
       {showAchievementsPage && (
         <div 
-          className="fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setShowAchievementsPage(false)}
+          className={`fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
+            isClosing ? 'opacity-0' : 'opacity-100'
+          }`}
+          onClick={handleCloseModal}
         >
           <div 
-            className={`max-w-4xl w-full max-h-[90vh] overflow-y-auto border-4 p-8 rounded-lg ${
+            className={`max-w-4xl w-full max-h-[90vh] overflow-y-auto border-4 p-8 rounded-lg transition-transform duration-300 ${
+              isClosing ? 'scale-90' : 'scale-100'
+            } ${
               isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-minecraft-stone border-minecraft-grass'
             }`}
             onClick={(e) => e.stopPropagation()}
@@ -1000,7 +1041,7 @@ const Index = () => {
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-pixel text-3xl text-minecraft-grass">ДОСТИЖЕНИЯ</h2>
               <button 
-                onClick={() => setShowAchievementsPage(false)}
+                onClick={handleCloseModal}
                 className="text-white hover:text-minecraft-grass transition-colors"
               >
                 <Icon name="X" size={32} />
