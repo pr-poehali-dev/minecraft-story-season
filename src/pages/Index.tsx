@@ -168,8 +168,11 @@ const Index = () => {
         </div>
       </nav>
 
-      <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-4">
-        <div className="container mx-auto text-center">
+      <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-4 relative">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-full max-w-4xl h-full bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+        </div>
+        <div className="container mx-auto text-center relative z-10">
           <div className="mb-8 animate-fade-in">
             <h2 className="font-pixel text-2xl sm:text-4xl md:text-6xl mb-6 text-minecraft-stone drop-shadow-lg">
               СЮЖЕТНЫЕ СЕЗОНЫ
