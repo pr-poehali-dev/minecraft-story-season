@@ -1013,31 +1013,31 @@ const Index = () => {
                 return (
                   <div 
                     key={achievement.id}
-                    className={`border-4 p-6 transition-all ${
+                    className={`border-4 p-4 sm:p-6 transition-all ${
                       isUnlocked 
                         ? 'bg-minecraft-grass/20 border-minecraft-grass' 
                         : 'bg-gray-900/50 border-gray-700 opacity-50'
                     }`}
                   >
-                    <div className="flex items-start gap-4">
-                      <div className={`w-16 h-16 border-2 flex items-center justify-center flex-shrink-0 ${
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className={`w-12 h-12 sm:w-16 sm:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
                         isUnlocked 
                           ? 'bg-minecraft-grass border-black' 
                           : 'bg-gray-800 border-gray-600'
                       }`}>
                         <Icon 
                           name={isUnlocked ? achievement.icon as any : "Lock"} 
-                          size={32} 
-                          className={isUnlocked ? "text-white" : "text-gray-600"}
+                          size={24} 
+                          className={`${isUnlocked ? "text-white" : "text-gray-600"} sm:w-8 sm:h-8`}
                         />
                       </div>
-                      <div className="flex-1">
-                        <h3 className={`font-pixel text-lg mb-2 ${
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-pixel text-sm sm:text-lg mb-1 sm:mb-2 break-words ${
                           isUnlocked ? 'text-minecraft-grass' : 'text-gray-400'
                         }`}>
                           {achievement.title}
                         </h3>
-                        <p className={`font-sans text-sm ${
+                        <p className={`font-sans text-xs sm:text-sm break-words ${
                           isUnlocked ? 'text-white' : 'text-gray-600'
                         }`}>
                           {isUnlocked ? achievement.description : '???'}
