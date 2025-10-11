@@ -1214,23 +1214,28 @@ const Index = () => {
         // Determine border color based on season category
         let borderColorClass = 'border-minecraft-stone';
         let topBarColorClass = 'bg-cyan-500';
+        let titleColorClass = 'text-minecraft-brown';
         
         if (selectedSeason < startSeasons.length) {
           // Start seasons
           borderColorClass = isDarkTheme ? 'border-cyan-500' : 'border-minecraft-stone';
           topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500' : 'bg-cyan-500';
+          titleColorClass = isDarkTheme ? 'text-cyan-400' : 'text-minecraft-brown';
         } else if (selectedSeason < startSeasons.length + mainSeasons.length) {
           // Main seasons
           borderColorClass = isDarkTheme ? 'border-yellow-500' : 'border-minecraft-stone';
           topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500' : 'bg-[#f4bc09]';
+          titleColorClass = isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown';
         } else if (selectedSeason < startSeasons.length + mainSeasons.length + sideSeasons.length) {
           // Side seasons
           borderColorClass = isDarkTheme ? 'border-green-500' : 'border-minecraft-stone';
           topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass';
+          titleColorClass = isDarkTheme ? 'text-green-400' : 'text-minecraft-grass';
         } else {
           // In development seasons
           borderColorClass = isDarkTheme ? 'border-purple-500' : 'border-minecraft-stone';
           topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500' : 'bg-minecraft-sky';
+          titleColorClass = isDarkTheme ? 'text-purple-400' : 'text-minecraft-sky';
         }
         
         return (
@@ -1261,7 +1266,7 @@ const Index = () => {
                 />
               </div>
               <div className="p-4 sm:p-6 md:p-8">
-                <h3 className="font-pixel text-base sm:text-xl md:text-2xl mb-3 sm:mb-4 text-minecraft-brown">
+                <h3 className={`font-pixel text-base sm:text-xl md:text-2xl mb-3 sm:mb-4 ${titleColorClass}`}>
                   {season.title}
                 </h3>
                 <div className="font-sans text-sm sm:text-base text-minecraft-stone/80 leading-relaxed mb-3 sm:mb-4">
