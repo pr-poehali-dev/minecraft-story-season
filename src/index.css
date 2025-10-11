@@ -114,3 +114,14 @@
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(0deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(var(--rotate, 0deg));
+  }
+}

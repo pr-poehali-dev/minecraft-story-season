@@ -22,6 +22,8 @@ const Index = () => {
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
+  const [showDecorImage1, setShowDecorImage1] = useState(true);
+  const [showDecorImage2, setShowDecorImage2] = useState(true);
 
   const baseAchievements = [
     {
@@ -393,7 +395,7 @@ const Index = () => {
         </div>
       </nav>
 
-      <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 relative">
+      <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden">
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none bg-cover bg-center opacity-30"
           style={{
@@ -405,6 +407,43 @@ const Index = () => {
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-full max-w-4xl h-full bg-gradient-to-b from-transparent via-minecraft-sky/10 to-transparent"></div>
         </div>
+
+        {showDecorImage1 && (
+          <div 
+            className="hidden md:block absolute top-20 lg:top-32 right-4 lg:right-12 cursor-pointer animate-fade-in hover:scale-110 transition-all duration-300 z-20"
+            style={{ 
+              transform: 'rotate(8deg)',
+              animation: 'fadeIn 0.5s ease-in-out'
+            }}
+            onClick={() => setShowDecorImage1(false)}
+          >
+            <img 
+              src="https://cdn.poehali.dev/files/49aeb72a-fbcd-47eb-b669-f13f93eb7699.png"
+              alt="Character"
+              className="w-24 sm:w-32 lg:w-40 h-auto pixelated drop-shadow-2xl border-4 border-minecraft-stone/50 bg-white/10 p-2"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </div>
+        )}
+
+        {showDecorImage2 && (
+          <div 
+            className="hidden md:block absolute top-24 lg:top-40 left-4 lg:left-16 cursor-pointer animate-fade-in hover:scale-110 transition-all duration-300 z-20"
+            style={{ 
+              transform: 'rotate(-12deg)',
+              animation: 'fadeIn 0.5s ease-in-out'
+            }}
+            onClick={() => setShowDecorImage2(false)}
+          >
+            <img 
+              src="https://cdn.poehali.dev/files/ed40bf69-a291-4ea9-a4e8-0b600ad31718.png"
+              alt="Avatar"
+              className="w-20 sm:w-28 lg:w-36 h-auto pixelated drop-shadow-2xl border-4 border-purple-500/50 bg-black/20 p-2 rounded-lg"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </div>
+        )}
+
         <div className="container mx-auto text-center relative z-10">
           <div className="mb-8 animate-fade-in">
             <h2 className={`font-pixel text-xl sm:text-3xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 drop-shadow-lg transition-colors px-2 ${
