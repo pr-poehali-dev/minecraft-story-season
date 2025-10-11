@@ -8,6 +8,7 @@ import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/
 const Terms = () => {
   const navigate = useNavigate();
   const [isDarkTheme, setIsDarkTheme] = useState(getInitialTheme);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = listenToSystemThemeChanges((isDark) => {
@@ -21,11 +22,22 @@ const Terms = () => {
     saveTheme(isDarkTheme);
   }, [isDarkTheme]);
 
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const handleNavigateBack = () => {
+    setIsVisible(false);
+    setTimeout(() => navigate("/"), 300);
+  };
+
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${
+    <div className={`min-h-screen transition-all duration-500 ${
       isDarkTheme 
         ? 'bg-gradient-to-b from-gray-900 to-gray-800' 
         : 'bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20'
+    } ${
+      isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
     }`}>
       <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 ${
         isDarkTheme
@@ -47,7 +59,7 @@ const Terms = () => {
                 <Icon name={isDarkTheme ? "Sun" : "Moon"} size={14} className="sm:w-4 sm:h-4" />
               </button>
               <Button
-                onClick={() => navigate("/")}
+                onClick={handleNavigateBack}
                 variant="ghost"
                 className="font-pixel text-[8px] sm:text-[10px] px-2 sm:px-4 py-1 sm:py-2 h-auto border-2 text-white border-white/20 hover:bg-white/10"
               >
@@ -67,12 +79,21 @@ const Terms = () => {
             ТЕРМИНЫ СЮЖЕТНЫХ СЕЗОНОВ
           </h2>
 
-          <Card className={`border-2 sm:border-4 shadow-xl mb-6 sm:mb-8 transition-colors ${
-            isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-white border-minecraft-stone'
+          <Card className={`relative border-4 sm:border-6 lg:border-8 mb-6 sm:mb-8 transition-all overflow-hidden ${
+            isDarkTheme
+              ? 'bg-gray-900 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]'
+              : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)]'
           }`}>
+            <div className={`absolute top-0 left-0 right-0 h-2 ${
+              isDarkTheme ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500' : 'bg-yellow-500'
+            }`}></div>
             <CardContent className="p-4 sm:p-6 md:p-8">
               <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-minecraft-sand border-2 sm:border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 border-2 sm:border-4 flex items-center justify-center flex-shrink-0 ${
+                  isDarkTheme
+                    ? 'bg-yellow-900/50 border-yellow-500'
+                    : 'bg-minecraft-sand border-minecraft-stone'
+                }`}>
                   <Icon name="Gem" size={24} className="text-yellow-500 sm:w-7 sm:h-7 md:w-8 md:h-8" />
                 </div>
                 <div className="flex-1 w-full">
@@ -115,12 +136,21 @@ const Terms = () => {
             </CardContent>
           </Card>
 
-          <Card id="iskra" className={`border-2 sm:border-4 shadow-xl mb-6 sm:mb-8 transition-colors ${
-            isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-white border-minecraft-stone'
+          <Card id="iskra" className={`relative border-4 sm:border-6 lg:border-8 mb-6 sm:mb-8 transition-all overflow-hidden ${
+            isDarkTheme
+              ? 'bg-gray-900 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+              : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)]'
           }`}>
+            <div className={`absolute top-0 left-0 right-0 h-2 ${
+              isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass'
+            }`}></div>
             <CardContent className="p-4 sm:p-6 md:p-8">
               <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-minecraft-grass border-2 sm:border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 border-2 sm:border-4 flex items-center justify-center flex-shrink-0 ${
+                  isDarkTheme
+                    ? 'bg-green-900/50 border-green-500'
+                    : 'bg-minecraft-grass border-minecraft-stone'
+                }`}>
                   <Icon name="Sparkles" size={24} className="text-white sm:w-7 sm:h-7 md:w-8 md:h-8" />
                 </div>
                 <div className="flex-1 w-full">
@@ -170,7 +200,7 @@ const Terms = () => {
 
           <div className="text-center px-4">
             <Button
-              onClick={() => navigate("/")}
+              onClick={handleNavigateBack}
               className="font-pixel text-[10px] sm:text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black px-4 sm:px-6 py-3 sm:py-4 h-auto"
             >
               <Icon name="Home" size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4" />
