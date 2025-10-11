@@ -15,6 +15,8 @@ const Index = () => {
   const [showAchievementsPage, setShowAchievementsPage] = useState(false);
   const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
   const [hasViewedAchievements, setHasViewedAchievements] = useState(false);
+  const [viewedSeasons, setViewedSeasons] = useState<Set<number>>(new Set());
+  const [currentAchievement, setCurrentAchievement] = useState<any>(null);
 
   const achievements = [
     {
@@ -22,28 +24,60 @@ const Index = () => {
       title: "993 - реальность",
       description: "Вы зашли на сайт и открыли для себя новую реальность",
       icon: "Eye"
+    },
+    {
+      id: "infinity-limit",
+      title: "Бесконечность - не предел!",
+      description: "Просмотрели все сезоны проекта",
+      icon: "Infinity"
     }
   ];
 
   useEffect(() => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
     const hasViewed = localStorage.getItem('achievements-viewed');
+    const savedAchievements = localStorage.getItem('unlocked-achievements');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
     }
     
-    if (!hasVisited) {
+    if (savedAchievements) {
+      setUnlockedAchievements(JSON.parse(savedAchievements));
+    } else if (!hasVisited) {
       setTimeout(() => {
+        const achievement = achievements[0];
+        setCurrentAchievement(achievement);
         setShowAchievement(true);
-        setUnlockedAchievements(['993-reality']);
+        const newUnlocked = ['993-reality'];
+        setUnlockedAchievements(newUnlocked);
         localStorage.setItem('achievement-993-reality', 'true');
+        localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setTimeout(() => setShowAchievement(false), 5000);
       }, 2000);
     } else {
       setUnlockedAchievements(['993-reality']);
     }
   }, []);
+
+  useEffect(() => {
+    const allSeasons = [...startSeasons, ...mainSeasons, ...sideSeasons, ...inDevelopmentSeasons];
+    if (viewedSeasons.size === allSeasons.length && viewedSeasons.size > 0) {
+      const hasInfinityAchievement = unlockedAchievements.includes('infinity-limit');
+      if (!hasInfinityAchievement) {
+        setTimeout(() => {
+          const achievement = achievements[1];
+          setCurrentAchievement(achievement);
+          setShowAchievement(true);
+          const newUnlocked = [...unlockedAchievements, 'infinity-limit'];
+          setUnlockedAchievements(newUnlocked);
+          localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+          setHasViewedAchievements(false);
+          setTimeout(() => setShowAchievement(false), 5000);
+        }, 500);
+      }
+    }
+  }, [viewedSeasons]);
 
   const openAchievementsPage = () => {
     setShowAchievementsPage(true);
@@ -347,7 +381,10 @@ const Index = () => {
                 <Card 
                   key={index}
                   className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
-                  onClick={() => setSelectedSeason(index)}
+                  onClick={() => {
+                    setSelectedSeason(index);
+                    setViewedSeasons(prev => new Set(prev).add(index));
+                  }}
                 >
                   <div className="overflow-hidden">
                     <img 
@@ -382,7 +419,11 @@ const Index = () => {
                 <Card 
                   key={index}
                   className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
-                  onClick={() => setSelectedSeason(index + startSeasons.length)}
+                  onClick={() => {
+                    const seasonIndex = index + startSeasons.length;
+                    setSelectedSeason(seasonIndex);
+                    setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                  }}
                 >
                   <div className="overflow-hidden">
                     <img 
@@ -428,7 +469,11 @@ const Index = () => {
                 <Card 
                   key={index}
                   className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
-                  onClick={() => setSelectedSeason(startSeasons.length + mainSeasons.length + index)}
+                  onClick={() => {
+                    const seasonIndex = startSeasons.length + mainSeasons.length + index;
+                    setSelectedSeason(seasonIndex);
+                    setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                  }}
                 >
                   <div className="overflow-hidden">
                     <img 
@@ -464,7 +509,11 @@ const Index = () => {
                   <Card 
                     key={index}
                     className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group relative cursor-pointer"
-                    onClick={() => setSelectedSeason(startSeasons.length + mainSeasons.length + sideSeasons.length + index)}
+                    onClick={() => {
+                      const seasonIndex = startSeasons.length + mainSeasons.length + sideSeasons.length + index;
+                      setSelectedSeason(seasonIndex);
+                      setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                    }}
                   >
                     <div className="absolute top-2 right-2 z-10 bg-minecraft-sky text-white font-pixel text-[8px] px-2 py-1 border-2 border-black">
                       В РАЗРАБОТКЕ
@@ -918,20 +967,20 @@ const Index = () => {
         </div>
       </footer>
 
-      {showAchievement && (
+      {showAchievement && currentAchievement && (
         <div className="fixed top-20 right-4 z-[200] animate-fade-in">
           <div className="bg-minecraft-stone border-4 border-minecraft-grass p-4 shadow-2xl min-w-[300px]">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-12 h-12 bg-minecraft-grass border-2 border-black flex items-center justify-center">
-                <Icon name="Eye" size={24} className="text-white" />
+                <Icon name={currentAchievement.icon as any} size={24} className="text-white" />
               </div>
               <div>
                 <p className="font-pixel text-xs text-minecraft-grass">ДОСТИЖЕНИЕ ПОЛУЧЕНО!</p>
-                <h4 className="font-pixel text-sm text-white">993 - реальность</h4>
+                <h4 className="font-pixel text-sm text-white">{currentAchievement.title}</h4>
               </div>
             </div>
             <p className="font-sans text-xs text-white/80 mt-2">
-              Вы зашли на сайт и открыли для себя новую реальность
+              {currentAchievement.description}
             </p>
           </div>
         </div>
@@ -984,7 +1033,7 @@ const Index = () => {
                       </div>
                       <div className="flex-1">
                         <h3 className={`font-pixel text-lg mb-2 ${
-                          isUnlocked ? 'text-minecraft-grass' : 'text-gray-600'
+                          isUnlocked ? 'text-minecraft-grass' : 'text-gray-400'
                         }`}>
                           {achievement.title}
                         </h3>
