@@ -64,7 +64,7 @@ const Terms = () => {
           <h2 className={`font-pixel text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-center mb-8 sm:mb-12 px-2 transition-colors ${
             isDarkTheme ? 'text-white' : 'text-minecraft-stone'
           }`}>
-            ТЕРМИНЫ СЕЗОНОВ
+            ТЕРМИНЫ СЮЖЕТНЫХ СЕЗОНОВ
           </h2>
 
           <Card className={`border-2 sm:border-4 shadow-xl mb-6 sm:mb-8 transition-colors ${

@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/theme";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("home");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
@@ -318,6 +320,13 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <h1 className="font-pixel text-[10px] sm:text-xs md:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
             <div className="flex gap-2 items-center order-first sm:order-none">
+              <button
+                onClick={() => navigate('/terms')}
+                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-brown text-white border-minecraft-brown hover:bg-minecraft-brown/80"
+                title="Термины сезонов"
+              >
+                <Icon name="Book" size={14} />
+              </button>
               <button
                 onClick={openAchievementsPage}
                 className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80 relative"
