@@ -14,6 +14,7 @@ const Index = () => {
   const [showAchievement, setShowAchievement] = useState(false);
   const [showAchievementsPage, setShowAchievementsPage] = useState(false);
   const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
+  const [hasViewedAchievements, setHasViewedAchievements] = useState(false);
 
   const achievements = [
     {
@@ -26,6 +27,12 @@ const Index = () => {
 
   useEffect(() => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
+    const hasViewed = localStorage.getItem('achievements-viewed');
+    
+    if (hasViewed) {
+      setHasViewedAchievements(true);
+    }
+    
     if (!hasVisited) {
       setTimeout(() => {
         setShowAchievement(true);
@@ -37,6 +44,12 @@ const Index = () => {
       setUnlockedAchievements(['993-reality']);
     }
   }, []);
+
+  const openAchievementsPage = () => {
+    setShowAchievementsPage(true);
+    setHasViewedAchievements(true);
+    localStorage.setItem('achievements-viewed', 'true');
+  };
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -181,11 +194,11 @@ const Index = () => {
             <h1 className="font-pixel text-xs sm:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
             <div className="flex gap-2 items-center">
               <button
-                onClick={() => setShowAchievementsPage(true)}
+                onClick={openAchievementsPage}
                 className="font-pixel text-xs px-3 py-2 border-2 rounded transition-colors bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80 relative"
               >
                 <Icon name="Trophy" size={16} />
-                {unlockedAchievements.length > 0 && (
+                {unlockedAchievements.length > 0 && !hasViewedAchievements && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] rounded-full w-4 h-4 flex items-center justify-center">
                     {unlockedAchievements.length}
                   </span>
