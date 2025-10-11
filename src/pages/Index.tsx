@@ -470,34 +470,51 @@ const Index = () => {
 
           <div className="mb-16">
             <div className="flex items-center justify-center mb-8">
-              <div className="h-1 flex-1 bg-minecraft-sky max-w-xs"></div>
-              <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-sky">
+              <div className={`h-1 flex-1 max-w-xs transition-colors ${
+                isDarkTheme ? 'bg-cyan-400' : 'bg-cyan-500'
+              }`}></div>
+              <h3 className={`font-pixel text-xl sm:text-3xl mx-6 transition-colors ${
+                isDarkTheme ? 'text-cyan-400' : 'text-cyan-500'
+              }`}>
                 НАЧАЛО
               </h3>
-              <div className="h-1 flex-1 bg-minecraft-sky max-w-xs"></div>
+              <div className={`h-1 flex-1 max-w-xs transition-colors ${
+                isDarkTheme ? 'bg-cyan-400' : 'bg-cyan-500'
+              }`}></div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className="flex justify-center">
               {startSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
+                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer w-full sm:max-w-md lg:max-w-2xl ${
+                    isDarkTheme
+                      ? 'bg-gray-900 border-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]'
+                      : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
+                  }`}
                   onClick={() => {
                     setSelectedSeason(index);
                     setViewedSeasons(prev => new Set(prev).add(index));
                   }}
                 >
+                  <div className={`absolute top-0 left-0 right-0 h-2 ${
+                    isDarkTheme ? 'bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500' : 'bg-cyan-500'
+                  }`}></div>
                   <div className="overflow-hidden">
                     <img 
                       src={season.image}
                       alt={season.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-pixel text-sm mb-4 text-minecraft-brown">
+                  <CardContent className="p-6 lg:p-8">
+                    <h3 className={`font-pixel text-sm sm:text-base lg:text-lg mb-4 transition-colors ${
+                      isDarkTheme ? 'text-cyan-400' : 'text-minecraft-brown'
+                    }`}>
                       {season.title}
                     </h3>
-                    <p className="font-sans text-sm text-minecraft-stone/80">
+                    <p className={`font-sans text-sm sm:text-base transition-colors ${
+                      isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                    }`}>
                       {season.description}
                     </p>
                   </CardContent>
