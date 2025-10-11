@@ -67,6 +67,25 @@ const Index = () => {
   }, [isDarkTheme]);
 
   useEffect(() => {
+    if (showMemorial) {
+      document.body.style.overflow = 'hidden';
+      
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setShowMemorial(false);
+        }
+      };
+      
+      window.addEventListener('keydown', handleEscape);
+      
+      return () => {
+        document.body.style.overflow = 'unset';
+        window.removeEventListener('keydown', handleEscape);
+      };
+    }
+  }, [showMemorial]);
+
+  useEffect(() => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
     const hasViewed = localStorage.getItem('achievements-viewed');
     const savedAchievements = localStorage.getItem('unlocked-achievements');
@@ -425,11 +444,11 @@ const Index = () => {
 
           {showMemorial && (
             <div 
-              className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50"
+              className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 overflow-hidden"
               onClick={() => setShowMemorial(false)}
             >
               <div 
-                className="bg-minecraft-stone border-4 border-black p-6 sm:p-8 md:p-12 text-center max-w-xs sm:max-w-2xl mx-4"
+                className="bg-minecraft-stone border-4 border-black p-6 sm:p-8 md:p-12 text-center max-w-xs sm:max-w-2xl mx-4 animate-fade-in"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="mb-4 sm:mb-6">
@@ -438,6 +457,9 @@ const Index = () => {
                 <h3 className="font-pixel text-xl sm:text-2xl md:text-3xl text-white mb-4">
                   Уголь, прости:(
                 </h3>
+                <p className="text-gray-300 text-xs sm:text-sm mb-2">
+                  Нажмите ESC для закрытия
+                </p>
                 <button 
                   onClick={() => setShowMemorial(false)}
                   className="mt-4 sm:mt-6 font-pixel text-xs sm:text-sm bg-white text-minecraft-stone px-4 sm:px-6 py-2 sm:py-3 border-2 sm:border-4 border-black hover:bg-gray-200 transition-colors"
