@@ -573,10 +573,10 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <Button
               onClick={() => setShowDownloads(!showDownloads)}
-              className="font-pixel text-lg bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black px-8 py-6 h-auto shadow-lg hover:scale-105 transition-transform"
+              className="font-pixel text-xs sm:text-sm md:text-lg bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 h-auto shadow-lg hover:scale-105 transition-transform"
             >
-              <Icon name={showDownloads ? "ChevronUp" : "ChevronDown"} size={24} className="mr-2" />
-              {showDownloads ? "СКРЫТЬ ЗАГРУЗКИ" : "ПОКАЗАТЬ ЗАГРУЗКИ"}
+              <Icon name={showDownloads ? "ChevronUp" : "ChevronDown"} size={16} className="mr-1 sm:mr-2 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+              <span className="whitespace-nowrap">{showDownloads ? "СКРЫТЬ ЗАГРУЗКИ" : "ПОКАЗАТЬ ЗАГРУЗКИ"}</span>
             </Button>
           </div>
 
