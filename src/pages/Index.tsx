@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -11,6 +11,32 @@ const Index = () => {
   const [showMemorial, setShowMemorial] = useState(false);
   const [showDownloads, setShowDownloads] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [showAchievement, setShowAchievement] = useState(false);
+  const [showAchievementsPage, setShowAchievementsPage] = useState(false);
+  const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
+
+  const achievements = [
+    {
+      id: "993-reality",
+      title: "993 - реальность",
+      description: "Вы зашли на сайт и открыли для себя новую реальность",
+      icon: "Eye"
+    }
+  ];
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('achievement-993-reality');
+    if (!hasVisited) {
+      setTimeout(() => {
+        setShowAchievement(true);
+        setUnlockedAchievements(['993-reality']);
+        localStorage.setItem('achievement-993-reality', 'true');
+        setTimeout(() => setShowAchievement(false), 5000);
+      }, 2000);
+    } else {
+      setUnlockedAchievements(['993-reality']);
+    }
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -153,16 +179,29 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className="font-pixel text-xs sm:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
-            <button
-              onClick={() => setIsDarkTheme(!isDarkTheme)}
-              className={`font-pixel text-xs px-3 py-2 border-2 rounded transition-colors ${
-                isDarkTheme
-                  ? 'bg-yellow-500 text-black border-yellow-600 hover:bg-yellow-400'
-                  : 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
-              }`}
-            >
-              <Icon name={isDarkTheme ? "Sun" : "Moon"} size={16} />
-            </button>
+            <div className="flex gap-2 items-center">
+              <button
+                onClick={() => setShowAchievementsPage(true)}
+                className="font-pixel text-xs px-3 py-2 border-2 rounded transition-colors bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80 relative"
+              >
+                <Icon name="Trophy" size={16} />
+                {unlockedAchievements.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] rounded-full w-4 h-4 flex items-center justify-center">
+                    {unlockedAchievements.length}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => setIsDarkTheme(!isDarkTheme)}
+                className={`font-pixel text-xs px-3 py-2 border-2 rounded transition-colors ${
+                  isDarkTheme
+                    ? 'bg-yellow-500 text-black border-yellow-600 hover:bg-yellow-400'
+                    : 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
+                }`}
+              >
+                <Icon name={isDarkTheme ? "Sun" : "Moon"} size={16} />
+              </button>
+            </div>
             <div className="flex gap-2 sm:gap-4 flex-wrap justify-end">
               {["home", "seasons", "download", "about", "team", "gallery"].map((section) => (
                 <Button
@@ -865,6 +904,100 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {showAchievement && (
+        <div className="fixed top-20 right-4 z-[200] animate-fade-in">
+          <div className="bg-minecraft-stone border-4 border-minecraft-grass p-4 shadow-2xl min-w-[300px]">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 bg-minecraft-grass border-2 border-black flex items-center justify-center">
+                <Icon name="Eye" size={24} className="text-white" />
+              </div>
+              <div>
+                <p className="font-pixel text-xs text-minecraft-grass">ДОСТИЖЕНИЕ ПОЛУЧЕНО!</p>
+                <h4 className="font-pixel text-sm text-white">993 - реальность</h4>
+              </div>
+            </div>
+            <p className="font-sans text-xs text-white/80 mt-2">
+              Вы зашли на сайт и открыли для себя новую реальность
+            </p>
+          </div>
+        </div>
+      )}
+
+      {showAchievementsPage && (
+        <div 
+          className="fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setShowAchievementsPage(false)}
+        >
+          <div 
+            className={`max-w-4xl w-full max-h-[90vh] overflow-y-auto border-4 p-8 rounded-lg ${
+              isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-minecraft-stone border-minecraft-grass'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="font-pixel text-3xl text-minecraft-grass">ДОСТИЖЕНИЯ</h2>
+              <button 
+                onClick={() => setShowAchievementsPage(false)}
+                className="text-white hover:text-minecraft-grass transition-colors"
+              >
+                <Icon name="X" size={32} />
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {achievements.map((achievement) => {
+                const isUnlocked = unlockedAchievements.includes(achievement.id);
+                return (
+                  <div 
+                    key={achievement.id}
+                    className={`border-4 p-6 transition-all ${
+                      isUnlocked 
+                        ? 'bg-minecraft-grass/20 border-minecraft-grass' 
+                        : 'bg-gray-900/50 border-gray-700 opacity-50'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-16 h-16 border-2 flex items-center justify-center flex-shrink-0 ${
+                        isUnlocked 
+                          ? 'bg-minecraft-grass border-black' 
+                          : 'bg-gray-800 border-gray-600'
+                      }`}>
+                        <Icon 
+                          name={isUnlocked ? achievement.icon as any : "Lock"} 
+                          size={32} 
+                          className={isUnlocked ? "text-white" : "text-gray-600"}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className={`font-pixel text-lg mb-2 ${
+                          isUnlocked ? 'text-minecraft-grass' : 'text-gray-600'
+                        }`}>
+                          {achievement.title}
+                        </h3>
+                        <p className={`font-sans text-sm ${
+                          isUnlocked ? 'text-white' : 'text-gray-600'
+                        }`}>
+                          {isUnlocked ? achievement.description : '???'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 text-center">
+              <p className="font-pixel text-minecraft-grass text-xl">
+                {unlockedAchievements.length} / {achievements.length}
+              </p>
+              <p className="font-sans text-white/60 text-sm mt-2">
+                Достижений разблокировано
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
