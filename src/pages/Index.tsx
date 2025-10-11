@@ -22,12 +22,6 @@ const Index = () => {
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
-  const [currentTrack, setCurrentTrack] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.7);
 
   const baseAchievements = [
     {
@@ -317,21 +311,6 @@ const Index = () => {
     }
   ];
 
-  const musicTracks = [
-    {
-      title: "Creator",
-      artist: "Lena Raine",
-      url: "https://soundcloud.com/lena-raine/creator",
-      embedUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1024764913&color=%2322c55e&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"
-    },
-    {
-      title: "Aria Math",
-      artist: "C418",
-      url: "https://soundcloud.com/c418/aria-math",
-      embedUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34452515&color=%2322c55e&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"
-    }
-  ];
-
   const gallery = [
     "https://cdn.poehali.dev/files/8c093338-e505-45e5-8cf9-7fcc4eb3970f.jpg",
     "https://cdn.poehali.dev/files/0c2e117a-832b-4727-aa05-18351297a54c.jpg",
@@ -390,7 +369,7 @@ const Index = () => {
               </button>
             </div>
             <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
-              {["home", "seasons", "download", "about", "team", "gallery", "music"].map((section) => (
+              {["home", "seasons", "download", "about", "team", "gallery"].map((section) => (
                 <Button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -407,7 +386,6 @@ const Index = () => {
                   {section === "about" && "О НАС"}
                   {section === "team" && "КОМАНДА"}
                   {section === "gallery" && "ГАЛЕРЕЯ"}
-                  {section === "music" && "МУЗЫКА"}
                 </Button>
               ))}
             </div>
@@ -1200,125 +1178,6 @@ const Index = () => {
                 />
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="music" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
-        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-grass/10'
-      }`}>
-        <div 
-          className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
-          style={{
-            backgroundImage: 'url(https://cdn.poehali.dev/files/537b7315-92b4-40c0-87ba-736c2985a280.jpg)',
-            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
-          }}
-        ></div>
-        <div className="container mx-auto relative z-10 max-w-4xl">
-          <h2 className={`font-pixel text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-8 sm:mb-12 transition-colors px-4 ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
-          }`}>
-            МУЗЫКА
-          </h2>
-
-          <div className={`relative border-4 sm:border-6 lg:border-8 p-4 sm:p-6 md:p-8 rounded-lg transition-all overflow-hidden ${
-            isDarkTheme
-              ? 'bg-gray-900 border-green-500 shadow-[0_0_30px_rgba(34,197,94,0.5)]'
-              : 'bg-white border-minecraft-stone shadow-[8px_8px_0px_rgba(0,0,0,0.3)]'
-          }`}>
-            <div className={`absolute top-0 left-0 right-0 h-2 ${
-              isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass'
-            }`}></div>
-
-            <div className="space-y-3 sm:space-y-4 mt-2">
-              {musicTracks.map((track, index) => (
-                <div
-                  key={index}
-                  className={`p-3 sm:p-4 border-2 sm:border-4 cursor-pointer transition-all ${
-                    currentTrack === index
-                      ? isDarkTheme
-                        ? 'border-green-400 bg-green-900/40 shadow-[0_0_15px_rgba(34,197,94,0.4)]'
-                        : 'border-minecraft-grass bg-minecraft-grass/20 shadow-[4px_4px_0px_rgba(0,0,0,0.2)]'
-                      : isDarkTheme
-                        ? 'border-gray-600 bg-gray-800/50 hover:bg-gray-800/70'
-                        : 'border-minecraft-stone bg-minecraft-stone/5 hover:bg-minecraft-stone/10'
-                  }`}
-                  onClick={() => setCurrentTrack(index)}
-                >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center border-2 transition-colors ${
-                      currentTrack === index
-                        ? isDarkTheme
-                          ? 'bg-green-500 border-green-400'
-                          : 'bg-minecraft-grass border-black'
-                        : isDarkTheme
-                          ? 'bg-gray-700 border-gray-600'
-                          : 'bg-minecraft-stone border-black'
-                    }`}>
-                      <Icon name="Music" size={20} className={`sm:w-6 sm:h-6 ${
-                        currentTrack === index ? 'text-white' : isDarkTheme ? 'text-gray-400' : 'text-white'
-                      }`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className={`font-pixel text-xs sm:text-sm md:text-base truncate transition-colors ${
-                        isDarkTheme ? 'text-green-400' : 'text-minecraft-stone'
-                      }`}>
-                        {track.title}
-                      </h3>
-                      <p className={`font-sans text-[10px] sm:text-xs truncate transition-colors ${
-                        isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
-                      }`}>
-                        {track.artist}
-                      </p>
-                    </div>
-                    {currentTrack === index && (
-                      <div className={`font-pixel text-[10px] sm:text-xs px-2 py-1 border-2 transition-colors ${
-                        isDarkTheme
-                          ? 'bg-green-600 text-white border-green-400'
-                          : 'bg-minecraft-grass text-black border-black'
-                      }`}>
-                        ИГРАЕТ
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 sm:mt-8">
-              <div className={`border-4 overflow-hidden ${
-                isDarkTheme ? 'border-green-500' : 'border-minecraft-stone'
-              }`}>
-                <iframe
-                  width="100%"
-                  height="166"
-                  scrolling="no"
-                  frameBorder="no"
-                  allow="autoplay"
-                  src={musicTracks[currentTrack].embedUrl}
-                  className="w-full"
-                ></iframe>
-              </div>
-              
-              <div className={`mt-4 sm:mt-6 text-center font-sans text-xs sm:text-sm transition-colors ${
-                isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/70'
-              }`}>
-                <a 
-                  href={musicTracks[currentTrack].url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 font-pixel text-[10px] sm:text-xs px-4 py-2 border-2 sm:border-4 transition-all hover:scale-105 ${
-                    isDarkTheme
-                      ? 'bg-green-600 text-white border-green-400 hover:bg-green-500'
-                      : 'bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80'
-                  }`}
-                >
-                  <Icon name="ExternalLink" size={14} className="sm:w-4 sm:h-4" />
-                  ОТКРЫТЬ В SOUNDCLOUD
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </section>
