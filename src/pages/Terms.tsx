@@ -32,9 +32,9 @@ const Terms = () => {
           ? 'bg-gray-900/95 border-gray-700'
           : 'bg-minecraft-stone/95 border-minecraft-brown'
       }`}>
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="font-pixel text-xs sm:text-sm text-white">ТЕРМИНЫ СЕЗОНОВ</h1>
+        <div className="container mx-auto px-2 sm:px-4 py-3">
+          <div className="flex items-center justify-between gap-2">
+            <h1 className="font-pixel text-[10px] sm:text-xs md:text-sm text-white">ТЕРМИНЫ</h1>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsDarkTheme(!isDarkTheme)}
@@ -44,14 +44,14 @@ const Terms = () => {
                     : 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
                 }`}
               >
-                <Icon name={isDarkTheme ? "Sun" : "Moon"} size={14} />
+                <Icon name={isDarkTheme ? "Sun" : "Moon"} size={14} className="sm:w-4 sm:h-4" />
               </button>
               <Button
                 onClick={() => navigate("/")}
                 variant="ghost"
                 className="font-pixel text-[8px] sm:text-[10px] px-2 sm:px-4 py-1 sm:py-2 h-auto border-2 text-white border-white/20 hover:bg-white/10"
               >
-                <Icon name="ArrowLeft" size={16} className="mr-2" />
+                <Icon name="ArrowLeft" size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4" />
                 НАЗАД
               </Button>
             </div>
@@ -59,30 +59,30 @@ const Terms = () => {
         </div>
       </nav>
 
-      <section className="min-h-screen py-20 px-4 pt-32">
+      <section className="min-h-screen py-12 sm:py-16 md:py-20 px-4 pt-20 sm:pt-24 md:pt-32">
         <div className="container mx-auto max-w-4xl">
-          <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
+          <h2 className={`font-pixel text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-center mb-8 sm:mb-12 px-2 transition-colors ${
             isDarkTheme ? 'text-white' : 'text-minecraft-stone'
           }`}>
             ТЕРМИНЫ СЕЗОНОВ
           </h2>
 
-          <Card className={`border-4 shadow-xl mb-8 transition-colors ${
+          <Card className={`border-2 sm:border-4 shadow-xl mb-6 sm:mb-8 transition-colors ${
             isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-white border-minecraft-stone'
           }`}>
-            <CardContent className="p-8">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-16 h-16 bg-minecraft-sand border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
-                  <Icon name="Gem" size={32} className="text-yellow-500" />
+            <CardContent className="p-4 sm:p-6 md:p-8">
+              <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-minecraft-sand border-2 sm:border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
+                  <Icon name="Gem" size={24} className="text-yellow-500 sm:w-7 sm:h-7 md:w-8 md:h-8" />
                 </div>
-                <div>
-                  <h3 className={`font-pixel text-xl mb-4 transition-colors ${
+                <div className="flex-1 w-full">
+                  <h3 className={`font-pixel text-base sm:text-lg md:text-xl mb-3 sm:mb-4 transition-colors ${
                     isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
                   }`}>
                     СКИНТ
                   </h3>
-                  <div className={`space-y-4 font-sans text-base transition-colors ${
-                    isDarkTheme ? 'text-gray-200' : 'text-minecraft-stone/90'
+                  <div className={`space-y-2 sm:space-y-3 md:space-y-4 font-sans text-xs sm:text-sm md:text-base transition-colors border-2 sm:border-4 rounded p-3 sm:p-4 ${
+                    isDarkTheme ? 'border-gray-600 bg-gray-900/30 text-gray-200' : 'border-minecraft-stone/20 bg-minecraft-sand/5 text-minecraft-stone/90'
                   }`}>
                     <p>
                       <strong>Скинт</strong> — прочный кристалл жёлтого цвета, который тяжело сломать 
@@ -96,41 +96,41 @@ const Terms = () => {
                 </div>
               </div>
               
-              <div className={`mt-6 p-4 border-2 rounded transition-colors ${
+              <div className={`mt-4 sm:mt-6 p-3 sm:p-4 border-2 rounded transition-colors ${
                 isDarkTheme 
                   ? 'bg-yellow-500/10 border-yellow-500/30' 
                   : 'bg-minecraft-sand/20 border-minecraft-sand'
               }`}>
-                <p className={`font-pixel text-xs mb-2 transition-colors ${
+                <p className={`font-pixel text-[10px] sm:text-xs mb-2 transition-colors ${
                   isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
                 }`}>
                   ПОЯВЛЕНИЕ В СЕЗОНАХ:
                 </p>
-                <p className={`font-sans text-sm transition-colors ${
+                <p className={`font-sans text-xs sm:text-sm transition-colors ${
                   isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
                 }`}>
-                  Сезон 3: Сердце Миров — заражение Скинтом как ключевой элемент сюжета
+                  Используется во всех сезонах, кроме сезонов в разработке. Ключевой элемент сюжета в Сезоне 3: Сердце Миров
                 </p>
               </div>
             </CardContent>
           </Card>
 
-          <Card id="iskra" className={`border-4 shadow-xl mb-8 transition-colors ${
+          <Card id="iskra" className={`border-2 sm:border-4 shadow-xl mb-6 sm:mb-8 transition-colors ${
             isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-white border-minecraft-stone'
           }`}>
-            <CardContent className="p-8">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-16 h-16 bg-minecraft-grass border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
-                  <Icon name="Sparkles" size={32} className="text-white" />
+            <CardContent className="p-4 sm:p-6 md:p-8">
+              <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-minecraft-grass border-2 sm:border-4 border-minecraft-stone flex items-center justify-center flex-shrink-0">
+                  <Icon name="Sparkles" size={24} className="text-white sm:w-7 sm:h-7 md:w-8 md:h-8" />
                 </div>
-                <div>
-                  <h3 className={`font-pixel text-xl mb-4 transition-colors ${
+                <div className="flex-1 w-full">
+                  <h3 className={`font-pixel text-base sm:text-lg md:text-xl mb-3 sm:mb-4 transition-colors ${
                     isDarkTheme ? 'text-minecraft-grass' : 'text-minecraft-grass'
                   }`}>
                     ИСКРА
                   </h3>
-                  <div className={`space-y-4 font-sans text-base transition-colors ${
-                    isDarkTheme ? 'text-gray-200' : 'text-minecraft-stone/90'
+                  <div className={`space-y-2 sm:space-y-3 md:space-y-4 font-sans text-xs sm:text-sm md:text-base transition-colors border-2 sm:border-4 rounded p-3 sm:p-4 ${
+                    isDarkTheme ? 'border-gray-600 bg-gray-900/30 text-gray-200' : 'border-minecraft-stone/20 bg-minecraft-grass/5 text-minecraft-stone/90'
                   }`}>
                     <p>
                       <strong>Искра</strong> (также «Орган межпространственного перемещения») — материальный орган в мире мироходцев.
@@ -151,42 +151,42 @@ const Terms = () => {
                 </div>
               </div>
               
-              <div className={`mt-6 p-4 border-2 rounded transition-colors ${
+              <div className={`mt-4 sm:mt-6 p-3 sm:p-4 border-2 rounded transition-colors ${
                 isDarkTheme 
                   ? 'bg-minecraft-grass/10 border-minecraft-grass/30' 
                   : 'bg-minecraft-grass/20 border-minecraft-grass'
               }`}>
-                <p className="font-pixel text-xs text-minecraft-grass mb-2">
+                <p className="font-pixel text-[10px] sm:text-xs text-minecraft-grass mb-2">
                   ПОЯВЛЕНИЕ В СЕЗОНАХ:
                 </p>
-                <p className={`font-sans text-sm transition-colors ${
+                <p className={`font-sans text-xs sm:text-sm transition-colors ${
                   isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
                 }`}>
-                  Побочный сезон 1: Моральное Осознание — углублённое познание в мирохождении и Искры
+                  Используется во всех сезонах, кроме сезонов в разработке. Углублённое познание в Побочном сезоне 1: Моральное Осознание
                 </p>
               </div>
             </CardContent>
           </Card>
 
-          <div className="text-center">
+          <div className="text-center px-4">
             <Button
               onClick={() => navigate("/")}
-              className="font-pixel text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-4 border-black px-6 py-4 h-auto"
+              className="font-pixel text-[10px] sm:text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black px-4 sm:px-6 py-3 sm:py-4 h-auto"
             >
-              <Icon name="Home" size={16} className="mr-2" />
-              ВЕРНУТЬСЯ НА ГЛАВНУЮ
+              <Icon name="Home" size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4" />
+              ВЕРНУТЬСЯ
             </Button>
           </div>
         </div>
       </section>
 
-      <footer className={`border-t-4 py-8 px-4 transition-colors duration-500 ${
+      <footer className={`border-t-2 sm:border-t-4 py-6 sm:py-8 px-4 transition-colors duration-500 ${
         isDarkTheme 
           ? 'bg-gray-900 border-gray-700' 
           : 'bg-minecraft-stone border-minecraft-brown'
       }`}>
         <div className="container mx-auto text-center">
-          <p className="font-pixel text-[10px] text-white/80">
+          <p className="font-pixel text-[8px] sm:text-[10px] text-white/80">
             © 2025 MINECRAFT SEASONS | MADE WITH ❤️
           </p>
         </div>
