@@ -428,7 +428,7 @@ const Index = () => {
               <Button 
                 onClick={() => scrollToSection("team")}
                 variant="outline"
-                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform"
+                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-[#0891b2] text-white hover:bg-[#0891b2]/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform"
               >
                 ПОЗНАКОМИТЬСЯ
               </Button>
