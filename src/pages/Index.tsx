@@ -9,6 +9,7 @@ const Index = () => {
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [showMemorial, setShowMemorial] = useState(false);
+  const [showDownloads, setShowDownloads] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -412,7 +413,19 @@ const Index = () => {
           <h2 className="font-pixel text-3xl sm:text-5xl text-center mb-12 text-minecraft-stone">
             СКАЧАТЬ MINECRAFT
           </h2>
-          <div className="max-w-4xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl">
+          
+          <div className="max-w-4xl mx-auto text-center">
+            <Button
+              onClick={() => setShowDownloads(!showDownloads)}
+              className="font-pixel text-lg bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-4 border-black px-8 py-6 h-auto shadow-lg hover:scale-105 transition-transform"
+            >
+              <Icon name={showDownloads ? "ChevronUp" : "ChevronDown"} size={24} className="mr-2" />
+              {showDownloads ? "СКРЫТЬ ЗАГРУЗКИ" : "ПОКАЗАТЬ ЗАГРУЗКИ"}
+            </Button>
+          </div>
+
+          {showDownloads && (
+          <div className="max-w-4xl mx-auto bg-white border-4 border-minecraft-stone p-8 sm:p-12 rounded-lg shadow-xl mt-8 animate-fade-in">
             <p className="font-sans text-lg text-minecraft-stone/80 text-center mb-8">
               Выберите подходящую версию Minecraft для вашей платформы
             </p>
@@ -508,6 +521,7 @@ const Index = () => {
               </p>
             </div>
           </div>
+          )}
         </div>
       </section>
 
