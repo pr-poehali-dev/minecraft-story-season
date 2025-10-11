@@ -469,7 +469,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="seasons" className={`min-h-screen py-20 px-4 relative transition-colors duration-500 ${
+      <section id="seasons" className={`min-h-screen py-12 sm:py-16 px-4 relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
       }`}>
         <div 
@@ -746,7 +746,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="download" className={`min-h-screen py-12 sm:py-16 md:py-20 px-4 flex items-center relative transition-colors duration-500 ${
+      <section id="download" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
       }`}>
         <div 
@@ -875,7 +875,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="about" className={`min-h-screen py-12 sm:py-16 md:py-20 px-4 flex items-center relative transition-colors duration-500 ${
+      <section id="about" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-transparent' : 'bg-transparent'
       }`}>
         <div 
@@ -922,7 +922,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className={`min-h-screen py-12 sm:py-16 md:py-20 px-4 relative transition-colors duration-500 ${
+      <section id="team" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
       }`}>
         <div 
@@ -1087,7 +1087,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="gallery" className={`min-h-screen py-12 sm:py-16 md:py-20 px-4 relative transition-colors duration-500 ${
+      <section id="gallery" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-transparent' : 'bg-transparent'
       }`}>
         <div 
