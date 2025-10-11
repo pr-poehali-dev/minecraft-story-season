@@ -1211,6 +1211,28 @@ const Index = () => {
         const allSeasons = [...startSeasons, ...mainSeasons, ...sideSeasons, ...inDevelopmentSeasons];
         const season = allSeasons[selectedSeason];
         
+        // Determine border color based on season category
+        let borderColorClass = 'border-minecraft-stone';
+        let topBarColorClass = 'bg-cyan-500';
+        
+        if (selectedSeason < startSeasons.length) {
+          // Start seasons
+          borderColorClass = isDarkTheme ? 'border-cyan-500' : 'border-minecraft-stone';
+          topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500' : 'bg-cyan-500';
+        } else if (selectedSeason < startSeasons.length + mainSeasons.length) {
+          // Main seasons
+          borderColorClass = isDarkTheme ? 'border-yellow-500' : 'border-minecraft-stone';
+          topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500' : 'bg-[#f4bc09]';
+        } else if (selectedSeason < startSeasons.length + mainSeasons.length + sideSeasons.length) {
+          // Side seasons
+          borderColorClass = isDarkTheme ? 'border-green-500' : 'border-minecraft-stone';
+          topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass';
+        } else {
+          // In development seasons
+          borderColorClass = isDarkTheme ? 'border-purple-500' : 'border-minecraft-stone';
+          topBarColorClass = isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500' : 'bg-minecraft-sky';
+        }
+        
         return (
           <div 
             className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${
@@ -1219,12 +1241,13 @@ const Index = () => {
             onClick={handleCloseModal}
           >
             <div 
-              className={`bg-white border-4 border-minecraft-stone rounded-lg max-w-3xl w-full my-8 transition-transform duration-300 ${
+              className={`${isDarkTheme ? 'bg-gray-900' : 'bg-white'} border-4 sm:border-6 lg:border-8 ${borderColorClass} rounded-lg max-w-3xl w-full my-8 transition-transform duration-300 ${
                 isClosing ? 'scale-90' : 'scale-100 animate-scale-in'
               }`}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
+                <div className={`absolute top-0 left-0 right-0 h-2 ${topBarColorClass}`}></div>
                 <button
                   onClick={handleCloseModal}
                   className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-minecraft-stone hover:bg-minecraft-stone/80 border-2 sm:border-4 border-white flex items-center justify-center transition-colors"
@@ -1234,7 +1257,7 @@ const Index = () => {
                 <img 
                   src={season.image}
                   alt="Season"
-                  className="w-full h-48 sm:h-56 md:h-64 object-cover border-b-2 sm:border-b-4 border-minecraft-stone"
+                  className="w-full h-48 sm:h-56 md:h-64 object-cover"
                 />
               </div>
               <div className="p-4 sm:p-6 md:p-8">
