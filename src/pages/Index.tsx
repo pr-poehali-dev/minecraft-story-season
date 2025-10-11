@@ -410,7 +410,7 @@ const Index = () => {
 
         {showDecorImage1 && (
           <div 
-            className="hidden md:block absolute top-32 lg:top-48 right-4 lg:right-12 cursor-pointer animate-fade-in hover:scale-110 transition-all duration-300 z-20 animate-float"
+            className="absolute top-24 sm:top-32 lg:top-48 right-2 sm:right-4 lg:right-12 cursor-pointer animate-fade-in hover:scale-110 transition-all duration-300 z-20 animate-float"
             style={{ 
               transform: 'rotate(8deg)',
               animation: 'fadeIn 0.5s ease-in-out, float 6s ease-in-out infinite'
@@ -420,7 +420,7 @@ const Index = () => {
             <img 
               src="https://cdn.poehali.dev/files/49aeb72a-fbcd-47eb-b669-f13f93eb7699.png"
               alt="Character"
-              className="w-24 sm:w-32 lg:w-40 h-auto pixelated drop-shadow-2xl"
+              className="w-16 sm:w-24 md:w-32 lg:w-40 h-auto pixelated drop-shadow-2xl"
               style={{ imageRendering: 'pixelated' }}
             />
           </div>
@@ -428,7 +428,7 @@ const Index = () => {
 
         {showDecorImage2 && (
           <div 
-            className="hidden md:block absolute top-24 lg:top-40 left-4 lg:left-16 cursor-pointer animate-fade-in hover:scale-110 transition-all duration-300 z-20 animate-float"
+            className="absolute top-16 sm:top-24 lg:top-40 left-2 sm:left-4 lg:left-16 cursor-pointer animate-fade-in hover:scale-110 transition-all duration-300 z-20 animate-float"
             style={{ 
               transform: 'rotate(-12deg)',
               animation: 'fadeIn 0.5s ease-in-out, float 6s ease-in-out infinite',
@@ -439,7 +439,7 @@ const Index = () => {
             <img 
               src="https://cdn.poehali.dev/files/ed40bf69-a291-4ea9-a4e8-0b600ad31718.png"
               alt="Avatar"
-              className="w-20 sm:w-28 lg:w-36 h-auto pixelated drop-shadow-2xl"
+              className="w-14 sm:w-20 md:w-28 lg:w-36 h-auto pixelated drop-shadow-2xl"
               style={{ imageRendering: 'pixelated' }}
             />
           </div>
