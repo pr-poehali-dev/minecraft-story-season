@@ -845,25 +845,25 @@ const Index = () => {
           }`}>
             КОМАНДА
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
             {team.map((member, index) => (
               <Card 
                 key={index}
                 onClick={() => setSelectedMember(index)}
-                className={`relative border-8 hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden ${
+                className={`relative border-4 sm:border-8 hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden ${
                   isDarkTheme
-                    ? 'bg-gray-900 border-gray-700 shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]'
-                    : 'bg-white border-minecraft-stone shadow-[8px_8px_0px_rgba(0,0,0,0.3)] hover:shadow-[12px_12px_0px_rgba(0,0,0,0.4)]'
+                    ? 'bg-gray-900 border-gray-700 shadow-[0_0_10px_rgba(139,92,246,0.3)] sm:shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] sm:hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]'
+                    : 'bg-white border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.3)] sm:shadow-[8px_8px_0px_rgba(0,0,0,0.3)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.4)] sm:hover:shadow-[12px_12px_0px_rgba(0,0,0,0.4)]'
                 }`}
               >
-                <div className={`absolute top-0 left-0 right-0 h-2 ${
+                <div className={`absolute top-0 left-0 right-0 h-1.5 sm:h-2 ${
                   isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500' : 'bg-minecraft-grass'
                 }`}></div>
-                <CardContent className="p-8 text-center">
-                  <div className={`relative w-32 h-32 mx-auto mb-6 overflow-hidden ${
+                <CardContent className="p-4 sm:p-8 text-center">
+                  <div className={`relative w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 overflow-hidden ${
                     isDarkTheme 
-                      ? 'border-4 border-purple-500 shadow-[0_0_20px_rgba(139,92,246,0.6)]' 
-                      : 'border-4 border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.4)]'
+                      ? 'border-3 sm:border-4 border-purple-500 shadow-[0_0_15px_rgba(139,92,246,0.6)] sm:shadow-[0_0_20px_rgba(139,92,246,0.6)]' 
+                      : 'border-3 sm:border-4 border-minecraft-stone shadow-[3px_3px_0px_rgba(0,0,0,0.4)] sm:shadow-[4px_4px_0px_rgba(0,0,0,0.4)]'
                   }`}>
                     <div className={`absolute inset-0 ${
                       isDarkTheme ? 'bg-gradient-to-br from-purple-900 to-gray-900' : 'bg-minecraft-brown'
@@ -879,28 +879,28 @@ const Index = () => {
                       <Icon name="User" size={48} className="text-white relative z-10" />
                     )}
                   </div>
-                  <h3 className={`font-pixel text-xl mb-2 transition-colors ${
+                  <h3 className={`font-pixel text-base sm:text-xl mb-2 transition-colors ${
                     isDarkTheme ? 'text-purple-400' : 'text-minecraft-brown'
                   }`}>
                     {member.name}
                   </h3>
-                  <p className={`font-sans text-sm mb-4 transition-colors ${
+                  <p className={`font-sans text-xs sm:text-sm mb-3 sm:mb-4 transition-colors ${
                     isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
                   }`}>
                     {member.role}
                   </p>
-                  <p className={`font-sans text-xs sm:text-sm mb-4 transition-colors ${
+                  <p className={`font-sans text-xs sm:text-sm mb-3 sm:mb-4 transition-colors ${
                     isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
                   }`}>
                     {member.description}
                   </p>
-                  <div className={`inline-flex items-center gap-2 font-pixel text-[10px] sm:text-xs px-4 py-2 border-2 transition-colors ${
+                  <div className={`inline-flex items-center gap-1.5 sm:gap-2 font-pixel text-[9px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 border-2 transition-colors ${
                     isDarkTheme
                       ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
                       : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/90'
                   }`}>
-                    <Icon name="Send" size={14} className="sm:w-4 sm:h-4" />
-                    <span className="truncate">{member.telegram}</span>
+                    <Icon name="Send" size={12} className="sm:w-4 sm:h-4" />
+                    <span className="truncate max-w-[150px] sm:max-w-none">{member.telegram}</span>
                   </div>
                 </CardContent>
               </Card>
