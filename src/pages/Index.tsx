@@ -850,30 +850,55 @@ const Index = () => {
               <Card 
                 key={index}
                 onClick={() => setSelectedMember(index)}
-                className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 cursor-pointer"
+                className={`relative border-8 hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden ${
+                  isDarkTheme
+                    ? 'bg-gray-900 border-gray-700 shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]'
+                    : 'bg-white border-minecraft-stone shadow-[8px_8px_0px_rgba(0,0,0,0.3)] hover:shadow-[12px_12px_0px_rgba(0,0,0,0.4)]'
+                }`}
               >
+                <div className={`absolute top-0 left-0 right-0 h-2 ${
+                  isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500' : 'bg-minecraft-grass'
+                }`}></div>
                 <CardContent className="p-8 text-center">
-                  <div className="w-24 h-24 bg-minecraft-brown border-4 border-minecraft-stone mx-auto mb-6 flex items-center justify-center overflow-hidden">
+                  <div className={`relative w-32 h-32 mx-auto mb-6 overflow-hidden ${
+                    isDarkTheme 
+                      ? 'border-4 border-purple-500 shadow-[0_0_20px_rgba(139,92,246,0.6)]' 
+                      : 'border-4 border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.4)]'
+                  }`}>
+                    <div className={`absolute inset-0 ${
+                      isDarkTheme ? 'bg-gradient-to-br from-purple-900 to-gray-900' : 'bg-minecraft-brown'
+                    }`}></div>
                     {member.avatar ? (
                       <img 
                         src={member.avatar} 
                         alt={member.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover relative z-10 pixelated"
+                        style={{ imageRendering: 'pixelated' }}
                       />
                     ) : (
-                      <Icon name="User" size={48} className="text-white" />
+                      <Icon name="User" size={48} className="text-white relative z-10" />
                     )}
                   </div>
-                  <h3 className="font-pixel text-lg mb-2 text-minecraft-brown">
+                  <h3 className={`font-pixel text-xl mb-2 transition-colors ${
+                    isDarkTheme ? 'text-purple-400' : 'text-minecraft-brown'
+                  }`}>
                     {member.name}
                   </h3>
-                  <p className="font-sans text-sm text-minecraft-stone/60 mb-4">
+                  <p className={`font-sans text-sm mb-4 transition-colors ${
+                    isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                  }`}>
                     {member.role}
                   </p>
-                  <p className="font-sans text-xs sm:text-sm text-minecraft-stone/80 mb-3 sm:mb-4">
+                  <p className={`font-sans text-xs sm:text-sm mb-4 transition-colors ${
+                    isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                  }`}>
                     {member.description}
                   </p>
-                  <div className="inline-flex items-center gap-1 sm:gap-2 font-pixel text-[10px] sm:text-xs bg-minecraft-sky text-white px-3 sm:px-4 py-1.5 sm:py-2 border-2 border-black">
+                  <div className={`inline-flex items-center gap-2 font-pixel text-[10px] sm:text-xs px-4 py-2 border-2 transition-colors ${
+                    isDarkTheme
+                      ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
+                      : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/90'
+                  }`}>
                     <Icon name="Send" size={14} className="sm:w-4 sm:h-4" />
                     <span className="truncate">{member.telegram}</span>
                   </div>
@@ -890,48 +915,72 @@ const Index = () => {
               onClick={handleCloseModal}
             >
               <div 
-                className={`bg-white border-2 sm:border-4 border-minecraft-stone max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
+                className={`border-4 max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
                   isClosing ? 'scale-90' : 'scale-100 animate-scale-in'
+                } ${
+                  isDarkTheme
+                    ? 'bg-gray-900 border-purple-500 shadow-[0_0_30px_rgba(139,92,246,0.5)]'
+                    : 'bg-white border-minecraft-stone shadow-[12px_12px_0px_rgba(0,0,0,0.5)]'
                 }`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-4 sm:p-6 md:p-8">
                   <div className="flex justify-between items-start mb-4 sm:mb-6">
-                    <h3 className="font-pixel text-lg sm:text-xl md:text-2xl text-minecraft-brown">
+                    <h3 className={`font-pixel text-lg sm:text-xl md:text-2xl transition-colors ${
+                      isDarkTheme ? 'text-purple-400' : 'text-minecraft-brown'
+                    }`}>
                       {team[selectedMember].name}
                     </h3>
                     <button 
                       onClick={handleCloseModal}
-                      className="text-minecraft-stone hover:text-minecraft-brown transition-colors p-1"
+                      className={`transition-colors p-1 ${
+                        isDarkTheme ? 'text-gray-400 hover:text-purple-400' : 'text-minecraft-stone hover:text-minecraft-brown'
+                      }`}
                     >
                       <Icon name="X" size={20} className="sm:w-6 sm:h-6" />
                     </button>
                   </div>
                   
-                  <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-minecraft-brown border-2 sm:border-4 border-minecraft-stone mx-auto mb-4 sm:mb-6 flex items-center justify-center overflow-hidden">
+                  <div className={`relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto mb-4 sm:mb-6 flex items-center justify-center overflow-hidden ${
+                    isDarkTheme
+                      ? 'border-4 border-purple-500 shadow-[0_0_20px_rgba(139,92,246,0.6)]'
+                      : 'bg-minecraft-brown border-4 border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
+                  }`}>
+                    <div className={`absolute inset-0 ${
+                      isDarkTheme ? 'bg-gradient-to-br from-purple-900 to-gray-900' : ''
+                    }`}></div>
                     {team[selectedMember].avatar ? (
                       <img 
                         src={team[selectedMember].avatar} 
                         alt={team[selectedMember].name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover relative z-10 pixelated"
+                        style={{ imageRendering: 'pixelated' }}
                       />
                     ) : (
-                      <Icon name="User" size={64} className="text-white sm:w-20 sm:h-20 md:w-24 md:h-24" />
+                      <Icon name="User" size={64} className="text-white sm:w-20 sm:h-20 md:w-24 md:h-24 relative z-10" />
                     )}
                   </div>
                   
                   <div className="text-center space-y-3 sm:space-y-4">
-                    <p className="font-sans text-sm sm:text-base md:text-lg text-minecraft-stone/60">
+                    <p className={`font-sans text-sm sm:text-base md:text-lg transition-colors ${
+                      isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                    }`}>
                       {team[selectedMember].role}
                     </p>
-                    <p className="font-sans text-xs sm:text-sm md:text-base text-minecraft-stone/80 px-2">
+                    <p className={`font-sans text-xs sm:text-sm md:text-base px-2 transition-colors ${
+                      isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                    }`}>
                       {team[selectedMember].description}
                     </p>
                     <a 
                       href={`https://t.me/${team[selectedMember].telegram.replace('@', '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-pixel text-sm bg-minecraft-sky text-white px-6 py-3 border-4 border-black hover:bg-minecraft-sky/80 transition-colors mt-6"
+                      className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors mt-6 ${
+                        isDarkTheme
+                          ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
+                          : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/80'
+                      }`}
                     >
                       <Icon name="Send" size={20} />
                       Написать {team[selectedMember].telegram}
