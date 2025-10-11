@@ -12,6 +12,7 @@ const Index = () => {
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [showMemorial, setShowMemorial] = useState(false);
+  const [isMemorialClosing, setIsMemorialClosing] = useState(false);
   const [showDownloads, setShowDownloads] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(getInitialTheme);
   const [showAchievement, setShowAchievement] = useState(false);
@@ -72,7 +73,11 @@ const Index = () => {
       
       const handleEscape = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
-          setShowMemorial(false);
+          setIsMemorialClosing(true);
+          setTimeout(() => {
+            setShowMemorial(false);
+            setIsMemorialClosing(false);
+          }, 300);
         }
       };
       
@@ -445,11 +450,21 @@ const Index = () => {
 
           {showMemorial && (
             <div 
-              className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 overflow-hidden"
-              onClick={() => setShowMemorial(false)}
+              className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 overflow-hidden transition-opacity duration-300 ${
+                isMemorialClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+              }`}
+              onClick={() => {
+                setIsMemorialClosing(true);
+                setTimeout(() => {
+                  setShowMemorial(false);
+                  setIsMemorialClosing(false);
+                }, 300);
+              }}
             >
               <div 
-                className="bg-minecraft-stone border-4 border-black p-6 sm:p-8 md:p-12 text-center max-w-xs sm:max-w-2xl mx-4 animate-fade-in"
+                className={`bg-minecraft-stone border-4 border-black p-6 sm:p-8 md:p-12 text-center max-w-xs sm:max-w-2xl mx-4 transition-transform duration-300 ${
+                  isMemorialClosing ? 'scale-90' : 'scale-100 animate-scale-in'
+                }`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="mb-4 sm:mb-6">
@@ -459,7 +474,13 @@ const Index = () => {
                   Уголь, прости:(
                 </h3>
                 <button 
-                  onClick={() => setShowMemorial(false)}
+                  onClick={() => {
+                    setIsMemorialClosing(true);
+                    setTimeout(() => {
+                      setShowMemorial(false);
+                      setIsMemorialClosing(false);
+                    }, 300);
+                  }}
                   className="mt-4 sm:mt-6 font-pixel text-xs sm:text-sm bg-white text-minecraft-stone px-4 sm:px-6 py-2 sm:py-3 border-2 sm:border-4 border-black hover:bg-gray-200 transition-colors"
                 >
                   Закрыть
