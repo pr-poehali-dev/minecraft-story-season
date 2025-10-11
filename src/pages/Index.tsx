@@ -525,23 +525,30 @@ const Index = () => {
 
           <div className="mb-16">
             <div className="flex items-center justify-center mb-8">
-              <div className="h-1 flex-1 bg-minecraft-brown max-w-xs"></div>
-              <h3 className="font-pixel text-xl sm:text-3xl mx-6 text-minecraft-brown">
+              <div className="h-1 flex-1 max-w-xs transition-colors" style={{ backgroundColor: '#f4bc09' }}></div>
+              <h3 className="font-pixel text-xl sm:text-3xl mx-6 transition-colors" style={{ color: '#f4bc09' }}>
                 ОСНОВНОЙ СЮЖЕТ
               </h3>
-              <div className="h-1 flex-1 bg-minecraft-brown max-w-xs"></div>
+              <div className="h-1 flex-1 max-w-xs transition-colors" style={{ backgroundColor: '#f4bc09' }}></div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
               {mainSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className="border-4 border-minecraft-stone bg-white hover:scale-105 transition-transform duration-300 overflow-hidden group cursor-pointer"
+                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer ${
+                    isDarkTheme
+                      ? 'bg-gray-900 border-yellow-500 shadow-[0_0_20px_rgba(244,188,9,0.4)] hover:shadow-[0_0_30px_rgba(244,188,9,0.6)]'
+                      : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
+                  }`}
                   onClick={() => {
                     const seasonIndex = index + startSeasons.length;
                     setSelectedSeason(seasonIndex);
                     setViewedSeasons(prev => new Set(prev).add(seasonIndex));
                   }}
                 >
+                  <div className={`absolute top-0 left-0 right-0 h-2 transition-colors ${
+                    isDarkTheme ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500' : ''
+                  }`} style={{ backgroundColor: isDarkTheme ? '' : '#f4bc09' }}></div>
                   <div className="overflow-hidden">
                     <img 
                       src={season.image}
@@ -550,10 +557,14 @@ const Index = () => {
                     />
                   </div>
                   <CardContent className="p-6">
-                    <h3 className="font-pixel text-xs sm:text-sm mb-2 sm:mb-4 text-minecraft-brown">
+                    <h3 className={`font-pixel text-xs sm:text-sm mb-2 sm:mb-4 transition-colors ${
+                      isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                    }`}>
                       {season.title}
                     </h3>
-                    <div className="font-sans text-xs sm:text-sm text-minecraft-stone/80 mb-2 sm:mb-4">
+                    <div className={`font-sans text-xs sm:text-sm mb-2 sm:mb-4 transition-colors ${
+                      isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                    }`}>
                       {season.description}
                     </div>
                     {season.audio && (
@@ -561,7 +572,11 @@ const Index = () => {
                         href={season.audio.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 sm:gap-2 font-pixel text-[8px] sm:text-[10px] bg-minecraft-stone text-white px-2 sm:px-4 py-1 sm:py-2 border-2 border-black hover:bg-minecraft-stone/80 transition-colors"
+                        className={`inline-flex items-center gap-1 sm:gap-2 font-pixel text-[8px] sm:text-[10px] px-2 sm:px-4 py-1 sm:py-2 border-2 transition-colors ${
+                          isDarkTheme
+                            ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
+                            : 'bg-minecraft-stone text-white border-black hover:bg-minecraft-stone/80'
+                        }`}
                       >
                         <Icon name="Music" size={12} className="sm:w-3.5 sm:h-3.5" />
                         {season.audio.title} - {season.audio.artist}
@@ -570,6 +585,7 @@ const Index = () => {
                   </CardContent>
                 </Card>
               ))}
+              <div className="hidden lg:block"></div>
             </div>
           </div>
 
