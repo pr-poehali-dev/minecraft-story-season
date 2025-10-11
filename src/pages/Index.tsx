@@ -457,9 +457,6 @@ const Index = () => {
                 <h3 className="font-pixel text-xl sm:text-2xl md:text-3xl text-white mb-4">
                   Уголь, прости:(
                 </h3>
-                <p className="text-gray-300 text-xs sm:text-sm mb-2">
-                  Нажмите ESC для закрытия
-                </p>
                 <button 
                   onClick={() => setShowMemorial(false)}
                   className="mt-4 sm:mt-6 font-pixel text-xs sm:text-sm bg-white text-minecraft-stone px-4 sm:px-6 py-2 sm:py-3 border-2 sm:border-4 border-black hover:bg-gray-200 transition-colors"
