@@ -27,6 +27,7 @@ const Index = () => {
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
+  const [viewedCharacters, setViewedCharacters] = useState<Set<number>>(new Set());
 
   const baseAchievements = [
     {
@@ -46,6 +47,12 @@ const Index = () => {
       title: "Третьяковская галерея",
       description: "Просмотрели 3 скриншота в галерее",
       icon: "Image"
+    },
+    {
+      id: "supreme-power",
+      title: "Высшая власть",
+      description: "Узнали информацию о главных героях",
+      icon: "Crown"
     }
   ];
 
@@ -159,7 +166,22 @@ const Index = () => {
   }, [viewedImages]);
 
   useEffect(() => {
-    const requiredAchievements = ['993-reality', 'infinity-limit', 'tretyakov-gallery'];
+    if (viewedCharacters.size === 2 && !unlockedAchievements.includes('supreme-power')) {
+      setTimeout(() => {
+        const achievement = baseAchievements.find(a => a.id === 'supreme-power');
+        setCurrentAchievement(achievement);
+        setShowAchievement(true);
+        const newUnlocked = [...unlockedAchievements, 'supreme-power'];
+        setUnlockedAchievements(newUnlocked);
+        localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        setHasViewedAchievements(false);
+        setTimeout(() => setShowAchievement(false), 5000);
+      }, 500);
+    }
+  }, [viewedCharacters]);
+
+  useEffect(() => {
+    const requiredAchievements = ['993-reality', 'infinity-limit', 'tretyakov-gallery', 'supreme-power'];
     const hasAllBase = requiredAchievements.every(id => unlockedAchievements.includes(id));
     const hasSecret = unlockedAchievements.includes('story-seasons-master');
     
@@ -1191,6 +1213,7 @@ const Index = () => {
                         <button
                           onClick={() => {
                             setShowCharacter(true);
+                            setViewedCharacters(prev => new Set(prev).add(0));
                             handleCloseModal();
                           }}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
@@ -1207,6 +1230,7 @@ const Index = () => {
                         <button
                           onClick={() => {
                             setShowCharacter2(true);
+                            setViewedCharacters(prev => new Set(prev).add(1));
                             handleCloseModal();
                           }}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
