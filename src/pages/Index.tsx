@@ -346,14 +346,16 @@ const Index = () => {
             <div className="flex gap-2 items-center order-first sm:order-none">
               <button
                 onClick={() => navigate('/terms')}
-                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-brown text-white border-minecraft-brown hover:bg-minecraft-brown/80"
+                disabled={showMemorial}
+                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-brown text-white border-minecraft-brown hover:bg-minecraft-brown/80 disabled:opacity-50 disabled:cursor-not-allowed"
                 title="Термины сезонов"
               >
                 <Icon name="Book" size={14} />
               </button>
               <button
                 onClick={openAchievementsPage}
-                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80 relative"
+                disabled={showMemorial}
+                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80 relative disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Icon name="Trophy" size={14} />
                 {unlockedAchievements.length > 0 && !hasViewedAchievements && (
@@ -364,7 +366,8 @@ const Index = () => {
               </button>
               <button
                 onClick={() => setIsDarkTheme(!isDarkTheme)}
-                className={`font-pixel text-xs p-2 border-2 rounded transition-colors ${
+                disabled={showMemorial}
+                className={`font-pixel text-xs p-2 border-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                   isDarkTheme
                     ? 'bg-yellow-500 text-black border-yellow-600 hover:bg-yellow-400'
                     : 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
@@ -378,8 +381,9 @@ const Index = () => {
                 <Button
                   key={section}
                   onClick={() => scrollToSection(section)}
+                  disabled={showMemorial}
                   variant={activeSection === section ? "default" : "ghost"}
-                  className={`font-pixel text-[8px] sm:text-[9px] md:text-[10px] px-2 sm:px-3 py-1 h-auto border-2 ${
+                  className={`font-pixel text-[8px] sm:text-[9px] md:text-[10px] px-2 sm:px-3 py-1 h-auto border-2 disabled:opacity-50 disabled:cursor-not-allowed ${
                     activeSection === section 
                       ? "bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80" 
                       : "text-white border-white/20 hover:bg-white/10"
@@ -426,14 +430,16 @@ const Index = () => {
             <div className="flex gap-2 sm:gap-3 md:gap-4 justify-center flex-wrap px-4">
               <Button 
                 onClick={() => scrollToSection("seasons")}
-                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform"
+                disabled={showMemorial}
+                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 СМОТРЕТЬ СЕЗОНЫ
               </Button>
               <Button 
                 onClick={() => scrollToSection("team")}
+                disabled={showMemorial}
                 variant="outline"
-                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-[#0891b2] text-white hover:bg-[#0891b2]/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform"
+                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-[#0891b2] text-white hover:bg-[#0891b2]/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 ПОЗНАКОМИТЬСЯ
               </Button>
@@ -527,14 +533,18 @@ const Index = () => {
               {startSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer w-full sm:max-w-md lg:max-w-2xl ${
+                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group w-full sm:max-w-md lg:max-w-2xl ${
+                    showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                  } ${
                     isDarkTheme
                       ? 'bg-gray-900 border-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]'
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
-                    setSelectedSeason(index);
-                    setViewedSeasons(prev => new Set(prev).add(index));
+                    if (!showMemorial) {
+                      setSelectedSeason(index);
+                      setViewedSeasons(prev => new Set(prev).add(index));
+                    }
                   }}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-2 ${
@@ -576,15 +586,19 @@ const Index = () => {
               {mainSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer ${
+                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group ${
+                    showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                  } ${
                     isDarkTheme
                       ? 'bg-gray-900 border-yellow-500 shadow-[0_0_20px_rgba(244,188,9,0.4)] hover:shadow-[0_0_30px_rgba(244,188,9,0.6)]'
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
-                    const seasonIndex = index + startSeasons.length;
-                    setSelectedSeason(seasonIndex);
-                    setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                    if (!showMemorial) {
+                      const seasonIndex = index + startSeasons.length;
+                      setSelectedSeason(seasonIndex);
+                      setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                    }
                   }}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-2 transition-colors ${
@@ -648,15 +662,19 @@ const Index = () => {
               {sideSeasons.map((season, index) => (
                 <Card 
                   key={index}
-                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer ${
+                  className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group ${
+                    showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                  } ${
                     isDarkTheme
                       ? 'bg-gray-900 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)]'
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
-                    const seasonIndex = startSeasons.length + mainSeasons.length + index;
-                    setSelectedSeason(seasonIndex);
-                    setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                    if (!showMemorial) {
+                      const seasonIndex = startSeasons.length + mainSeasons.length + index;
+                      setSelectedSeason(seasonIndex);
+                      setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                    }
                   }}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-2 ${
@@ -705,15 +723,19 @@ const Index = () => {
                 {inDevelopmentSeasons.map((season, index) => (
                   <Card 
                     key={index}
-                    className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group cursor-pointer w-full sm:max-w-md lg:max-w-2xl ${
+                    className={`relative border-4 sm:border-6 lg:border-8 hover:scale-105 transition-all duration-300 overflow-hidden group w-full sm:max-w-md lg:max-w-2xl ${
+                      showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                    } ${
                       isDarkTheme
                         ? 'bg-gray-900 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]'
                         : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                     }`}
                     onClick={() => {
-                      const seasonIndex = startSeasons.length + mainSeasons.length + sideSeasons.length + index;
-                      setSelectedSeason(seasonIndex);
-                      setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                      if (!showMemorial) {
+                        const seasonIndex = startSeasons.length + mainSeasons.length + sideSeasons.length + index;
+                        setSelectedSeason(seasonIndex);
+                        setViewedSeasons(prev => new Set(prev).add(seasonIndex));
+                      }
                     }}
                   >
                     <div className={`absolute top-0 left-0 right-0 h-2 ${
@@ -789,7 +811,8 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <Button
               onClick={() => setShowDownloads(!showDownloads)}
-              className="font-pixel text-[10px] sm:text-xs md:text-sm lg:text-lg bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform"
+              disabled={showMemorial}
+              className="font-pixel text-[10px] sm:text-xs md:text-sm lg:text-lg bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               <Icon name={showDownloads ? "ChevronUp" : "ChevronDown"} size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
               <span className="whitespace-nowrap text-[10px] sm:text-xs md:text-sm lg:text-base">{showDownloads ? "СКРЫТЬ" : "ПОКАЗАТЬ"}</span>
@@ -833,10 +856,11 @@ const Index = () => {
                   href="https://minecraft-downloads.net/MinecraftInstaller.exe"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full"
+                  className={`block w-full ${showMemorial ? 'pointer-events-none' : ''}`}
                 >
                   <Button 
-                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3"
+                    disabled={showMemorial}
+                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Icon name="Download" size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4" />
                     СКАЧАТЬ
@@ -866,10 +890,11 @@ const Index = () => {
                   href="https://mcpehub.org/engine/dlfile.php?id=49382"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full"
+                  className={`block w-full ${showMemorial ? 'pointer-events-none' : ''}`}
                 >
                   <Button 
-                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3"
+                    disabled={showMemorial}
+                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Icon name="Download" size={16} className="mr-2" />
                     СКАЧАТЬ
@@ -899,10 +924,11 @@ const Index = () => {
                   href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe&hl=ru"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full"
+                  className={`block w-full ${showMemorial ? 'pointer-events-none' : ''}`}
                 >
                   <Button 
-                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3"
+                    disabled={showMemorial}
+                    className="w-full font-pixel text-[10px] sm:text-xs bg-minecraft-sky text-white hover:bg-minecraft-sky/80 border-2 sm:border-4 border-black h-auto py-2 sm:py-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Icon name="Download" size={16} className="mr-2" />
                     СКАЧАТЬ
@@ -1018,8 +1044,10 @@ const Index = () => {
             {team.map((member, index) => (
               <Card 
                 key={index}
-                onClick={() => setSelectedMember(index)}
-                className={`relative border-4 sm:border-8 hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden ${
+                onClick={() => !showMemorial && setSelectedMember(index)}
+                className={`relative border-4 sm:border-8 hover:scale-105 transition-all duration-300 overflow-hidden ${
+                  showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                } ${
                   isDarkTheme
                     ? 'bg-gray-900 border-gray-700 shadow-[0_0_10px_rgba(139,92,246,0.3)] sm:shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] sm:hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]'
                     : 'bg-white border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.3)] sm:shadow-[8px_8px_0px_rgba(0,0,0,0.3)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.4)] sm:hover:shadow-[12px_12px_0px_rgba(0,0,0,0.4)]'
@@ -1184,10 +1212,14 @@ const Index = () => {
               <div 
                 key={index}
                 onClick={() => {
-                  setSelectedImage(image);
-                  setViewedImages(prev => new Set(prev).add(index));
+                  if (!showMemorial) {
+                    setSelectedImage(image);
+                    setViewedImages(prev => new Set(prev).add(index));
+                  }
                 }}
-                className={`overflow-hidden border-4 sm:border-6 hover:scale-[1.02] transition-all duration-300 cursor-pointer ${
+                className={`overflow-hidden border-4 sm:border-6 hover:scale-[1.02] transition-all duration-300 ${
+                  showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                } ${
                   isDarkTheme
                     ? 'border-purple-500 shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)]'
                     : 'border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.3)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
