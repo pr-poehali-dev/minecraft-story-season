@@ -1216,8 +1216,11 @@ const Index = () => {
                             setViewedCharacters(prev => new Set(prev).add(0));
                             handleCloseModal();
                           }}
+                          disabled={showCharacter || showCharacter2}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            isDarkTheme
+                            (showCharacter || showCharacter2)
+                              ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
+                              : isDarkTheme
                               ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
                               : 'bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80'
                           }`}
@@ -1233,8 +1236,11 @@ const Index = () => {
                             setViewedCharacters(prev => new Set(prev).add(1));
                             handleCloseModal();
                           }}
+                          disabled={showCharacter || showCharacter2}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            isDarkTheme
+                            (showCharacter || showCharacter2)
+                              ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
+                              : isDarkTheme
                               ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
                               : 'bg-minecraft-sky text-black border-black hover:bg-minecraft-sky/80'
                           }`}
