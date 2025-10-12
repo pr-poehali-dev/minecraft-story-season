@@ -15,6 +15,8 @@ const Index = () => {
   const [isCharacterClosing, setIsCharacterClosing] = useState(false);
   const [showCharacter2, setShowCharacter2] = useState(false);
   const [isCharacter2Closing, setIsCharacter2Closing] = useState(false);
+  const [showCharacter3, setShowCharacter3] = useState(false);
+  const [isCharacter3Closing, setIsCharacter3Closing] = useState(false);
   const [showMemorial, setShowMemorial] = useState(false);
   const [isMemorialClosing, setIsMemorialClosing] = useState(false);
   const [showDownloads, setShowDownloads] = useState(true);
@@ -167,7 +169,7 @@ const Index = () => {
   }, [viewedImages]);
 
   useEffect(() => {
-    if (viewedCharacters.size === 2 && !unlockedAchievements.includes('supreme-power')) {
+    if (viewedCharacters.size === 3 && !unlockedAchievements.includes('supreme-power')) {
       setTimeout(() => {
         const achievement = baseAchievements.find(a => a.id === 'supreme-power');
         setCurrentAchievement(achievement);
@@ -1239,9 +1241,9 @@ const Index = () => {
                             setViewedCharacters(prev => new Set(prev).add(0));
                             handleCloseModal();
                           }}
-                          disabled={showCharacter || showCharacter2}
+                          disabled={showCharacter || showCharacter2 || showCharacter3}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            (showCharacter || showCharacter2)
+                            (showCharacter || showCharacter2 || showCharacter3)
                               ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
                               : isDarkTheme
                               ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
@@ -1253,24 +1255,44 @@ const Index = () => {
                         </button>
                       )}
                       {selectedMember === 1 && (
-                        <button
-                          onClick={() => {
-                            setShowCharacter2(true);
-                            setViewedCharacters(prev => new Set(prev).add(1));
-                            handleCloseModal();
-                          }}
-                          disabled={showCharacter || showCharacter2}
-                          className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            (showCharacter || showCharacter2)
-                              ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
-                              : isDarkTheme
-                              ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
-                              : 'bg-minecraft-sky text-black border-black hover:bg-minecraft-sky/80'
-                          }`}
-                        >
-                          <Icon name="User" size={20} />
-                          Главный персонаж
-                        </button>
+                        <>
+                          <button
+                            onClick={() => {
+                              setShowCharacter2(true);
+                              setViewedCharacters(prev => new Set(prev).add(1));
+                              handleCloseModal();
+                            }}
+                            disabled={showCharacter || showCharacter2 || showCharacter3}
+                            className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
+                              (showCharacter || showCharacter2 || showCharacter3)
+                                ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
+                                : isDarkTheme
+                                ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
+                                : 'bg-minecraft-sky text-black border-black hover:bg-minecraft-sky/80'
+                            }`}
+                          >
+                            <Icon name="User" size={20} />
+                            Уголь
+                          </button>
+                          <button
+                            onClick={() => {
+                              setShowCharacter3(true);
+                              setViewedCharacters(prev => new Set(prev).add(2));
+                              handleCloseModal();
+                            }}
+                            disabled={showCharacter || showCharacter2 || showCharacter3}
+                            className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
+                              (showCharacter || showCharacter2 || showCharacter3)
+                                ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
+                                : isDarkTheme
+                                ? 'bg-orange-600 text-white border-orange-400 hover:bg-orange-500'
+                                : 'bg-minecraft-brown text-white border-black hover:bg-minecraft-brown/80'
+                            }`}
+                          >
+                            <Icon name="User" size={20} />
+                            Раст
+                          </button>
+                        </>
                       )}
                     </div>
                   </div>
@@ -1867,6 +1889,178 @@ const Index = () => {
                       isDarkTheme
                         ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
                         : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/80'
+                    }`}
+                  >
+                    Закрыть
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCharacter3 && (
+        <div 
+          className={`fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-300 ${
+            isCharacter3Closing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+          } ${
+            isDarkTheme ? 'bg-black/90' : 'bg-minecraft-stone/90'
+          }`}
+          onClick={() => {
+            if (!isButtonLocked) {
+              setIsButtonLocked(true);
+              setIsCharacter3Closing(true);
+              setTimeout(() => {
+                setShowCharacter3(false);
+                setIsCharacter3Closing(false);
+                setIsButtonLocked(false);
+              }, 300);
+            }
+          }}
+        >
+          <div 
+            className={`max-w-4xl w-full border-4 sm:border-6 md:border-8 transition-transform duration-300 ${
+              isCharacter3Closing ? 'scale-90' : 'scale-100 animate-scale-in'
+            } ${
+              isDarkTheme
+                ? 'bg-gray-900 border-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.5)]'
+                : 'bg-white border-minecraft-stone shadow-[12px_12px_0px_rgba(0,0,0,0.5)]'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 sm:p-6 md:p-8">
+              <div className="flex justify-between items-start mb-4 sm:mb-6">
+                <h3 className={`font-pixel text-lg sm:text-xl md:text-2xl transition-colors ${
+                  isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
+                }`}>
+                  Главный персонаж
+                </h3>
+                <button 
+                  onClick={() => {
+                    if (!isButtonLocked) {
+                      setIsButtonLocked(true);
+                      setIsCharacter3Closing(true);
+                      setTimeout(() => {
+                        setShowCharacter3(false);
+                        setIsCharacter3Closing(false);
+                        setIsButtonLocked(false);
+                      }, 300);
+                    }
+                  }}
+                  className={`transition-colors p-1 ${
+                    isDarkTheme ? 'text-gray-400 hover:text-orange-400' : 'text-minecraft-stone hover:text-minecraft-brown'
+                  }`}
+                >
+                  <Icon name="X" size={20} className="sm:w-6 sm:h-6" />
+                </button>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                <div className={`relative w-full aspect-square mx-auto flex items-center justify-center overflow-hidden ${
+                  isDarkTheme
+                    ? 'border-4 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.6)] bg-gray-800'
+                    : 'bg-minecraft-brown/20 border-4 border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
+                }`}>
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Icon name="User" size={120} className={`${isDarkTheme ? 'text-orange-500' : 'text-minecraft-brown'}`} />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <h4 className={`font-pixel text-xl sm:text-2xl mb-4 transition-colors ${
+                      isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
+                    }`}>
+                      Характеристики
+                    </h4>
+                  </div>
+
+                  <div className={`border-2 p-3 sm:p-4 transition-colors ${
+                    isDarkTheme
+                      ? 'border-orange-500/50 bg-orange-900/20'
+                      : 'border-minecraft-brown bg-minecraft-brown/5'
+                  }`}>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Имя:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
+                        }`}>
+                          Раст
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Возраст:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
+                        }`}>
+                          28
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Мир:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
+                        }`}>
+                          Синева
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Страна:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
+                        }`}>
+                          Тени
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Класс:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
+                        }`}>
+                          Инженер
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={() => {
+                      setIsCharacter3Closing(true);
+                      setTimeout(() => {
+                        setShowCharacter3(false);
+                        setIsCharacter3Closing(false);
+                      }, 300);
+                    }}
+                    className={`w-full font-pixel text-sm px-6 py-3 border-4 transition-colors ${
+                      isDarkTheme
+                        ? 'bg-orange-600 text-white border-orange-400 hover:bg-orange-500'
+                        : 'bg-minecraft-brown text-white border-black hover:bg-minecraft-brown/80'
                     }`}
                   >
                     Закрыть
