@@ -1235,16 +1235,13 @@ const Index = () => {
                       {selectedMember === 0 && (
                         <button
                           onClick={() => {
-                            if (!isButtonLocked) {
-                              setIsButtonLocked(true);
-                              setShowCharacter(true);
-                              setViewedCharacters(prev => new Set(prev).add(0));
-                              handleCloseModal();
-                            }
+                            setShowCharacter(true);
+                            setViewedCharacters(prev => new Set(prev).add(0));
+                            handleCloseModal();
                           }}
-                          disabled={showCharacter || showCharacter2 || isButtonLocked}
+                          disabled={showCharacter || showCharacter2}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            (showCharacter || showCharacter2 || isButtonLocked)
+                            (showCharacter || showCharacter2)
                               ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
                               : isDarkTheme
                               ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
@@ -1258,16 +1255,13 @@ const Index = () => {
                       {selectedMember === 1 && (
                         <button
                           onClick={() => {
-                            if (!isButtonLocked) {
-                              setIsButtonLocked(true);
-                              setShowCharacter2(true);
-                              setViewedCharacters(prev => new Set(prev).add(1));
-                              handleCloseModal();
-                            }
+                            setShowCharacter2(true);
+                            setViewedCharacters(prev => new Set(prev).add(1));
+                            handleCloseModal();
                           }}
-                          disabled={showCharacter || showCharacter2 || isButtonLocked}
+                          disabled={showCharacter || showCharacter2}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            (showCharacter || showCharacter2 || isButtonLocked)
+                            (showCharacter || showCharacter2)
                               ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
                               : isDarkTheme
                               ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
