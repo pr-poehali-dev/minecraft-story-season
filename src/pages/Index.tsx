@@ -1962,9 +1962,12 @@ const Index = () => {
                     ? 'border-4 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.6)] bg-gray-800'
                     : 'bg-minecraft-brown/20 border-4 border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
                 }`}>
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Icon name="User" size={120} className={`${isDarkTheme ? 'text-orange-500' : 'text-minecraft-brown'}`} />
-                  </div>
+                  <img 
+                    src="https://cdn.poehali.dev/files/476a8c7d-decd-4922-b386-32aa16aa3af5.png" 
+                    alt="Раст"
+                    className="w-full h-full object-contain pixelated"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
                 </div>
 
                 <div className="space-y-4">
@@ -2004,7 +2007,7 @@ const Index = () => {
                         <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
                           isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
                         }`}>
-                          28
+                          22
                         </span>
                       </div>
                       
@@ -2043,7 +2046,7 @@ const Index = () => {
                         <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
                           isDarkTheme ? 'text-orange-300' : 'text-minecraft-brown'
                         }`}>
-                          Инженер
+                          Мироходец
                         </span>
                       </div>
                     </div>
