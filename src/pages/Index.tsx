@@ -27,6 +27,7 @@ const Index = () => {
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
+  const [isButtonLocked, setIsButtonLocked] = useState(false);
   const [viewedCharacters, setViewedCharacters] = useState<Set<number>>(new Set());
 
   const baseAchievements = [
@@ -219,19 +220,25 @@ const Index = () => {
       setSelectedMember(null);
       setShowAchievementsPage(false);
       setIsClosing(false);
+      setIsButtonLocked(false);
     }, 300);
   };
 
   const openAchievementsPage = () => {
+    if (isButtonLocked) return;
+    setIsButtonLocked(true);
     setShowAchievementsPage(true);
     setHasViewedAchievements(true);
     localStorage.setItem('achievements-viewed', 'true');
   };
 
   const scrollToSection = (sectionId: string) => {
+    if (isButtonLocked) return;
+    setIsButtonLocked(true);
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => setIsButtonLocked(false), 500);
   };
 
   const startSeasons = [
@@ -475,7 +482,12 @@ const Index = () => {
             <img 
               src="https://cdn.poehali.dev/files/52a192e4-420c-42f2-be29-f58ba27d00c4.png"
               alt="Minecraft World"
-              onClick={() => setShowMemorial(true)}
+              onClick={() => {
+                if (!isButtonLocked) {
+                  setIsButtonLocked(true);
+                  setShowMemorial(true);
+                }
+              }}
               className="rounded-lg border-2 sm:border-4 border-minecraft-stone shadow-2xl mx-auto max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-4xl w-full cursor-pointer hover:scale-105 transition-transform"
             />
           </div>
@@ -486,11 +498,15 @@ const Index = () => {
                 isMemorialClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
               }`}
               onClick={() => {
-                setIsMemorialClosing(true);
-                setTimeout(() => {
-                  setShowMemorial(false);
-                  setIsMemorialClosing(false);
-                }, 300);
+                if (!isButtonLocked) {
+                  setIsButtonLocked(true);
+                  setIsMemorialClosing(true);
+                  setTimeout(() => {
+                    setShowMemorial(false);
+                    setIsMemorialClosing(false);
+                    setIsButtonLocked(false);
+                  }, 300);
+                }
               }}
             >
               <div 
@@ -567,7 +583,8 @@ const Index = () => {
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
-                    if (!showMemorial) {
+                    if (!showMemorial && !isButtonLocked) {
+                      setIsButtonLocked(true);
                       setSelectedSeason(index);
                       setViewedSeasons(prev => new Set(prev).add(index));
                     }
@@ -620,7 +637,8 @@ const Index = () => {
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
-                    if (!showMemorial) {
+                    if (!showMemorial && !isButtonLocked) {
+                      setIsButtonLocked(true);
                       const seasonIndex = index + startSeasons.length;
                       setSelectedSeason(seasonIndex);
                       setViewedSeasons(prev => new Set(prev).add(seasonIndex));
@@ -1070,7 +1088,12 @@ const Index = () => {
             {team.map((member, index) => (
               <Card 
                 key={index}
-                onClick={() => !showMemorial && setSelectedMember(index)}
+                onClick={() => {
+                  if (!showMemorial && !isButtonLocked) {
+                    setIsButtonLocked(true);
+                    setSelectedMember(index);
+                  }
+                }}
                 className={`relative border-4 sm:border-8 hover:scale-105 transition-all duration-300 overflow-hidden ${
                   showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 } ${
@@ -1212,13 +1235,16 @@ const Index = () => {
                       {selectedMember === 0 && (
                         <button
                           onClick={() => {
-                            setShowCharacter(true);
-                            setViewedCharacters(prev => new Set(prev).add(0));
-                            handleCloseModal();
+                            if (!isButtonLocked) {
+                              setIsButtonLocked(true);
+                              setShowCharacter(true);
+                              setViewedCharacters(prev => new Set(prev).add(0));
+                              handleCloseModal();
+                            }
                           }}
-                          disabled={showCharacter || showCharacter2}
+                          disabled={showCharacter || showCharacter2 || isButtonLocked}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            (showCharacter || showCharacter2)
+                            (showCharacter || showCharacter2 || isButtonLocked)
                               ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
                               : isDarkTheme
                               ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
@@ -1232,13 +1258,16 @@ const Index = () => {
                       {selectedMember === 1 && (
                         <button
                           onClick={() => {
-                            setShowCharacter2(true);
-                            setViewedCharacters(prev => new Set(prev).add(1));
-                            handleCloseModal();
+                            if (!isButtonLocked) {
+                              setIsButtonLocked(true);
+                              setShowCharacter2(true);
+                              setViewedCharacters(prev => new Set(prev).add(1));
+                              handleCloseModal();
+                            }
                           }}
-                          disabled={showCharacter || showCharacter2}
+                          disabled={showCharacter || showCharacter2 || isButtonLocked}
                           className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
-                            (showCharacter || showCharacter2)
+                            (showCharacter || showCharacter2 || isButtonLocked)
                               ? 'bg-gray-500 text-gray-300 border-gray-400 cursor-not-allowed opacity-50'
                               : isDarkTheme
                               ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
@@ -1280,7 +1309,8 @@ const Index = () => {
               <div 
                 key={index}
                 onClick={() => {
-                  if (!showMemorial) {
+                  if (!showMemorial && !isButtonLocked) {
+                    setIsButtonLocked(true);
                     setSelectedImage(image);
                     setViewedImages(prev => new Set(prev).add(index));
                   }
@@ -1548,11 +1578,15 @@ const Index = () => {
                 </h3>
                 <button 
                   onClick={() => {
-                    setIsCharacterClosing(true);
-                    setTimeout(() => {
-                      setShowCharacter(false);
-                      setIsCharacterClosing(false);
-                    }, 300);
+                    if (!isButtonLocked) {
+                      setIsButtonLocked(true);
+                      setIsCharacterClosing(true);
+                      setTimeout(() => {
+                        setShowCharacter(false);
+                        setIsCharacterClosing(false);
+                        setIsButtonLocked(false);
+                      }, 300);
+                    }
                   }}
                   className={`transition-colors p-1 ${
                     isDarkTheme ? 'text-gray-400 hover:text-yellow-400' : 'text-minecraft-stone hover:text-minecraft-brown'
@@ -1713,11 +1747,15 @@ const Index = () => {
                 </h3>
                 <button 
                   onClick={() => {
-                    setIsCharacter2Closing(true);
-                    setTimeout(() => {
-                      setShowCharacter2(false);
-                      setIsCharacter2Closing(false);
-                    }, 300);
+                    if (!isButtonLocked) {
+                      setIsButtonLocked(true);
+                      setIsCharacter2Closing(true);
+                      setTimeout(() => {
+                        setShowCharacter2(false);
+                        setIsCharacter2Closing(false);
+                        setIsButtonLocked(false);
+                      }, 300);
+                    }
                   }}
                   className={`transition-colors p-1 ${
                     isDarkTheme ? 'text-gray-400 hover:text-purple-400' : 'text-minecraft-stone hover:text-minecraft-sky'
