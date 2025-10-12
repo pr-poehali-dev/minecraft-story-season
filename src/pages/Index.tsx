@@ -12,7 +12,9 @@ const Index = () => {
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [showCharacter, setShowCharacter] = useState(false);
+  const [isCharacterClosing, setIsCharacterClosing] = useState(false);
   const [showCharacter2, setShowCharacter2] = useState(false);
+  const [isCharacter2Closing, setIsCharacter2Closing] = useState(false);
   const [showMemorial, setShowMemorial] = useState(false);
   const [isMemorialClosing, setIsMemorialClosing] = useState(false);
   const [showDownloads, setShowDownloads] = useState(true);
@@ -1486,11 +1488,21 @@ const Index = () => {
 
       {showCharacter && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 animate-fade-in`}
-          onClick={() => setShowCharacter(false)}
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+            isCharacterClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+          }`}
+          onClick={() => {
+            setIsCharacterClosing(true);
+            setTimeout(() => {
+              setShowCharacter(false);
+              setIsCharacterClosing(false);
+            }, 300);
+          }}
         >
           <div 
-            className={`border-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 animate-scale-in ${
+            className={`border-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
+              isCharacterClosing ? 'scale-90' : 'scale-100 animate-scale-in'
+            } ${
               isDarkTheme
                 ? 'bg-gray-900 border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.5)]'
                 : 'bg-white border-minecraft-brown shadow-[12px_12px_0px_rgba(0,0,0,0.5)]'
@@ -1505,7 +1517,13 @@ const Index = () => {
                   Главный персонаж
                 </h3>
                 <button 
-                  onClick={() => setShowCharacter(false)}
+                  onClick={() => {
+                    setIsCharacterClosing(true);
+                    setTimeout(() => {
+                      setShowCharacter(false);
+                      setIsCharacterClosing(false);
+                    }, 300);
+                  }}
                   className={`transition-colors p-1 ${
                     isDarkTheme ? 'text-gray-400 hover:text-yellow-400' : 'text-minecraft-stone hover:text-minecraft-brown'
                   }`}
@@ -1611,7 +1629,13 @@ const Index = () => {
                   </div>
                   
                   <button
-                    onClick={() => setShowCharacter(false)}
+                    onClick={() => {
+                      setIsCharacterClosing(true);
+                      setTimeout(() => {
+                        setShowCharacter(false);
+                        setIsCharacterClosing(false);
+                      }, 300);
+                    }}
                     className={`w-full font-pixel text-sm px-6 py-3 border-4 transition-colors ${
                       isDarkTheme
                         ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
@@ -1629,11 +1653,21 @@ const Index = () => {
 
       {showCharacter2 && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 animate-fade-in`}
-          onClick={() => setShowCharacter2(false)}
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+            isCharacter2Closing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+          }`}
+          onClick={() => {
+            setIsCharacter2Closing(true);
+            setTimeout(() => {
+              setShowCharacter2(false);
+              setIsCharacter2Closing(false);
+            }, 300);
+          }}
         >
           <div 
-            className={`border-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 animate-scale-in ${
+            className={`border-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
+              isCharacter2Closing ? 'scale-90' : 'scale-100 animate-scale-in'
+            } ${
               isDarkTheme
                 ? 'bg-gray-900 border-purple-500 shadow-[0_0_30px_rgba(139,92,246,0.5)]'
                 : 'bg-white border-minecraft-stone shadow-[12px_12px_0px_rgba(0,0,0,0.5)]'
@@ -1648,7 +1682,13 @@ const Index = () => {
                   Главный персонаж
                 </h3>
                 <button 
-                  onClick={() => setShowCharacter2(false)}
+                  onClick={() => {
+                    setIsCharacter2Closing(true);
+                    setTimeout(() => {
+                      setShowCharacter2(false);
+                      setIsCharacter2Closing(false);
+                    }, 300);
+                  }}
                   className={`transition-colors p-1 ${
                     isDarkTheme ? 'text-gray-400 hover:text-purple-400' : 'text-minecraft-stone hover:text-minecraft-sky'
                   }`}
@@ -1754,7 +1794,13 @@ const Index = () => {
                   </div>
                   
                   <button
-                    onClick={() => setShowCharacter2(false)}
+                    onClick={() => {
+                      setIsCharacter2Closing(true);
+                      setTimeout(() => {
+                        setShowCharacter2(false);
+                        setIsCharacter2Closing(false);
+                      }, 300);
+                    }}
                     className={`w-full font-pixel text-sm px-6 py-3 border-4 transition-colors ${
                       isDarkTheme
                         ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
