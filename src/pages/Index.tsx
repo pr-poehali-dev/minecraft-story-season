@@ -11,6 +11,7 @@ const Index = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
+  const [showCharacter, setShowCharacter] = useState(false);
   const [showMemorial, setShowMemorial] = useState(false);
   const [isMemorialClosing, setIsMemorialClosing] = useState(false);
   const [showDownloads, setShowDownloads] = useState(true);
@@ -1169,19 +1170,37 @@ const Index = () => {
                     }`}>
                       {team[selectedMember].description}
                     </p>
-                    <a 
-                      href={`https://t.me/${team[selectedMember].telegram.replace('@', '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors mt-6 ${
-                        isDarkTheme
-                          ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
-                          : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/80'
-                      }`}
-                    >
-                      <Icon name="Send" size={20} />
-                      Написать {team[selectedMember].telegram}
-                    </a>
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                      <a 
+                        href={`https://t.me/${team[selectedMember].telegram.replace('@', '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
+                          isDarkTheme
+                            ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
+                            : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/80'
+                        }`}
+                      >
+                        <Icon name="Send" size={20} />
+                        Написать {team[selectedMember].telegram}
+                      </a>
+                      {selectedMember === 0 && (
+                        <button
+                          onClick={() => {
+                            setShowCharacter(true);
+                            handleCloseModal();
+                          }}
+                          className={`inline-flex items-center gap-2 font-pixel text-sm px-6 py-3 border-4 transition-colors ${
+                            isDarkTheme
+                              ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
+                              : 'bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80'
+                          }`}
+                        >
+                          <Icon name="User" size={20} />
+                          Главный персонаж
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1443,6 +1462,149 @@ const Index = () => {
               <p className="font-sans text-white/60 text-xs sm:text-sm mt-1 sm:mt-2">
                 Достижений разблокировано
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCharacter && (
+        <div 
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 animate-fade-in`}
+          onClick={() => setShowCharacter(false)}
+        >
+          <div 
+            className={`border-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 animate-scale-in ${
+              isDarkTheme
+                ? 'bg-gray-900 border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.5)]'
+                : 'bg-white border-minecraft-brown shadow-[12px_12px_0px_rgba(0,0,0,0.5)]'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 sm:p-6 md:p-8">
+              <div className="flex justify-between items-start mb-4 sm:mb-6">
+                <h3 className={`font-pixel text-lg sm:text-xl md:text-2xl transition-colors ${
+                  isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                }`}>
+                  Главный персонаж
+                </h3>
+                <button 
+                  onClick={() => setShowCharacter(false)}
+                  className={`transition-colors p-1 ${
+                    isDarkTheme ? 'text-gray-400 hover:text-yellow-400' : 'text-minecraft-stone hover:text-minecraft-brown'
+                  }`}
+                >
+                  <Icon name="X" size={20} className="sm:w-6 sm:h-6" />
+                </button>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                <div className={`relative w-full aspect-square mx-auto flex items-center justify-center overflow-hidden ${
+                  isDarkTheme
+                    ? 'border-4 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.6)] bg-gray-800'
+                    : 'bg-minecraft-sky/20 border-4 border-minecraft-brown shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
+                }`}>
+                  <img 
+                    src="https://cdn.poehali.dev/files/8576b771-e0f7-4d61-89b0-4da8fbd77ab3.png" 
+                    alt="dFenger"
+                    className="w-full h-full object-contain pixelated"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <h4 className={`font-pixel text-xl sm:text-2xl mb-4 transition-colors ${
+                      isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                    }`}>
+                      Характеристики
+                    </h4>
+                  </div>
+
+                  <div className={`border-2 p-3 sm:p-4 transition-colors ${
+                    isDarkTheme
+                      ? 'border-yellow-500/50 bg-yellow-900/20'
+                      : 'border-minecraft-brown bg-minecraft-brown/5'
+                  }`}>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Имя:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-yellow-300' : 'text-minecraft-brown'
+                        }`}>
+                          dFenger
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Возраст:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-yellow-300' : 'text-minecraft-brown'
+                        }`}>
+                          22
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Мир:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-yellow-300' : 'text-minecraft-brown'
+                        }`}>
+                          Вактерония
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Страна:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-yellow-300' : 'text-minecraft-brown'
+                        }`}>
+                          Виронтерия
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className={`font-pixel text-xs sm:text-sm transition-colors ${
+                          isDarkTheme ? 'text-gray-400' : 'text-minecraft-stone/60'
+                        }`}>
+                          Класс:
+                        </span>
+                        <span className={`font-sans text-sm sm:text-base font-semibold transition-colors ${
+                          isDarkTheme ? 'text-yellow-300' : 'text-minecraft-brown'
+                        }`}>
+                          Мироходец
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={() => setShowCharacter(false)}
+                    className={`w-full font-pixel text-sm px-6 py-3 border-4 transition-colors ${
+                      isDarkTheme
+                        ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
+                        : 'bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80'
+                    }`}
+                  >
+                    Закрыть
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
