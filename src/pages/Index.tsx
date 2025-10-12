@@ -31,6 +31,7 @@ const Index = () => {
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
   const [isButtonLocked, setIsButtonLocked] = useState(false);
   const [viewedCharacters, setViewedCharacters] = useState<Set<number>>(new Set());
+  const [foundPumpkins, setFoundPumpkins] = useState<Set<number>>(new Set());
 
   const baseAchievements = [
     {
@@ -56,6 +57,12 @@ const Index = () => {
       title: "Высшая власть",
       description: "Узнали информацию о главных героях",
       icon: "Crown"
+    },
+    {
+      id: "spooky-harvest",
+      title: "Жуткая Жатва",
+      description: "Нашли все тыквы на сайте!",
+      icon: "Ghost"
     }
   ];
 
@@ -184,6 +191,22 @@ const Index = () => {
   }, [viewedCharacters]);
 
   useEffect(() => {
+    const totalPumpkins = 8;
+    if (foundPumpkins.size === totalPumpkins && !unlockedAchievements.includes('spooky-harvest')) {
+      setTimeout(() => {
+        const achievement = baseAchievements.find(a => a.id === 'spooky-harvest');
+        setCurrentAchievement(achievement);
+        setShowAchievement(true);
+        const newUnlocked = [...unlockedAchievements, 'spooky-harvest'];
+        setUnlockedAchievements(newUnlocked);
+        localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        setHasViewedAchievements(false);
+        setTimeout(() => setShowAchievement(false), 5000);
+      }, 500);
+    }
+  }, [foundPumpkins]);
+
+  useEffect(() => {
     const requiredAchievements = ['993-reality', 'infinity-limit', 'tretyakov-gallery', 'supreme-power'];
     const hasAllBase = requiredAchievements.every(id => unlockedAchievements.includes(id));
     const hasSecret = unlockedAchievements.includes('story-seasons-master');
@@ -241,6 +264,12 @@ const Index = () => {
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: "smooth" });
     setTimeout(() => setIsButtonLocked(false), 500);
+  };
+
+  const handlePumpkinClick = (pumpkinId: number) => {
+    if (!foundPumpkins.has(pumpkinId)) {
+      setFoundPumpkins(prev => new Set(prev).add(pumpkinId));
+    }
   };
 
   const startSeasons = [
@@ -399,6 +428,11 @@ const Index = () => {
                   </span>
                 )}
               </button>
+              {foundPumpkins.size > 0 && (
+                <div className="font-pixel text-xs px-2 py-1 border-2 rounded transition-colors bg-orange-500 text-white border-orange-600">
+                  🎃 {foundPumpkins.size}/8
+                </div>
+              )}
               <button
                 onClick={() => setIsDarkTheme(!isDarkTheme)}
                 disabled={showMemorial}
@@ -480,6 +514,11 @@ const Index = () => {
               </Button>
             </div>
           </div>
+          
+          <div className="absolute top-20 left-4 sm:left-10 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(1)}>
+            <div className={`text-4xl sm:text-5xl ${foundPumpkins.has(1) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+          </div>
+          
           <div className="mt-6 sm:mt-8 md:mt-12 animate-float px-2 sm:px-4">
             <img 
               src="https://cdn.poehali.dev/files/52a192e4-420c-42f2-be29-f58ba27d00c4.png"
@@ -553,6 +592,10 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
+          <div className="absolute top-10 right-4 sm:right-10 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(2)}>
+            <div className={`text-4xl sm:text-5xl ${foundPumpkins.has(2) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+          </div>
+          
           <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-16 transition-colors ${
             isDarkTheme ? 'text-white' : 'text-minecraft-stone'
           }`}>
@@ -620,7 +663,10 @@ const Index = () => {
           </div>
 
           <div className="mb-16">
-            <div className="flex items-center justify-center mb-8">
+            <div className="flex items-center justify-center mb-8 relative">
+              <div className="absolute left-0 -top-8 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(3)}>
+                <div className={`text-3xl sm:text-4xl ${foundPumpkins.has(3) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+              </div>
               <div className="h-1 flex-1 max-w-xs transition-colors" style={{ backgroundColor: '#f4bc09' }}></div>
               <h3 className="font-pixel text-xl sm:text-3xl mx-6 transition-colors" style={{ color: '#f4bc09' }}>
                 ОСНОВНОЙ СЮЖЕТ
@@ -691,7 +737,10 @@ const Index = () => {
           </div>
 
           <div className="mb-16">
-            <div className="flex items-center justify-center mb-8">
+            <div className="flex items-center justify-center mb-8 relative">
+              <div className="absolute right-0 -top-8 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(6)}>
+                <div className={`text-3xl sm:text-4xl ${foundPumpkins.has(6) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+              </div>
               <div className={`h-1 flex-1 max-w-xs transition-colors ${
                 isDarkTheme ? 'bg-green-400' : 'bg-minecraft-grass'
               }`}></div>
@@ -752,7 +801,10 @@ const Index = () => {
 
           {inDevelopmentSeasons.length > 0 && (
             <div>
-              <div className="flex items-center justify-center mb-8">
+              <div className="flex items-center justify-center mb-8 relative">
+                <div className="absolute left-1/4 -top-10 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(7)}>
+                  <div className={`text-3xl sm:text-4xl ${foundPumpkins.has(7) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+                </div>
                 <div className={`h-1 flex-1 max-w-xs transition-colors ${
                   isDarkTheme ? 'bg-purple-400' : 'bg-minecraft-sky'
                 }`}></div>
@@ -848,6 +900,10 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
+          <div className="absolute top-5 left-10 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(8)}>
+            <div className={`text-4xl sm:text-5xl ${foundPumpkins.has(8) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+          </div>
+          
           <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
             isDarkTheme ? 'text-white' : 'text-minecraft-stone'
           }`}>
@@ -1081,6 +1137,10 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
+          <div className="absolute top-5 left-1/2 transform -translate-x-1/2 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(4)}>
+            <div className={`text-4xl sm:text-5xl ${foundPumpkins.has(4) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+          </div>
+          
           <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
             isDarkTheme ? 'text-white' : 'text-minecraft-stone'
           }`}>
@@ -1315,6 +1375,10 @@ const Index = () => {
           }}
         ></div>
         <div className="container mx-auto relative z-10">
+          <div className="absolute top-0 right-10 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(5)}>
+            <div className={`text-4xl sm:text-5xl ${foundPumpkins.has(5) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
+          </div>
+          
           <h2 className={`font-pixel text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-8 sm:mb-12 transition-colors px-4 ${
             isDarkTheme ? 'text-white' : 'text-minecraft-stone'
           }`}>
@@ -1516,14 +1580,18 @@ const Index = () => {
                     key={achievement.id}
                     className={`border-2 sm:border-4 p-3 sm:p-4 md:p-6 transition-all ${
                       isUnlocked 
-                        ? 'bg-minecraft-grass/20 border-minecraft-grass' 
+                        ? achievement.id === 'spooky-harvest' 
+                          ? 'bg-orange-500/20 border-orange-500' 
+                          : 'bg-minecraft-grass/20 border-minecraft-grass'
                         : 'bg-gray-900/50 border-gray-700 opacity-50'
                     }`}
                   >
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
                         isUnlocked 
-                          ? 'bg-minecraft-grass border-black' 
+                          ? achievement.id === 'spooky-harvest'
+                            ? 'bg-orange-500 border-black'
+                            : 'bg-minecraft-grass border-black'
                           : 'bg-gray-800 border-gray-600'
                       }`}>
                         <Icon 
@@ -1534,7 +1602,11 @@ const Index = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-pixel text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 break-words ${
-                          isUnlocked ? 'text-minecraft-grass' : 'text-gray-400'
+                          isUnlocked 
+                            ? achievement.id === 'spooky-harvest' 
+                              ? 'text-orange-500' 
+                              : 'text-minecraft-grass'
+                            : 'text-gray-400'
                         }`}>
                           {achievement.title}
                         </h3>
