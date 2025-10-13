@@ -142,13 +142,13 @@ const Index = () => {
     const now = new Date();
     const month = now.getMonth();
     const day = now.getDate();
-    const isHalloweenPeriod = month === 9 && day >= 25;
+    const isHalloweenPeriod = true;
     
     if (savedAchievements) {
       setUnlockedAchievements(JSON.parse(savedAchievements));
       
       if (isHalloweenPeriod && !hasSeenScreamerBefore) {
-        const randomDelay = Math.floor(Math.random() * 20000) + 10000;
+        const randomDelay = 2000;
         setTimeout(() => {
           setShowScreamer(true);
           setHasSeenScreamer(true);
@@ -186,7 +186,7 @@ const Index = () => {
         setTimeout(() => setShowAchievement(false), 5000);
         
         if (isHalloweenPeriod && !hasSeenScreamerBefore) {
-          const randomDelay = Math.floor(Math.random() * 20000) + 15000;
+          const randomDelay = 8000;
           setTimeout(() => {
             setShowScreamer(true);
             setHasSeenScreamer(true);
