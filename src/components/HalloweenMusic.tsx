@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/components/ui/icon';
 
 interface HalloweenMusicProps {
@@ -6,72 +6,54 @@ interface HalloweenMusicProps {
 }
 
 const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isMuted, setIsMuted] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [volume, setVolume] = useState(0.3);
 
   useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.15;
-      audioRef.current.crossOrigin = 'anonymous';
+    const audio = document.getElementById('halloween-audio') as HTMLAudioElement;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.play().catch(err => console.log('Autoplay blocked:', err));
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
     }
+  }, [isPlaying]);
 
-    const playAudio = async () => {
-      if (audioRef.current && isPlaying && hasInteracted) {
-        try {
-          audioRef.current.currentTime = 0;
-          await audioRef.current.play();
-          console.log('Музыка запущена');
-        } catch (error) {
-          console.error('Ошибка воспроизведения:', error);
-        }
-      } else if (audioRef.current && !isPlaying) {
-        audioRef.current.pause();
-      }
-    };
+  const handleVolumeToggle = () => {
+    const audio = document.getElementById('halloween-audio') as HTMLAudioElement;
+    if (!audio) return;
 
-    playAudio();
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-  }, [isPlaying, hasInteracted]);
-
-  useEffect(() => {
-    const handleInteraction = () => {
-      setHasInteracted(true);
-    };
-
-    document.addEventListener('click', handleInteraction, { once: true });
-    document.addEventListener('keydown', handleInteraction, { once: true });
-
-    return () => {
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('keydown', handleInteraction);
-    };
-  }, []);
-
-  const toggleMute = () => {
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+    if (volume > 0) {
+      setVolume(0);
+      audio.volume = 0;
+    } else {
+      setVolume(0.3);
+      audio.volume = 0.3;
     }
   };
 
   if (!isPlaying) return null;
 
   return (
-    <button
-      onClick={toggleMute}
-      className="fixed bottom-4 right-4 z-50 bg-orange-600 hover:bg-orange-500 text-white p-3 rounded-full shadow-lg spooky-glow transition-all animate-pulse-slow"
-      title={isMuted ? 'Включить музыку' : 'Выключить музыку'}
-    >
-      <Icon name={isMuted ? 'VolumeX' : 'Volume2'} size={20} />
-    </button>
+    <>
+      <audio
+        id="halloween-audio"
+        loop
+        preload="auto"
+      >
+        <source src="https://assets.mixkit.co/music/preview/mixkit-halloween-moon-2507.mp3" type="audio/mpeg" />
+        <source src="https://cdn.freesound.org/previews/615/615103_6283755-lq.mp3" type="audio/mpeg" />
+      </audio>
+      
+      <button
+        onClick={handleVolumeToggle}
+        className="fixed bottom-4 right-4 z-50 bg-orange-600 hover:bg-orange-500 text-white p-3 rounded-full shadow-lg spooky-glow transition-all hover:scale-110"
+        title={volume > 0 ? 'Выключить музыку' : 'Включить музыку'}
+      >
+        <Icon name={volume > 0 ? 'Volume2' : 'VolumeX'} size={20} />
+      </button>
+    </>
   );
 };
 
