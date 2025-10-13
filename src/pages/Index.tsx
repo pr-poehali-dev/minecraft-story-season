@@ -1627,7 +1627,7 @@ const Index = () => {
               </div>
               <div className="min-w-0">
                 <p className={`font-pixel text-[8px] sm:text-xs ${
-                  currentAchievement.id === 'spooky-harvest' 
+                  currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
                     ? 'text-orange-400' 
                     : 'text-minecraft-grass'
                 }`}>ДОСТИЖЕНИЕ!</p>
@@ -1674,7 +1674,7 @@ const Index = () => {
                     key={achievement.id}
                     className={`border-2 sm:border-4 p-3 sm:p-4 md:p-6 transition-all ${
                       isUnlocked 
-                        ? achievement.id === 'spooky-harvest' 
+                        ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024'
                           ? 'bg-orange-500/20 border-orange-500' 
                           : 'bg-minecraft-grass/20 border-minecraft-grass'
                         : 'bg-gray-900/50 border-gray-700 opacity-50'
@@ -1683,7 +1683,7 @@ const Index = () => {
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
                         isUnlocked 
-                          ? achievement.id === 'spooky-harvest'
+                          ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024'
                             ? 'bg-orange-500 border-black'
                             : 'bg-minecraft-grass border-black'
                           : 'bg-gray-800 border-gray-600'
@@ -1697,7 +1697,7 @@ const Index = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-pixel text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 break-words ${
                           isUnlocked 
-                            ? achievement.id === 'spooky-harvest' 
+                            ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024'
                               ? 'text-orange-500' 
                               : 'text-minecraft-grass'
                             : 'text-gray-400'
