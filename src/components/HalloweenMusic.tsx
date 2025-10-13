@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
 interface HalloweenMusicProps {
@@ -6,30 +6,30 @@ interface HalloweenMusicProps {
 }
 
 const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
-  const [volume, setVolume] = useState(0.3);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    const audio = document.getElementById('halloween-audio') as HTMLAudioElement;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.play().catch(err => console.log('Autoplay blocked:', err));
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
+    if (!isPlaying && audioRef.current) {
+      audioRef.current.pause();
+      setIsAudioPlaying(false);
     }
   }, [isPlaying]);
 
-  const handleVolumeToggle = () => {
-    const audio = document.getElementById('halloween-audio') as HTMLAudioElement;
-    if (!audio) return;
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
 
-    if (volume > 0) {
-      setVolume(0);
-      audio.volume = 0;
+    if (isAudioPlaying) {
+      audioRef.current.pause();
+      setIsAudioPlaying(false);
     } else {
-      setVolume(0.3);
-      audio.volume = 0.3;
+      audioRef.current.volume = 0.25;
+      audioRef.current.play()
+        .then(() => setIsAudioPlaying(true))
+        .catch(err => {
+          console.error('Ошибка воспроизведения:', err);
+          alert('Кликните на кнопку ещё раз для запуска музыки!');
+        });
     }
   };
 
@@ -38,20 +38,22 @@ const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
   return (
     <>
       <audio
-        id="halloween-audio"
+        ref={audioRef}
         loop
         preload="auto"
-      >
-        <source src="https://assets.mixkit.co/music/preview/mixkit-halloween-moon-2507.mp3" type="audio/mpeg" />
-        <source src="https://cdn.freesound.org/previews/615/615103_6283755-lq.mp3" type="audio/mpeg" />
-      </audio>
+        src="https://cdn.freesound.org/previews/615/615103_6283755-lq.mp3"
+      />
       
       <button
-        onClick={handleVolumeToggle}
-        className="fixed bottom-4 right-4 z-50 bg-orange-600 hover:bg-orange-500 text-white p-3 rounded-full shadow-lg spooky-glow transition-all hover:scale-110"
-        title={volume > 0 ? 'Выключить музыку' : 'Включить музыку'}
+        onClick={toggleAudio}
+        className={`fixed bottom-4 right-4 z-50 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 ${
+          isAudioPlaying 
+            ? 'bg-orange-600 hover:bg-orange-500 spooky-glow animate-pulse' 
+            : 'bg-gray-700 hover:bg-gray-600 border-2 border-orange-500'
+        }`}
+        title={isAudioPlaying ? '🎃 Остановить музыку' : '🎃 Запустить хэллоуинскую музыку (кликни!)'}
       >
-        <Icon name={volume > 0 ? 'Volume2' : 'VolumeX'} size={20} />
+        <Icon name={isAudioPlaying ? 'Volume2' : 'Play'} size={24} />
       </button>
     </>
   );
