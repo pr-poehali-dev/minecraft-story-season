@@ -115,9 +115,15 @@ const Index = () => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
     const hasViewed = localStorage.getItem('achievements-viewed');
     const savedAchievements = localStorage.getItem('unlocked-achievements');
+    const savedPumpkins = localStorage.getItem('found-pumpkins');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
+    }
+    
+    if (savedPumpkins) {
+      const pumpkinsArray = JSON.parse(savedPumpkins);
+      setFoundPumpkins(new Set(pumpkinsArray));
     }
     
     if (savedAchievements) {
@@ -268,7 +274,9 @@ const Index = () => {
 
   const handlePumpkinClick = (pumpkinId: number) => {
     if (!foundPumpkins.has(pumpkinId)) {
-      setFoundPumpkins(prev => new Set(prev).add(pumpkinId));
+      const newPumpkins = new Set(foundPumpkins).add(pumpkinId);
+      setFoundPumpkins(newPumpkins);
+      localStorage.setItem('found-pumpkins', JSON.stringify(Array.from(newPumpkins)));
     }
   };
 
