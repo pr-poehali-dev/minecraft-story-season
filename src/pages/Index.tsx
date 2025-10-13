@@ -29,7 +29,6 @@ const Index = () => {
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
-  const [isButtonLocked, setIsButtonLocked] = useState(false);
   const [viewedCharacters, setViewedCharacters] = useState<Set<number>>(new Set());
   const [foundPumpkins, setFoundPumpkins] = useState<Set<number>>(new Set());
 
@@ -137,10 +136,7 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('achievement-993-reality', 'true');
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-        setTimeout(() => {
-          setShowAchievement(false);
-          setIsButtonLocked(false);
-        }, 5000);
+        setTimeout(() => setShowAchievement(false), 5000);
       }, 2000);
     } else {
       setUnlockedAchievements(['993-reality']);
@@ -160,10 +156,7 @@ const Index = () => {
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
           setHasViewedAchievements(false);
-          setTimeout(() => {
-          setShowAchievement(false);
-          setIsButtonLocked(false);
-        }, 5000);
+          setTimeout(() => setShowAchievement(false), 5000);
         }, 500);
       }
     }
@@ -181,10 +174,7 @@ const Index = () => {
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
           setHasViewedAchievements(false);
-          setTimeout(() => {
-          setShowAchievement(false);
-          setIsButtonLocked(false);
-        }, 5000);
+          setTimeout(() => setShowAchievement(false), 5000);
         }, 500);
       }
     }
@@ -200,10 +190,7 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setHasViewedAchievements(false);
-        setTimeout(() => {
-          setShowAchievement(false);
-          setIsButtonLocked(false);
-        }, 5000);
+        setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
     }
   }, [viewedCharacters]);
@@ -219,10 +206,7 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setHasViewedAchievements(false);
-        setTimeout(() => {
-          setShowAchievement(false);
-          setIsButtonLocked(false);
-        }, 5000);
+        setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
     }
   }, [foundPumpkins]);
@@ -240,10 +224,7 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setHasViewedAchievements(false);
-        setTimeout(() => {
-          setShowAchievement(false);
-          setIsButtonLocked(false);
-        }, 5000);
+        setTimeout(() => setShowAchievement(false), 5000);
       }, 1000);
     }
   }, [unlockedAchievements]);
@@ -269,25 +250,19 @@ const Index = () => {
       setSelectedMember(null);
       setShowAchievementsPage(false);
       setIsClosing(false);
-      setIsButtonLocked(false);
     }, 300);
   };
 
   const openAchievementsPage = () => {
-    if (isButtonLocked) return;
-    setIsButtonLocked(true);
     setShowAchievementsPage(true);
     setHasViewedAchievements(true);
     localStorage.setItem('achievements-viewed', 'true');
   };
 
   const scrollToSection = (sectionId: string) => {
-    if (isButtonLocked) return;
-    setIsButtonLocked(true);
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: "smooth" });
-    setTimeout(() => setIsButtonLocked(false), 500);
   };
 
   const handlePumpkinClick = (pumpkinId: number) => {
@@ -602,10 +577,7 @@ const Index = () => {
               src="https://cdn.poehali.dev/files/52a192e4-420c-42f2-be29-f58ba27d00c4.png"
               alt="Minecraft World"
               onClick={() => {
-                if (!isButtonLocked) {
-                  setIsButtonLocked(true);
-                  setShowMemorial(true);
-                }
+                setShowMemorial(true);
               }}
               className="rounded-lg border-2 sm:border-4 border-minecraft-stone shadow-2xl mx-auto max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-4xl w-full cursor-pointer hover:scale-105 transition-transform"
             />
@@ -617,15 +589,11 @@ const Index = () => {
                 isMemorialClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
               }`}
               onClick={() => {
-                if (!isButtonLocked) {
-                  setIsButtonLocked(true);
-                  setIsMemorialClosing(true);
-                  setTimeout(() => {
-                    setShowMemorial(false);
-                    setIsMemorialClosing(false);
-                    setIsButtonLocked(false);
-                  }, 300);
-                }
+                setIsMemorialClosing(true);
+                setTimeout(() => {
+                  setShowMemorial(false);
+                  setIsMemorialClosing(false);
+                }, 300);
               }}
             >
               <div 
