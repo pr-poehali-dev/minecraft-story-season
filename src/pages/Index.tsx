@@ -170,7 +170,7 @@ const Index = () => {
     const now = new Date();
     const month = now.getMonth();
     const day = now.getDate();
-    const isHalloweenPeriod = true; // Режим тестирования
+    const isHalloweenPeriod = (month === 9 && day >= 13) || (month === 10 && day === 1);
     
     if (savedAchievements) {
       setUnlockedAchievements(JSON.parse(savedAchievements));
