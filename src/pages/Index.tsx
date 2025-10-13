@@ -137,7 +137,10 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('achievement-993-reality', 'true');
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-        setTimeout(() => setShowAchievement(false), 5000);
+        setTimeout(() => {
+          setShowAchievement(false);
+          setIsButtonLocked(false);
+        }, 5000);
       }, 2000);
     } else {
       setUnlockedAchievements(['993-reality']);
@@ -157,7 +160,10 @@ const Index = () => {
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
           setHasViewedAchievements(false);
-          setTimeout(() => setShowAchievement(false), 5000);
+          setTimeout(() => {
+          setShowAchievement(false);
+          setIsButtonLocked(false);
+        }, 5000);
         }, 500);
       }
     }
@@ -175,7 +181,10 @@ const Index = () => {
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
           setHasViewedAchievements(false);
-          setTimeout(() => setShowAchievement(false), 5000);
+          setTimeout(() => {
+          setShowAchievement(false);
+          setIsButtonLocked(false);
+        }, 5000);
         }, 500);
       }
     }
@@ -191,7 +200,10 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setHasViewedAchievements(false);
-        setTimeout(() => setShowAchievement(false), 5000);
+        setTimeout(() => {
+          setShowAchievement(false);
+          setIsButtonLocked(false);
+        }, 5000);
       }, 500);
     }
   }, [viewedCharacters]);
@@ -207,7 +219,10 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setHasViewedAchievements(false);
-        setTimeout(() => setShowAchievement(false), 5000);
+        setTimeout(() => {
+          setShowAchievement(false);
+          setIsButtonLocked(false);
+        }, 5000);
       }, 500);
     }
   }, [foundPumpkins]);
@@ -225,7 +240,10 @@ const Index = () => {
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setHasViewedAchievements(false);
-        setTimeout(() => setShowAchievement(false), 5000);
+        setTimeout(() => {
+          setShowAchievement(false);
+          setIsButtonLocked(false);
+        }, 5000);
       }, 1000);
     }
   }, [unlockedAchievements]);
@@ -1594,11 +1612,20 @@ const Index = () => {
 
       {showAchievement && currentAchievement && (
         <div className="fixed top-16 sm:top-20 right-2 sm:right-4 z-[200] animate-fade-in max-w-[280px] sm:max-w-[320px]">
-          <div className={`bg-minecraft-stone border-2 sm:border-4 p-3 sm:p-4 shadow-2xl ${
+          <div className={`bg-minecraft-stone border-2 sm:border-4 p-3 sm:p-4 shadow-2xl relative ${
             currentAchievement.id === 'spooky-harvest' 
               ? 'border-orange-500 spooky-glow' 
               : 'border-minecraft-grass'
           }`}>
+            <button
+              onClick={() => {
+                setShowAchievement(false);
+                setIsButtonLocked(false);
+              }}
+              className="absolute -top-2 -right-2 w-6 h-6 bg-red-600 hover:bg-red-700 border-2 border-black flex items-center justify-center transition-colors"
+            >
+              <Icon name="X" size={14} className="text-white" />
+            </button>
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
               <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${
                 currentAchievement.id === 'spooky-harvest' 
