@@ -1612,14 +1612,14 @@ const Index = () => {
 
       {showAchievement && currentAchievement && (
         <div className="fixed top-16 sm:top-20 right-2 sm:right-4 z-[200] animate-fade-in max-w-[280px] sm:max-w-[320px]">
-          <div className={`bg-minecraft-stone border-2 sm:border-4 p-3 sm:p-4 shadow-2xl ${
-            currentAchievement.id === 'spooky-harvest' 
-              ? 'border-orange-500 spooky-glow' 
-              : 'border-minecraft-grass'
+          <div className={`border-2 sm:border-4 p-3 sm:p-4 shadow-2xl ${
+            currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
+              ? 'bg-orange-600 border-orange-500 spooky-glow' 
+              : 'bg-minecraft-stone border-minecraft-grass'
           }`}>
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
               <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${
-                currentAchievement.id === 'spooky-harvest' 
+                currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
                   ? 'bg-orange-500' 
                   : 'bg-minecraft-grass'
               }`}>
@@ -1628,13 +1628,13 @@ const Index = () => {
               <div className="min-w-0">
                 <p className={`font-pixel text-[8px] sm:text-xs ${
                   currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
-                    ? 'text-orange-400' 
+                    ? 'text-orange-200' 
                     : 'text-minecraft-grass'
                 }`}>ДОСТИЖЕНИЕ!</p>
                 <h4 className="font-pixel text-[10px] sm:text-sm text-white truncate">{currentAchievement.title}</h4>
               </div>
             </div>
-            <p className="font-sans text-[10px] sm:text-xs text-white/80 mt-2">
+            <p className="font-sans text-[10px] sm:text-xs text-white/90 mt-2">
               {currentAchievement.description}
             </p>
           </div>
