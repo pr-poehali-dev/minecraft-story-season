@@ -34,6 +34,10 @@ const Index = () => {
   const [foundPumpkins, setFoundPumpkins] = useState<Set<number>>(new Set());
   const [showScreamer, setShowScreamer] = useState(false);
   const [hasSeenScreamer, setHasSeenScreamer] = useState(false);
+  const [showDailyQuest, setShowDailyQuest] = useState(false);
+  const [completedQuests, setCompletedQuests] = useState<string[]>([]);
+  const [currentQuestProgress, setCurrentQuestProgress] = useState(0);
+  const [showQuestComplete, setShowQuestComplete] = useState(false);
 
   const baseAchievements = [
     {
@@ -71,6 +75,12 @@ const Index = () => {
       title: "С жутким Хэллоуином",
       description: "Сладость или гадость?",
       icon: "Ghost"
+    },
+    {
+      id: "cursed-lands-conqueror",
+      title: "Покоритель проклятых земель",
+      description: "Выполнили все хэллоуинские квесты!",
+      icon: "Skull"
     }
   ];
 
@@ -119,12 +129,23 @@ const Index = () => {
     }
   }, [showMemorial]);
 
+  const dailyQuests = [
+    { id: 'day1', date: '2024-10-25', task: 'visit-home', title: 'Добро пожаловать в кошмар', description: 'Зайдите на главную страницу', icon: 'Home' },
+    { id: 'day2', date: '2024-10-26', task: 'view-season', title: 'Исследователь теней', description: 'Откройте любой сезон', icon: 'BookOpen' },
+    { id: 'day3', date: '2024-10-27', task: 'view-gallery', title: 'Коллекционер душ', description: 'Просмотрите 2 изображения в галерее', icon: 'Image' },
+    { id: 'day4', date: '2024-10-28', task: 'find-pumpkin', title: 'Охотник за тыквами', description: 'Найдите хотя бы одну тыкву', icon: 'Ghost' },
+    { id: 'day5', date: '2024-10-29', task: 'view-characters', title: 'Знакомство с мертвецами', description: 'Откройте карточку любого участника', icon: 'Users' },
+    { id: 'day6', date: '2024-10-30', task: 'theme-switch', title: 'Повелитель тьмы', description: 'Переключите тему сайта', icon: 'Moon' },
+    { id: 'day7', date: '2024-10-31', task: 'all-pumpkins', title: 'Последний ритуал', description: 'Найдите все 8 тыкв', icon: 'Skull' }
+  ];
+
   useEffect(() => {
     const hasVisited = localStorage.getItem('achievement-993-reality');
     const hasViewed = localStorage.getItem('achievements-viewed');
     const savedAchievements = localStorage.getItem('unlocked-achievements');
     const savedPumpkins = localStorage.getItem('found-pumpkins');
     const hasSeenScreamerBefore = localStorage.getItem('halloween-screamer-seen');
+    const savedQuests = localStorage.getItem('completed-quests');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
@@ -137,6 +158,10 @@ const Index = () => {
     
     if (hasSeenScreamerBefore) {
       setHasSeenScreamer(true);
+    }
+    
+    if (savedQuests) {
+      setCompletedQuests(JSON.parse(savedQuests));
     }
     
     const now = new Date();
@@ -284,11 +309,65 @@ const Index = () => {
   }, [foundPumpkins]);
 
   useEffect(() => {
+    const now = new Date();
+    const currentDate = now.toISOString().split('T')[0];
+    const todayQuest = dailyQuests.find(q => q.date === currentDate);
+    
+    if (todayQuest && !completedQuests.includes(todayQuest.id)) {
+      const questCompleted = checkQuestCompletion(todayQuest.task);
+      if (questCompleted) {
+        const newCompleted = [...completedQuests, todayQuest.id];
+        setCompletedQuests(newCompleted);
+        localStorage.setItem('completed-quests', JSON.stringify(newCompleted));
+        setShowQuestComplete(true);
+        setTimeout(() => setShowQuestComplete(false), 5000);
+        
+        if (newCompleted.length === dailyQuests.length && !unlockedAchievements.includes('cursed-lands-conqueror')) {
+          setTimeout(() => {
+            const finalAchievement = baseAchievements.find(a => a.id === 'cursed-lands-conqueror');
+            if (finalAchievement) {
+              setCurrentAchievement(finalAchievement);
+              setShowAchievement(true);
+              const withFinal = [...unlockedAchievements, 'cursed-lands-conqueror'];
+              setUnlockedAchievements(withFinal);
+              localStorage.setItem('unlocked-achievements', JSON.stringify(withFinal));
+              setTimeout(() => setShowAchievement(false), 5000);
+            }
+          }, 6000);
+        }
+      }
+    }
+  }, [activeSection, viewedSeasons, viewedImages, foundPumpkins, viewedCharacters, isDarkTheme]);
+
+  const checkQuestCompletion = (task: string): boolean => {
+    switch (task) {
+      case 'visit-home':
+        return true;
+      case 'view-season':
+        return viewedSeasons.size > 0;
+      case 'view-gallery':
+        return viewedImages.size >= 2;
+      case 'find-pumpkin':
+        return foundPumpkins.size >= 1;
+      case 'view-characters':
+        return viewedCharacters.size > 0;
+      case 'theme-switch':
+        return localStorage.getItem('theme-switched') === 'true';
+      case 'all-pumpkins':
+        return foundPumpkins.size === 8;
+      default:
+        return false;
+    }
+  };
+
+  useEffect(() => {
     const requiredAchievements = ['993-reality', 'infinity-limit', 'tretyakov-gallery', 'supreme-power'];
+    const halloweenAchievements = ['spooky-harvest', 'halloween-2024', 'cursed-lands-conqueror'];
     const hasAllBase = requiredAchievements.every(id => unlockedAchievements.includes(id));
+    const hasAnyHalloween = halloweenAchievements.some(id => unlockedAchievements.includes(id));
     const hasSecret = unlockedAchievements.includes('story-seasons-master');
     
-    if (hasAllBase && !hasSecret) {
+    if (hasAllBase && !hasSecret && !hasAnyHalloween) {
       setTimeout(() => {
         setCurrentAchievement(secretAchievement);
         setShowAchievement(true);
@@ -553,7 +632,10 @@ const Index = () => {
                 </div>
               )}
               <button
-                onClick={() => setIsDarkTheme(!isDarkTheme)}
+                onClick={() => {
+                  setIsDarkTheme(!isDarkTheme);
+                  localStorage.setItem('theme-switched', 'true');
+                }}
                 disabled={showMemorial}
                 className={`font-pixel text-xs p-2 border-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                   isDarkTheme
@@ -1615,13 +1697,13 @@ const Index = () => {
       {showAchievement && currentAchievement && (
         <div className="fixed top-16 sm:top-20 right-2 sm:right-4 z-[200] animate-fade-in max-w-[280px] sm:max-w-[320px]">
           <div className={`border-2 sm:border-4 p-3 sm:p-4 shadow-2xl ${
-            currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
+            currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024' || currentAchievement.id === 'cursed-lands-conqueror'
               ? 'bg-orange-600 border-orange-500 spooky-glow' 
               : 'bg-minecraft-stone border-minecraft-grass'
           }`}>
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
               <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${
-                currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
+                currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024' || currentAchievement.id === 'cursed-lands-conqueror'
                   ? 'bg-orange-500' 
                   : 'bg-minecraft-grass'
               }`}>
@@ -1629,7 +1711,7 @@ const Index = () => {
               </div>
               <div className="min-w-0">
                 <p className={`font-pixel text-[8px] sm:text-xs ${
-                  currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024'
+                  currentAchievement.id === 'spooky-harvest' || currentAchievement.id === 'halloween-2024' || currentAchievement.id === 'cursed-lands-conqueror'
                     ? 'text-orange-200' 
                     : 'text-minecraft-grass'
                 }`}>ДОСТИЖЕНИЕ!</p>
@@ -1676,7 +1758,7 @@ const Index = () => {
                     key={achievement.id}
                     className={`border-2 sm:border-4 p-3 sm:p-4 md:p-6 transition-all ${
                       isUnlocked 
-                        ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024'
+                        ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
                           ? 'bg-orange-500/20 border-orange-500' 
                           : 'bg-minecraft-grass/20 border-minecraft-grass'
                         : 'bg-gray-900/50 border-gray-700 opacity-50'
@@ -1685,7 +1767,7 @@ const Index = () => {
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
                         isUnlocked 
-                          ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024'
+                          ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
                             ? 'bg-orange-500 border-black'
                             : 'bg-minecraft-grass border-black'
                           : 'bg-gray-800 border-gray-600'
@@ -1699,7 +1781,7 @@ const Index = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-pixel text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 break-words ${
                           isUnlocked 
-                            ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024'
+                            ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
                               ? 'text-orange-500' 
                               : 'text-minecraft-grass'
                             : 'text-gray-400'
@@ -2242,6 +2324,75 @@ const Index = () => {
           </div>
         </div>
       )}
+
+      {showQuestComplete && (() => {
+        const now = new Date();
+        const currentDate = now.toISOString().split('T')[0];
+        const completedQuest = dailyQuests.find(q => q.date === currentDate);
+        return completedQuest ? (
+          <div className="fixed bottom-4 right-2 sm:right-4 z-[200] max-w-[280px] sm:max-w-[320px] animate-[slideInBottom_0.5s_ease-out]">
+            <div className="bg-purple-900 border-4 border-purple-500 p-3 sm:p-4 shadow-2xl spooky-glow">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-purple-700 bg-purple-600 flex items-center justify-center flex-shrink-0">
+                  <Icon name={completedQuest.icon as any} size={20} className="text-white sm:w-6 sm:h-6" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-pixel text-[8px] sm:text-xs text-purple-300">КВЕСТ ВЫПОЛНЕН!</p>
+                  <h4 className="font-pixel text-[10px] sm:text-sm text-white truncate">{completedQuest.title}</h4>
+                </div>
+              </div>
+              <p className="font-sans text-[10px] sm:text-xs text-white/90 mt-2">
+                {completedQuest.description}
+              </p>
+              <div className="mt-2 bg-purple-950/50 border border-purple-600 p-2 rounded">
+                <div className="flex justify-between items-center text-[9px] sm:text-xs">
+                  <span className="font-pixel text-purple-300">Прогресс:</span>
+                  <span className="font-pixel text-purple-200">{completedQuests.length}/{dailyQuests.length}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null;
+      })()}
+
+      {(() => {
+        const now = new Date();
+        const month = now.getMonth();
+        const day = now.getDate();
+        const isHalloweenPeriod = month === 9 && day >= 25;
+        
+        if (!isHalloweenPeriod) return null;
+        
+        const currentDate = now.toISOString().split('T')[0];
+        const todayQuest = dailyQuests.find(q => q.date === currentDate);
+        
+        if (!todayQuest || completedQuests.includes(todayQuest.id)) return null;
+        
+        return (
+          <div className="fixed bottom-4 left-2 sm:left-4 z-[150] max-w-[280px] sm:max-w-[320px] animate-[slideInLeft_0.5s_ease-out]">
+            <div className="bg-gray-900 border-4 border-orange-500 p-3 sm:p-4 shadow-2xl spooky-glow">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-orange-600 bg-orange-500 flex items-center justify-center flex-shrink-0">
+                  <Icon name={todayQuest.icon as any} size={20} className="text-white sm:w-6 sm:h-6" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-pixel text-[8px] sm:text-xs text-orange-400">ЕЖЕДНЕВНЫЙ КВЕСТ</p>
+                  <h4 className="font-pixel text-[10px] sm:text-sm text-white truncate">{todayQuest.title}</h4>
+                </div>
+              </div>
+              <p className="font-sans text-[10px] sm:text-xs text-white/90 mt-2">
+                {todayQuest.description}
+              </p>
+              <div className="mt-2 bg-orange-950/50 border border-orange-600 p-2 rounded">
+                <div className="flex justify-between items-center text-[9px] sm:text-xs">
+                  <span className="font-pixel text-orange-300">День {completedQuests.length + 1}/7</span>
+                  <span className="font-pixel text-orange-200">🎃 Хэллоуин 2024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {showScreamer && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black animate-fade-in">
