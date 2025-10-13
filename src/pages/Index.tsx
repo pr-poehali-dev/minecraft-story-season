@@ -1854,7 +1854,7 @@ const Index = () => {
             <div className="flex justify-between items-center mb-4 sm:mb-6">
               <div>
                 <h2 className="font-pixel text-xl sm:text-2xl md:text-3xl text-orange-400 spooky-glow">ХЭЛЛОУИНСКИЕ КВЕСТЫ</h2>
-                <p className="font-sans text-sm text-purple-300 mt-1">25 - 31 Октября 2024</p>
+                <p className="font-sans text-sm text-purple-300 mt-1">25 - 31 Октября 2025</p>
               </div>
               <button 
                 onClick={() => {
@@ -2548,7 +2548,7 @@ const Index = () => {
               <div className="mt-2 bg-orange-950/50 border border-orange-600 p-2 rounded">
                 <div className="flex justify-between items-center text-[9px] sm:text-xs">
                   <span className="font-pixel text-orange-300">День {completedQuests.length + 1}/7</span>
-                  <span className="font-pixel text-orange-200">🎃 Хэллоуин 2024</span>
+                  <span className="font-pixel text-orange-200">🎃 Хэллоуин 2025</span>
                 </div>
               </div>
             </div>
