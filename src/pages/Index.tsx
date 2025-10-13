@@ -29,6 +29,7 @@ const Index = () => {
   const [currentAchievement, setCurrentAchievement] = useState<any>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [viewedImages, setViewedImages] = useState<Set<number>>(new Set());
+  const [isButtonLocked, setIsButtonLocked] = useState(false);
   const [viewedCharacters, setViewedCharacters] = useState<Set<number>>(new Set());
   const [foundPumpkins, setFoundPumpkins] = useState<Set<number>>(new Set());
 
@@ -250,19 +251,25 @@ const Index = () => {
       setSelectedMember(null);
       setShowAchievementsPage(false);
       setIsClosing(false);
+      setIsButtonLocked(false);
     }, 300);
   };
 
   const openAchievementsPage = () => {
+    if (isButtonLocked) return;
+    setIsButtonLocked(true);
     setShowAchievementsPage(true);
     setHasViewedAchievements(true);
     localStorage.setItem('achievements-viewed', 'true');
   };
 
   const scrollToSection = (sectionId: string) => {
+    if (isButtonLocked) return;
+    setIsButtonLocked(true);
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => setIsButtonLocked(false), 500);
   };
 
   const handlePumpkinClick = (pumpkinId: number) => {
@@ -577,7 +584,10 @@ const Index = () => {
               src="https://cdn.poehali.dev/files/52a192e4-420c-42f2-be29-f58ba27d00c4.png"
               alt="Minecraft World"
               onClick={() => {
-                setShowMemorial(true);
+                if (!isButtonLocked) {
+                  setIsButtonLocked(true);
+                  setShowMemorial(true);
+                }
               }}
               className="rounded-lg border-2 sm:border-4 border-minecraft-stone shadow-2xl mx-auto max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-4xl w-full cursor-pointer hover:scale-105 transition-transform"
             />
@@ -589,11 +599,15 @@ const Index = () => {
                 isMemorialClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
               }`}
               onClick={() => {
-                setIsMemorialClosing(true);
-                setTimeout(() => {
-                  setShowMemorial(false);
-                  setIsMemorialClosing(false);
-                }, 300);
+                if (!isButtonLocked) {
+                  setIsButtonLocked(true);
+                  setIsMemorialClosing(true);
+                  setTimeout(() => {
+                    setShowMemorial(false);
+                    setIsMemorialClosing(false);
+                    setIsButtonLocked(false);
+                  }, 300);
+                }
               }}
             >
               <div 
@@ -1580,20 +1594,11 @@ const Index = () => {
 
       {showAchievement && currentAchievement && (
         <div className="fixed top-16 sm:top-20 right-2 sm:right-4 z-[200] animate-fade-in max-w-[280px] sm:max-w-[320px]">
-          <div className={`bg-minecraft-stone border-2 sm:border-4 p-3 sm:p-4 shadow-2xl relative ${
+          <div className={`bg-minecraft-stone border-2 sm:border-4 p-3 sm:p-4 shadow-2xl ${
             currentAchievement.id === 'spooky-harvest' 
               ? 'border-orange-500 spooky-glow' 
               : 'border-minecraft-grass'
           }`}>
-            <button
-              onClick={() => {
-                setShowAchievement(false);
-                setIsButtonLocked(false);
-              }}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-red-600 hover:bg-red-700 border-2 border-black flex items-center justify-center transition-colors"
-            >
-              <Icon name="X" size={14} className="text-white" />
-            </button>
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
               <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${
                 currentAchievement.id === 'spooky-harvest' 
