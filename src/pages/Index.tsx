@@ -142,16 +142,17 @@ const Index = () => {
     const now = new Date();
     const month = now.getMonth();
     const day = now.getDate();
-    const isHalloweenPeriod = true;
+    const isHalloweenPeriod = month === 9 && day >= 25;
     
     if (savedAchievements) {
       setUnlockedAchievements(JSON.parse(savedAchievements));
       
-      if (isHalloweenPeriod) {
-        const randomDelay = 2000;
+      if (isHalloweenPeriod && !hasSeenScreamerBefore) {
+        const randomDelay = Math.floor(Math.random() * 20000) + 10000;
         setTimeout(() => {
           setShowScreamer(true);
           setHasSeenScreamer(true);
+          localStorage.setItem('halloween-screamer-seen', 'true');
           
           setTimeout(() => {
             setShowScreamer(false);
@@ -184,11 +185,12 @@ const Index = () => {
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setTimeout(() => setShowAchievement(false), 5000);
         
-        if (isHalloweenPeriod) {
-          const randomDelay = 8000;
+        if (isHalloweenPeriod && !hasSeenScreamerBefore) {
+          const randomDelay = Math.floor(Math.random() * 20000) + 15000;
           setTimeout(() => {
             setShowScreamer(true);
             setHasSeenScreamer(true);
+            localStorage.setItem('halloween-screamer-seen', 'true');
             
             setTimeout(() => {
               setShowScreamer(false);
