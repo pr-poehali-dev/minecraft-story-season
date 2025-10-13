@@ -28,7 +28,6 @@ const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
         .then(() => setIsAudioPlaying(true))
         .catch(err => {
           console.error('Ошибка воспроизведения:', err);
-          alert('Кликните на кнопку ещё раз для запуска музыки!');
         });
     }
   };
