@@ -1594,13 +1594,25 @@ const Index = () => {
 
       {showAchievement && currentAchievement && (
         <div className="fixed top-16 sm:top-20 right-2 sm:right-4 z-[200] animate-fade-in max-w-[280px] sm:max-w-[320px]">
-          <div className="bg-minecraft-stone border-2 sm:border-4 border-minecraft-grass p-3 sm:p-4 shadow-2xl">
+          <div className={`bg-minecraft-stone border-2 sm:border-4 p-3 sm:p-4 shadow-2xl ${
+            currentAchievement.id === 'spooky-harvest' 
+              ? 'border-orange-500 spooky-glow' 
+              : 'border-minecraft-grass'
+          }`}>
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-minecraft-grass border-2 border-black flex items-center justify-center flex-shrink-0">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${
+                currentAchievement.id === 'spooky-harvest' 
+                  ? 'bg-orange-500' 
+                  : 'bg-minecraft-grass'
+              }`}>
                 <Icon name={currentAchievement.icon as any} size={20} className="text-white sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">
-                <p className="font-pixel text-[8px] sm:text-xs text-minecraft-grass">ДОСТИЖЕНИЕ!</p>
+                <p className={`font-pixel text-[8px] sm:text-xs ${
+                  currentAchievement.id === 'spooky-harvest' 
+                    ? 'text-orange-400' 
+                    : 'text-minecraft-grass'
+                }`}>ДОСТИЖЕНИЕ!</p>
                 <h4 className="font-pixel text-[10px] sm:text-sm text-white truncate">{currentAchievement.title}</h4>
               </div>
             </div>
