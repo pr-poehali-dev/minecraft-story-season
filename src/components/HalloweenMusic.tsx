@@ -12,9 +12,9 @@ const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
 
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio('https://assets.mixkit.co/active_storage/sfx/2879/2879-preview.mp3');
+      audioRef.current = new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_4a26719f55.mp3');
       audioRef.current.loop = true;
-      audioRef.current.volume = 0.3;
+      audioRef.current.volume = 0.2;
     }
 
     const playAudio = async () => {
