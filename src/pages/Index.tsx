@@ -394,16 +394,44 @@ const Index = () => {
   ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${
+    <div className={`min-h-screen transition-colors duration-500 relative overflow-hidden ${
       isDarkTheme 
-        ? 'bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900' 
+        ? 'bg-gradient-to-b from-purple-950 via-orange-950 to-gray-950' 
         : 'bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20'
     }`}>
-      <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 ${
+      {/* Halloween decorations */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Spiderwebs */}
+        <div className="absolute top-0 left-0 text-6xl opacity-30">🕸️</div>
+        <div className="absolute top-0 right-0 text-6xl opacity-30 transform scale-x-[-1]">🕸️</div>
+        <div className="absolute bottom-20 left-10 text-5xl opacity-20">🕸️</div>
+        <div className="absolute bottom-40 right-20 text-5xl opacity-20 transform scale-x-[-1]">🕸️</div>
+        
+        {/* Flying bats */}
+        <div className="absolute top-1/4 left-1/4 text-4xl halloween-float opacity-40" style={{animationDelay: '0s'}}>🦇</div>
+        <div className="absolute top-1/3 right-1/4 text-3xl halloween-float opacity-30" style={{animationDelay: '1s'}}>🦇</div>
+        <div className="absolute top-2/3 left-1/3 text-3xl halloween-float opacity-35" style={{animationDelay: '2s'}}>🦇</div>
+        <div className="absolute bottom-1/4 right-1/3 text-4xl halloween-float opacity-25" style={{animationDelay: '1.5s'}}>🦇</div>
+        
+        {/* Ghosts */}
+        <div className="absolute top-1/2 left-10 text-5xl halloween-swing opacity-20" style={{animationDelay: '0.5s'}}>👻</div>
+        <div className="absolute top-1/3 right-10 text-5xl halloween-swing opacity-20" style={{animationDelay: '1.5s'}}>👻</div>
+        
+        {/* Floating pumpkins */}
+        <div className="absolute bottom-1/3 left-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '2.5s'}}>🎃</div>
+        <div className="absolute bottom-1/2 right-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '3s'}}>🎃</div>
+      </div>
+      <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 relative ${
         isDarkTheme 
-          ? 'bg-gray-950/95 border-gray-700' 
+          ? 'bg-purple-950/95 border-orange-600 spooky-glow' 
           : 'bg-minecraft-stone/95 border-minecraft-brown'
       }`}>
+        {isDarkTheme && (
+          <>
+            <div className="absolute -top-8 left-10 text-4xl animate-bounce">🎃</div>
+            <div className="absolute -top-8 right-10 text-4xl animate-bounce" style={{animationDelay: '0.5s'}}>🎃</div>
+          </>
+        )}
         <div className="container mx-auto px-2 sm:px-4 py-3">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <h1 className="font-pixel text-[10px] sm:text-xs md:text-sm text-white">СЮЖЕТНЫЕ СЕЗОНЫ</h1>
@@ -411,7 +439,11 @@ const Index = () => {
               <button
                 onClick={() => navigate('/terms')}
                 disabled={showMemorial}
-                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-brown text-white border-minecraft-brown hover:bg-minecraft-brown/80 disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`font-pixel text-xs p-2 border-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                  isDarkTheme 
+                    ? 'bg-purple-700 text-orange-300 border-purple-600 hover:bg-purple-600' 
+                    : 'bg-minecraft-brown text-white border-minecraft-brown hover:bg-minecraft-brown/80'
+                }`}
                 title="Термины сезонов"
               >
                 <Icon name="Book" size={14} />
@@ -419,7 +451,11 @@ const Index = () => {
               <button
                 onClick={openAchievementsPage}
                 disabled={showMemorial}
-                className="font-pixel text-xs p-2 border-2 rounded transition-colors bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80 relative disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`font-pixel text-xs p-2 border-2 rounded transition-colors relative disabled:opacity-50 disabled:cursor-not-allowed ${
+                  isDarkTheme 
+                    ? 'bg-orange-600 text-white border-orange-500 hover:bg-orange-500' 
+                    : 'bg-minecraft-grass text-black border-minecraft-grass hover:bg-minecraft-grass/80'
+                }`}
               >
                 <Icon name="Trophy" size={14} />
                 {unlockedAchievements.length > 0 && !hasViewedAchievements && (
@@ -429,7 +465,11 @@ const Index = () => {
                 )}
               </button>
               {foundPumpkins.size > 0 && (
-                <div className="font-pixel text-xs px-2 py-1 border-2 rounded transition-colors bg-orange-500 text-white border-orange-600">
+                <div className={`font-pixel text-xs px-2 py-1 border-2 rounded transition-colors ${
+                  isDarkTheme 
+                    ? 'bg-orange-500 text-white border-orange-600 spooky-glow' 
+                    : 'bg-orange-500 text-white border-orange-600'
+                }`}>
                   🎃 {foundPumpkins.size}/8
                 </div>
               )}
@@ -452,10 +492,14 @@ const Index = () => {
                   onClick={() => scrollToSection(section)}
                   disabled={showMemorial}
                   variant={activeSection === section ? "default" : "ghost"}
-                  className={`font-pixel text-[8px] sm:text-[9px] md:text-[10px] px-2 sm:px-3 py-1 h-auto border-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`font-pixel text-[8px] sm:text-[9px] md:text-[10px] px-2 sm:px-3 py-1 h-auto border-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all ${
                     activeSection === section 
-                      ? "bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80" 
-                      : "text-white border-white/20 hover:bg-white/10"
+                      ? isDarkTheme 
+                        ? "bg-orange-500 text-black border-orange-700 hover:bg-orange-400 spooky-glow" 
+                        : "bg-minecraft-grass text-black border-black hover:bg-minecraft-grass/80"
+                      : isDarkTheme
+                        ? "text-orange-300 border-purple-500/50 hover:bg-purple-800/30"
+                        : "text-white border-white/20 hover:bg-white/10"
                   }`}
                 >
                   {section === "home" && "ГЛАВНАЯ"}
@@ -487,12 +531,12 @@ const Index = () => {
         <div className="container mx-auto text-center relative z-10">
           <div className="mb-8 animate-fade-in">
             <h2 className={`font-pixel text-xl sm:text-3xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 drop-shadow-lg transition-colors px-2 ${
-              isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+              isDarkTheme ? 'text-orange-400 spooky-glow' : 'text-minecraft-stone'
             }`}>
               СЮЖЕТНЫЕ СЕЗОНЫ
             </h2>
             <p className={`font-sans text-sm sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 max-w-3xl mx-auto transition-colors px-4 ${
-              isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+              isDarkTheme ? 'text-purple-200' : 'text-minecraft-stone/80'
             }`}>
               Сюжетные сезоны, созданные с любовью к игре и вниманием к деталям
             </p>
@@ -500,7 +544,11 @@ const Index = () => {
               <Button 
                 onClick={() => scrollToSection("seasons")}
                 disabled={showMemorial}
-                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className={`font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                  isDarkTheme 
+                    ? 'bg-orange-600 text-white hover:bg-orange-500 spooky-glow' 
+                    : 'bg-minecraft-grass text-black hover:bg-minecraft-grass/80'
+                }`}
               >
                 СМОТРЕТЬ СЕЗОНЫ
               </Button>
@@ -508,7 +556,11 @@ const Index = () => {
                 onClick={() => scrollToSection("team")}
                 disabled={showMemorial}
                 variant="outline"
-                className="font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm bg-[#0891b2] text-white hover:bg-[#0891b2]/80 border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className={`font-pixel text-[9px] sm:text-[10px] md:text-xs lg:text-sm border-2 sm:border-4 border-black px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                  isDarkTheme 
+                    ? 'bg-purple-700 text-white hover:bg-purple-600' 
+                    : 'bg-[#0891b2] text-white hover:bg-[#0891b2]/80'
+                }`}
               >
                 ПОЗНАКОМИТЬСЯ
               </Button>
@@ -581,7 +633,7 @@ const Index = () => {
       </section>
 
       <section id="seasons" className={`min-h-screen py-12 sm:py-16 px-4 relative transition-colors duration-500 ${
-        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
+        isDarkTheme ? 'bg-purple-900/40 shadow-2xl' : 'bg-minecraft-stone/10'
       }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
@@ -597,7 +649,7 @@ const Index = () => {
           </div>
           
           <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-16 transition-colors ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            isDarkTheme ? 'text-orange-400 spooky-glow' : 'text-minecraft-stone'
           }`}>
             НАШИ СЕЗОНЫ
           </h2>
@@ -605,15 +657,15 @@ const Index = () => {
           <div className="mb-16">
             <div className="flex items-center justify-center mb-8">
               <div className={`h-1 flex-1 max-w-xs transition-colors ${
-                isDarkTheme ? 'bg-cyan-400' : 'bg-cyan-500'
+                isDarkTheme ? 'bg-orange-500' : 'bg-cyan-500'
               }`}></div>
               <h3 className={`font-pixel text-xl sm:text-3xl mx-6 transition-colors ${
-                isDarkTheme ? 'text-cyan-400' : 'text-cyan-500'
+                isDarkTheme ? 'text-orange-400' : 'text-cyan-500'
               }`}>
                 НАЧАЛО
               </h3>
               <div className={`h-1 flex-1 max-w-xs transition-colors ${
-                isDarkTheme ? 'bg-cyan-400' : 'bg-cyan-500'
+                isDarkTheme ? 'bg-orange-500' : 'bg-cyan-500'
               }`}></div>
             </div>
             <div className="flex justify-center">
@@ -624,7 +676,7 @@ const Index = () => {
                     showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                   } ${
                     isDarkTheme
-                      ? 'bg-gray-900 border-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]'
+                      ? 'bg-gray-950 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_40px_rgba(249,115,22,0.8)]'
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
@@ -636,7 +688,7 @@ const Index = () => {
                   }}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-2 ${
-                    isDarkTheme ? 'bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500' : 'bg-cyan-500'
+                    isDarkTheme ? 'bg-gradient-to-r from-orange-600 via-purple-600 to-orange-600' : 'bg-cyan-500'
                   }`}></div>
                   <div className="overflow-hidden">
                     <img 
@@ -647,12 +699,12 @@ const Index = () => {
                   </div>
                   <CardContent className="p-6 lg:p-8">
                     <h3 className={`font-pixel text-sm sm:text-base lg:text-lg mb-4 transition-colors ${
-                      isDarkTheme ? 'text-cyan-400' : 'text-minecraft-brown'
+                      isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
                     }`}>
                       {season.title}
                     </h3>
                     <p className={`font-sans text-sm sm:text-base transition-colors ${
-                      isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                      isDarkTheme ? 'text-purple-200' : 'text-minecraft-stone/80'
                     }`}>
                       {season.description}
                     </p>
@@ -681,7 +733,7 @@ const Index = () => {
                     showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                   } ${
                     isDarkTheme
-                      ? 'bg-gray-900 border-yellow-500 shadow-[0_0_20px_rgba(244,188,9,0.4)] hover:shadow-[0_0_30px_rgba(244,188,9,0.6)]'
+                      ? 'bg-purple-950 border-orange-600 shadow-[0_0_20px_rgba(234,88,12,0.5)] hover:shadow-[0_0_40px_rgba(234,88,12,0.8)]'
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
@@ -694,7 +746,7 @@ const Index = () => {
                   }}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-2 transition-colors ${
-                    isDarkTheme ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500' : ''
+                    isDarkTheme ? 'bg-gradient-to-r from-purple-600 via-orange-600 to-purple-600' : ''
                   }`} style={{ backgroundColor: isDarkTheme ? '' : '#f4bc09' }}></div>
                   <div className="overflow-hidden">
                     <img 
@@ -705,12 +757,12 @@ const Index = () => {
                   </div>
                   <CardContent className="p-6">
                     <h3 className={`font-pixel text-xs sm:text-sm mb-2 sm:mb-4 transition-colors ${
-                      isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                      isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
                     }`}>
                       {season.title}
                     </h3>
                     <div className={`font-sans text-xs sm:text-sm mb-2 sm:mb-4 transition-colors ${
-                      isDarkTheme ? 'text-gray-300' : 'text-minecraft-stone/80'
+                      isDarkTheme ? 'text-purple-200' : 'text-minecraft-stone/80'
                     }`}>
                       {season.description}
                     </div>
@@ -721,7 +773,7 @@ const Index = () => {
                         rel="noopener noreferrer"
                         className={`inline-flex items-center gap-1 sm:gap-2 font-pixel text-[8px] sm:text-[10px] px-2 sm:px-4 py-1 sm:py-2 border-2 transition-colors ${
                           isDarkTheme
-                            ? 'bg-yellow-600 text-white border-yellow-400 hover:bg-yellow-500'
+                            ? 'bg-orange-600 text-white border-orange-400 hover:bg-orange-500'
                             : 'bg-minecraft-stone text-white border-black hover:bg-minecraft-stone/80'
                         }`}
                       >
@@ -761,7 +813,7 @@ const Index = () => {
                     showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                   } ${
                     isDarkTheme
-                      ? 'bg-gray-900 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)]'
+                      ? 'bg-purple-950 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_40px_rgba(249,115,22,0.8)]'
                       : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                   }`}
                   onClick={() => {
@@ -773,7 +825,7 @@ const Index = () => {
                   }}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-2 ${
-                    isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass'
+                    isDarkTheme ? 'bg-gradient-to-r from-orange-600 via-purple-600 to-orange-600' : 'bg-minecraft-grass'
                   }`}></div>
                   <div className="overflow-hidden">
                     <img 
@@ -825,7 +877,7 @@ const Index = () => {
                       showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                     } ${
                       isDarkTheme
-                        ? 'bg-gray-900 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]'
+                        ? 'bg-gray-950 border-purple-600 shadow-[0_0_20px_rgba(147,51,234,0.6)] hover:shadow-[0_0_40px_rgba(147,51,234,0.9)]'
                         : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:shadow-[10px_10px_0px_rgba(0,0,0,0.4)]'
                     }`}
                     onClick={() => {
@@ -889,7 +941,7 @@ const Index = () => {
       </section>
 
       <section id="download" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
-        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
+        isDarkTheme ? 'bg-purple-900/40' : 'bg-minecraft-stone/10'
       }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
@@ -905,7 +957,7 @@ const Index = () => {
           </div>
           
           <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            isDarkTheme ? 'text-orange-400' : 'text-minecraft-stone'
           }`}>
             СКАЧАТЬ MINECRAFT
           </h2>
@@ -914,7 +966,11 @@ const Index = () => {
             <Button
               onClick={() => setShowDownloads(!showDownloads)}
               disabled={showMemorial}
-              className="font-pixel text-[10px] sm:text-xs md:text-sm lg:text-lg bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-2 sm:border-4 border-black px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className={`font-pixel text-[10px] sm:text-xs md:text-sm lg:text-lg border-2 sm:border-4 px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-6 h-auto shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                isDarkTheme 
+                  ? 'bg-orange-600 text-white hover:bg-orange-500 border-orange-800 spooky-glow' 
+                  : 'bg-minecraft-grass text-black hover:bg-minecraft-grass/80 border-black'
+              }`}
             >
               <Icon name={showDownloads ? "ChevronUp" : "ChevronDown"} size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
               <span className="whitespace-nowrap text-[10px] sm:text-xs md:text-sm lg:text-base">{showDownloads ? "СКРЫТЬ" : "ПОКАЗАТЬ"}</span>
@@ -1091,15 +1147,15 @@ const Index = () => {
         ></div>
         <div className="container mx-auto relative z-10">
           <h2 className={`font-pixel text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-8 sm:mb-12 transition-colors px-4 ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            isDarkTheme ? 'text-orange-400' : 'text-minecraft-stone'
           }`}>
             О ПРОЕКТЕ
           </h2>
           <div className={`max-w-4xl mx-auto border-4 p-4 sm:p-8 md:p-12 rounded-lg shadow-xl transition-colors ${
-            isDarkTheme ? 'bg-gray-800 border-gray-600' : 'bg-white border-minecraft-stone'
+            isDarkTheme ? 'bg-purple-950 border-orange-600 spooky-glow' : 'bg-white border-minecraft-stone'
           }`}>
             <div className={`space-y-4 sm:space-y-6 font-sans text-sm sm:text-base md:text-lg transition-colors ${
-              isDarkTheme ? 'text-gray-200' : 'text-minecraft-stone/90'
+              isDarkTheme ? 'text-purple-200' : 'text-minecraft-stone/90'
             }`}>
               <p>
                 Мы создаём уникальные сюжетные сезоны в Minecraft, где каждая постройка, каждое событие 
@@ -1126,7 +1182,7 @@ const Index = () => {
       </section>
 
       <section id="team" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
-        isDarkTheme ? 'bg-gray-800/30' : 'bg-minecraft-stone/10'
+        isDarkTheme ? 'bg-purple-900/40' : 'bg-minecraft-stone/10'
       }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
@@ -1142,7 +1198,7 @@ const Index = () => {
           </div>
           
           <h2 className={`font-pixel text-3xl sm:text-5xl text-center mb-12 transition-colors ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            isDarkTheme ? 'text-orange-400' : 'text-minecraft-stone'
           }`}>
             КОМАНДА
           </h2>
@@ -1160,12 +1216,12 @@ const Index = () => {
                   showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 } ${
                   isDarkTheme
-                    ? 'bg-gray-900 border-gray-700 shadow-[0_0_10px_rgba(139,92,246,0.3)] sm:shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] sm:hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]'
+                    ? 'bg-purple-950 border-orange-600 shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_40px_rgba(249,115,22,0.8)]'
                     : 'bg-white border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.3)] sm:shadow-[8px_8px_0px_rgba(0,0,0,0.3)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.4)] sm:hover:shadow-[12px_12px_0px_rgba(0,0,0,0.4)]'
                 }`}
               >
                 <div className={`absolute top-0 left-0 right-0 h-1.5 sm:h-2 ${
-                  isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500' : 'bg-minecraft-grass'
+                  isDarkTheme ? 'bg-gradient-to-r from-orange-600 via-purple-600 to-orange-600' : 'bg-minecraft-grass'
                 }`}></div>
                 <CardContent className="p-4 sm:p-8 text-center">
                   <div className={`relative w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 overflow-hidden ${
@@ -1188,7 +1244,7 @@ const Index = () => {
                     )}
                   </div>
                   <h3 className={`font-pixel text-base sm:text-xl mb-2 transition-colors ${
-                    isDarkTheme ? 'text-purple-400' : 'text-minecraft-brown'
+                    isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
                   }`}>
                     {member.name}
                   </h3>
@@ -1204,7 +1260,7 @@ const Index = () => {
                   </p>
                   <div className={`inline-flex items-center gap-1.5 sm:gap-2 font-pixel text-[9px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 border-2 transition-colors ${
                     isDarkTheme
-                      ? 'bg-purple-600 text-white border-purple-400 hover:bg-purple-500'
+                      ? 'bg-orange-600 text-white border-orange-400 hover:bg-orange-500'
                       : 'bg-minecraft-sky text-white border-black hover:bg-minecraft-sky/90'
                   }`}>
                     <Icon name="Send" size={12} className="sm:w-4 sm:h-4" />
@@ -1364,7 +1420,7 @@ const Index = () => {
       </section>
 
       <section id="gallery" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
-        isDarkTheme ? 'bg-transparent' : 'bg-transparent'
+        isDarkTheme ? 'bg-purple-900/40' : 'bg-transparent'
       }`}>
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
@@ -1380,7 +1436,7 @@ const Index = () => {
           </div>
           
           <h2 className={`font-pixel text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-8 sm:mb-12 transition-colors px-4 ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            isDarkTheme ? 'text-orange-400' : 'text-minecraft-stone'
           }`}>
             ГАЛЕРЕЯ
           </h2>
@@ -1399,7 +1455,7 @@ const Index = () => {
                   showMemorial ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 } ${
                   isDarkTheme
-                    ? 'border-purple-500 shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)]'
+                    ? 'border-orange-600 shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_40px_rgba(249,115,22,0.8)]'
                     : 'border-minecraft-stone shadow-[4px_4px_0px_rgba(0,0,0,0.3)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.4)]'
                 }`}
               >

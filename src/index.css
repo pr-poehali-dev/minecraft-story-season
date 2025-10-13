@@ -125,3 +125,45 @@
     transform: scale(1) rotate(var(--rotate, 0deg));
   }
 }
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes spooky-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(255, 119, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 119, 0, 0.8);
+  }
+}
+
+.halloween-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.halloween-swing {
+  animation: swing 2s ease-in-out infinite;
+}
+
+.spooky-glow {
+  animation: spooky-glow 2s ease-in-out infinite;
+}
