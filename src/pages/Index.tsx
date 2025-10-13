@@ -32,6 +32,8 @@ const Index = () => {
   const [isButtonLocked, setIsButtonLocked] = useState(false);
   const [viewedCharacters, setViewedCharacters] = useState<Set<number>>(new Set());
   const [foundPumpkins, setFoundPumpkins] = useState<Set<number>>(new Set());
+  const [showScreamer, setShowScreamer] = useState(false);
+  const [hasSeenScreamer, setHasSeenScreamer] = useState(false);
 
   const baseAchievements = [
     {
@@ -122,7 +124,7 @@ const Index = () => {
     const hasViewed = localStorage.getItem('achievements-viewed');
     const savedAchievements = localStorage.getItem('unlocked-achievements');
     const savedPumpkins = localStorage.getItem('found-pumpkins');
-    const hasHalloweenAchievement = localStorage.getItem('achievement-halloween-2024');
+    const hasSeenScreamerBefore = localStorage.getItem('halloween-screamer-seen');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
@@ -133,29 +135,44 @@ const Index = () => {
       setFoundPumpkins(new Set(pumpkinsArray));
     }
     
+    if (hasSeenScreamerBefore) {
+      setHasSeenScreamer(true);
+    }
+    
     const now = new Date();
     const month = now.getMonth();
     const day = now.getDate();
     const isHalloweenPeriod = month === 9 && day >= 25;
     
     if (savedAchievements) {
-      const achievements = JSON.parse(savedAchievements);
+      setUnlockedAchievements(JSON.parse(savedAchievements));
       
-      if (isHalloweenPeriod && !hasHalloweenAchievement && !achievements.includes('halloween-2024')) {
+      if (isHalloweenPeriod && !hasSeenScreamerBefore) {
+        const randomDelay = Math.floor(Math.random() * 20000) + 10000;
         setTimeout(() => {
-          const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
-          if (halloweenAchievement) {
-            setCurrentAchievement(halloweenAchievement);
-            setShowAchievement(true);
-            const newUnlocked = [...achievements, 'halloween-2024'];
-            setUnlockedAchievements(newUnlocked);
-            localStorage.setItem('achievement-halloween-2024', 'true');
-            localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-            setTimeout(() => setShowAchievement(false), 5000);
-          }
-        }, 4000);
-      } else {
-        setUnlockedAchievements(achievements);
+          setShowScreamer(true);
+          setHasSeenScreamer(true);
+          localStorage.setItem('halloween-screamer-seen', 'true');
+          
+          setTimeout(() => {
+            setShowScreamer(false);
+            
+            setTimeout(() => {
+              const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
+              if (halloweenAchievement) {
+                setCurrentAchievement(halloweenAchievement);
+                setShowAchievement(true);
+                const achievements = JSON.parse(localStorage.getItem('unlocked-achievements') || '[]');
+                if (!achievements.includes('halloween-2024')) {
+                  const newUnlocked = [...achievements, 'halloween-2024'];
+                  setUnlockedAchievements(newUnlocked);
+                  localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+                }
+                setTimeout(() => setShowAchievement(false), 5000);
+              }
+            }, 500);
+          }, 2000);
+        }, randomDelay);
       }
     } else if (!hasVisited) {
       setTimeout(() => {
@@ -168,19 +185,29 @@ const Index = () => {
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setTimeout(() => setShowAchievement(false), 5000);
         
-        if (isHalloweenPeriod) {
+        if (isHalloweenPeriod && !hasSeenScreamerBefore) {
+          const randomDelay = Math.floor(Math.random() * 20000) + 15000;
           setTimeout(() => {
-            const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
-            if (halloweenAchievement) {
-              setCurrentAchievement(halloweenAchievement);
-              setShowAchievement(true);
-              const withHalloween = [...newUnlocked, 'halloween-2024'];
-              setUnlockedAchievements(withHalloween);
-              localStorage.setItem('achievement-halloween-2024', 'true');
-              localStorage.setItem('unlocked-achievements', JSON.stringify(withHalloween));
-              setTimeout(() => setShowAchievement(false), 5000);
-            }
-          }, 8000);
+            setShowScreamer(true);
+            setHasSeenScreamer(true);
+            localStorage.setItem('halloween-screamer-seen', 'true');
+            
+            setTimeout(() => {
+              setShowScreamer(false);
+              
+              setTimeout(() => {
+                const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
+                if (halloweenAchievement) {
+                  setCurrentAchievement(halloweenAchievement);
+                  setShowAchievement(true);
+                  const withHalloween = [...newUnlocked, 'halloween-2024'];
+                  setUnlockedAchievements(withHalloween);
+                  localStorage.setItem('unlocked-achievements', JSON.stringify(withHalloween));
+                  setTimeout(() => setShowAchievement(false), 5000);
+                }
+              }, 500);
+            }, 2000);
+          }, randomDelay);
         }
       }, 2000);
     } else {
@@ -2211,6 +2238,21 @@ const Index = () => {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showScreamer && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black animate-fade-in">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="text-9xl animate-pulse">
+              👻
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <h1 className="font-pixel text-6xl md:text-8xl text-red-600 animate-pulse drop-shadow-[0_0_30px_rgba(220,38,38,0.8)]">
+                БУ!
+              </h1>
             </div>
           </div>
         </div>
