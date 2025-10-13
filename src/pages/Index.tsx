@@ -38,6 +38,8 @@ const Index = () => {
   const [completedQuests, setCompletedQuests] = useState<string[]>([]);
   const [currentQuestProgress, setCurrentQuestProgress] = useState(0);
   const [showQuestComplete, setShowQuestComplete] = useState(false);
+  const [showQuestsPage, setShowQuestsPage] = useState(false);
+  const [isQuestsClosing, setIsQuestsClosing] = useState(false);
 
   const baseAchievements = [
     {
@@ -619,6 +621,22 @@ const Index = () => {
                 {unlockedAchievements.length > 0 && !hasViewedAchievements && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] rounded-full w-3 h-3 flex items-center justify-center">
                     {unlockedAchievements.length}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => setShowQuestsPage(true)}
+                disabled={showMemorial}
+                className={`font-pixel text-xs p-2 border-2 rounded transition-colors relative disabled:opacity-50 disabled:cursor-not-allowed ${
+                  isDarkTheme 
+                    ? 'bg-purple-600 text-white border-purple-500 hover:bg-purple-500 spooky-glow' 
+                    : 'bg-purple-600 text-white border-purple-500 hover:bg-purple-500'
+                }`}
+              >
+                <Icon name="Scroll" size={14} />
+                {completedQuests.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[8px] rounded-full w-3 h-3 flex items-center justify-center">
+                    {completedQuests.length}
                   </span>
                 )}
               </button>
@@ -1807,6 +1825,150 @@ const Index = () => {
               <p className="font-sans text-white/60 text-xs sm:text-sm mt-1 sm:mt-2">
                 Достижений разблокировано
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showQuestsPage && (
+        <div 
+          className={`fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
+            isQuestsClosing ? 'opacity-0' : 'opacity-100'
+          }`}
+          onClick={() => {
+            setIsQuestsClosing(true);
+            setTimeout(() => {
+              setShowQuestsPage(false);
+              setIsQuestsClosing(false);
+            }, 300);
+          }}
+        >
+          <div 
+            className={`max-w-4xl w-full max-h-[90vh] overflow-y-auto border-4 p-4 sm:p-6 md:p-8 rounded-lg transition-transform duration-300 ${
+              isQuestsClosing ? 'scale-90' : 'scale-100'
+            } ${
+              isDarkTheme ? 'bg-gray-900 border-purple-600' : 'bg-purple-900 border-purple-500'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <div>
+                <h2 className="font-pixel text-xl sm:text-2xl md:text-3xl text-orange-400 spooky-glow">ХЭЛЛОУИНСКИЕ КВЕСТЫ</h2>
+                <p className="font-sans text-sm text-purple-300 mt-1">25 - 31 Октября 2024</p>
+              </div>
+              <button 
+                onClick={() => {
+                  setIsQuestsClosing(true);
+                  setTimeout(() => {
+                    setShowQuestsPage(false);
+                    setIsQuestsClosing(false);
+                  }, 300);
+                }}
+                className="text-white hover:text-orange-400 transition-colors p-1"
+              >
+                <Icon name="X" size={24} className="sm:w-8 sm:h-8" />
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
+              {dailyQuests.map((quest, index) => {
+                const isCompleted = completedQuests.includes(quest.id);
+                const now = new Date();
+                const currentDate = now.toISOString().split('T')[0];
+                const isToday = quest.date === currentDate;
+                const questDate = new Date(quest.date);
+                const isAvailable = questDate <= now;
+                
+                return (
+                  <div 
+                    key={quest.id}
+                    className={`border-4 p-3 sm:p-4 md:p-6 transition-all ${
+                      isCompleted
+                        ? 'bg-purple-600/30 border-purple-400'
+                        : isToday
+                          ? 'bg-orange-500/20 border-orange-500 spooky-glow'
+                          : isAvailable
+                            ? 'bg-purple-900/50 border-purple-600'
+                            : 'bg-gray-900/50 border-gray-700 opacity-50'
+                    }`}
+                  >
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
+                        isCompleted
+                          ? 'bg-purple-500 border-purple-300'
+                          : isToday
+                            ? 'bg-orange-500 border-orange-300'
+                            : isAvailable
+                              ? 'bg-purple-700 border-purple-500'
+                              : 'bg-gray-800 border-gray-600'
+                      }`}>
+                        {isCompleted ? (
+                          <Icon name="Check" size={24} className="text-white sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                        ) : (
+                          <Icon 
+                            name={isAvailable ? quest.icon as any : "Lock"} 
+                            size={24} 
+                            className={`${isAvailable ? "text-white" : "text-gray-600"} sm:w-7 sm:h-7 md:w-8 md:h-8`}
+                          />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`font-pixel text-[10px] sm:text-xs px-2 py-1 border ${
+                            isToday ? 'bg-orange-500 border-orange-600 text-white' : 'bg-purple-800 border-purple-600 text-purple-300'
+                          }`}>
+                            ДЕНЬ {index + 1}
+                          </span>
+                          {isCompleted && (
+                            <span className="font-pixel text-[10px] sm:text-xs px-2 py-1 border bg-green-600 border-green-500 text-white">
+                              ✓ ВЫПОЛНЕНО
+                            </span>
+                          )}
+                          {isToday && !isCompleted && (
+                            <span className="font-pixel text-[10px] sm:text-xs px-2 py-1 border bg-orange-600 border-orange-500 text-white animate-pulse">
+                              СЕГОДНЯ
+                            </span>
+                          )}
+                        </div>
+                        <h3 className={`font-pixel text-sm sm:text-base md:text-lg mb-1 sm:mb-2 break-words ${
+                          isCompleted
+                            ? 'text-purple-300'
+                            : isToday
+                              ? 'text-orange-400'
+                              : isAvailable
+                                ? 'text-purple-400'
+                                : 'text-gray-500'
+                        }`}>
+                          {quest.title}
+                        </h3>
+                        <p className={`font-sans text-xs sm:text-sm md:text-base break-words ${
+                          isCompleted || isAvailable ? 'text-white/80' : 'text-gray-600'
+                        }`}>
+                          {isAvailable ? quest.description : 'Доступно позже'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-purple-950/50 border-2 border-purple-600 rounded-lg">
+              <div className="flex items-center justify-between mb-3">
+                <span className="font-pixel text-sm sm:text-base text-purple-300">ПРОГРЕСС КВЕСТОВ</span>
+                <span className="font-pixel text-lg sm:text-xl md:text-2xl text-orange-400">{completedQuests.length}/{dailyQuests.length}</span>
+              </div>
+              <div className="w-full bg-gray-800 h-4 sm:h-6 border-2 border-purple-700 overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-purple-600 to-orange-500 transition-all duration-500"
+                  style={{ width: `${(completedQuests.length / dailyQuests.length) * 100}%` }}
+                ></div>
+              </div>
+              {completedQuests.length === dailyQuests.length && (
+                <p className="font-pixel text-xs sm:text-sm text-orange-400 mt-3 text-center animate-pulse">
+                  🎃 ВСЕ КВЕСТЫ ВЫПОЛНЕНЫ! ПОЛУЧЕНА НАГРАДА! 🎃
+                </p>
+              )}
             </div>
           </div>
         </div>
