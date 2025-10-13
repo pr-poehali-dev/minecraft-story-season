@@ -583,60 +583,9 @@ const Index = () => {
             <img 
               src="https://cdn.poehali.dev/files/52a192e4-420c-42f2-be29-f58ba27d00c4.png"
               alt="Minecraft World"
-              onClick={() => {
-                if (!isButtonLocked) {
-                  setIsButtonLocked(true);
-                  setShowMemorial(true);
-                }
-              }}
-              className="rounded-lg border-2 sm:border-4 border-minecraft-stone shadow-2xl mx-auto max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-4xl w-full cursor-pointer hover:scale-105 transition-transform"
+              className="rounded-lg border-2 sm:border-4 border-minecraft-stone shadow-2xl mx-auto max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-4xl w-full"
             />
           </div>
-
-          {showMemorial && (
-            <div 
-              className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 overflow-hidden transition-opacity duration-300 ${
-                isMemorialClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
-              }`}
-              onClick={() => {
-                if (!isButtonLocked) {
-                  setIsButtonLocked(true);
-                  setIsMemorialClosing(true);
-                  setTimeout(() => {
-                    setShowMemorial(false);
-                    setIsMemorialClosing(false);
-                    setIsButtonLocked(false);
-                  }, 300);
-                }
-              }}
-            >
-              <div 
-                className={`bg-minecraft-stone border-4 border-black p-6 sm:p-8 md:p-12 text-center max-w-xs sm:max-w-2xl mx-4 transition-transform duration-300 ${
-                  isMemorialClosing ? 'scale-90' : 'scale-100 animate-scale-in'
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="mb-4 sm:mb-6">
-                  <Icon name="Heart" size={48} className="text-red-500 mx-auto sm:w-16 sm:h-16" />
-                </div>
-                <h3 className="font-pixel text-xl sm:text-2xl md:text-3xl text-white mb-4">
-                  Уголь, прости:(
-                </h3>
-                <button 
-                  onClick={() => {
-                    setIsMemorialClosing(true);
-                    setTimeout(() => {
-                      setShowMemorial(false);
-                      setIsMemorialClosing(false);
-                    }, 300);
-                  }}
-                  className="mt-4 sm:mt-6 font-pixel text-xs sm:text-sm bg-white text-minecraft-stone px-4 sm:px-6 py-2 sm:py-3 border-2 sm:border-4 border-black hover:bg-gray-200 transition-colors"
-                >
-                  Закрыть
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
