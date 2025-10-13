@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/theme";
+import HalloweenMusic from "@/components/HalloweenMusic";
 
 const Terms = () => {
   const navigate = useNavigate();
@@ -242,6 +243,8 @@ const Terms = () => {
           </p>
         </div>
       </footer>
+
+      <HalloweenMusic isPlaying={isDarkTheme} />
     </div>
   );
 };

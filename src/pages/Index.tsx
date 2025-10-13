@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/theme";
+import HalloweenMusic from "@/components/HalloweenMusic";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -2570,6 +2571,8 @@ const Index = () => {
           </div>
         </div>
       )}
+
+      <HalloweenMusic isPlaying={isDarkTheme} />
     </div>
   );
 };
