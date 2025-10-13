@@ -16,19 +16,28 @@ const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
     }
   }, [isPlaying]);
 
-  const toggleAudio = () => {
-    if (!audioRef.current) return;
+  const toggleAudio = async () => {
+    if (!audioRef.current) {
+      console.log('Audio ref not found');
+      return;
+    }
+
+    console.log('Toggle clicked, current state:', isAudioPlaying);
 
     if (isAudioPlaying) {
       audioRef.current.pause();
       setIsAudioPlaying(false);
+      console.log('Paused');
     } else {
-      audioRef.current.volume = 0.25;
-      audioRef.current.play()
-        .then(() => setIsAudioPlaying(true))
-        .catch(err => {
-          console.error('Ошибка воспроизведения:', err);
-        });
+      try {
+        audioRef.current.volume = 0.3;
+        audioRef.current.load();
+        await audioRef.current.play();
+        setIsAudioPlaying(true);
+        console.log('Playing');
+      } catch (err) {
+        console.error('Play error:', err);
+      }
     }
   };
 
@@ -40,8 +49,10 @@ const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
         ref={audioRef}
         loop
         preload="auto"
-        src="https://cdn.freesound.org/previews/615/615103_6283755-lq.mp3"
-      />
+      >
+        <source src="https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3" type="audio/mpeg" />
+        <source src="https://commondatastorage.googleapis.com/codeskulptor-assets/Epoq-Lepidoptera.ogg" type="audio/ogg" />
+      </audio>
       
       <button
         onClick={toggleAudio}
