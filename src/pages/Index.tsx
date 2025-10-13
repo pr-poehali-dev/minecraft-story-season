@@ -130,13 +130,13 @@ const Index = () => {
   }, [showMemorial]);
 
   const dailyQuests = [
-    { id: 'day1', date: '2024-10-25', task: 'visit-home', title: 'Добро пожаловать в кошмар', description: 'Зайдите на главную страницу', icon: 'Home' },
-    { id: 'day2', date: '2024-10-26', task: 'view-season', title: 'Исследователь теней', description: 'Откройте любой сезон', icon: 'BookOpen' },
-    { id: 'day3', date: '2024-10-27', task: 'view-gallery', title: 'Коллекционер душ', description: 'Просмотрите 2 изображения в галерее', icon: 'Image' },
-    { id: 'day4', date: '2024-10-28', task: 'find-pumpkin', title: 'Охотник за тыквами', description: 'Найдите хотя бы одну тыкву', icon: 'Ghost' },
-    { id: 'day5', date: '2024-10-29', task: 'view-characters', title: 'Знакомство с мертвецами', description: 'Откройте карточку любого участника', icon: 'Users' },
-    { id: 'day6', date: '2024-10-30', task: 'theme-switch', title: 'Повелитель тьмы', description: 'Переключите тему сайта', icon: 'Moon' },
-    { id: 'day7', date: '2024-10-31', task: 'all-pumpkins', title: 'Последний ритуал', description: 'Найдите все 8 тыкв', icon: 'Skull' }
+    { id: 'day1', date: '2025-10-13', task: 'visit-home', title: 'Добро пожаловать в кошмар', description: 'Зайдите на главную страницу', icon: 'Home' },
+    { id: 'day2', date: '2025-10-14', task: 'view-season', title: 'Исследователь теней', description: 'Откройте любой сезон', icon: 'BookOpen' },
+    { id: 'day3', date: '2025-10-15', task: 'view-gallery', title: 'Коллекционер душ', description: 'Просмотрите 2 изображения в галерее', icon: 'Image' },
+    { id: 'day4', date: '2025-10-16', task: 'find-pumpkin', title: 'Охотник за тыквами', description: 'Найдите хотя бы одну тыкву', icon: 'Ghost' },
+    { id: 'day5', date: '2025-10-17', task: 'view-characters', title: 'Знакомство с мертвецами', description: 'Откройте карточку любого участника', icon: 'Users' },
+    { id: 'day6', date: '2025-10-18', task: 'theme-switch', title: 'Повелитель тьмы', description: 'Переключите тему сайта', icon: 'Moon' },
+    { id: 'day7', date: '2025-10-19', task: 'all-pumpkins', title: 'Последний ритуал', description: 'Найдите все 8 тыкв', icon: 'Skull' }
   ];
 
   useEffect(() => {
@@ -167,7 +167,7 @@ const Index = () => {
     const now = new Date();
     const month = now.getMonth();
     const day = now.getDate();
-    const isHalloweenPeriod = month === 9 && day >= 25;
+    const isHalloweenPeriod = true; // Режим тестирования
     
     if (savedAchievements) {
       setUnlockedAchievements(JSON.parse(savedAchievements));
@@ -2359,7 +2359,7 @@ const Index = () => {
         const now = new Date();
         const month = now.getMonth();
         const day = now.getDate();
-        const isHalloweenPeriod = month === 9 && day >= 25;
+        const isHalloweenPeriod = true; // Режим тестирования
         
         if (!isHalloweenPeriod) return null;
         
