@@ -112,18 +112,9 @@ const Index = () => {
   }, [showMemorial]);
 
   useEffect(() => {
-    // Reset pumpkins and spooky harvest achievement
-    localStorage.removeItem('found-pumpkins');
-    const savedAchievements = localStorage.getItem('unlocked-achievements');
-    if (savedAchievements) {
-      const achievements = JSON.parse(savedAchievements);
-      const filtered = achievements.filter((id: string) => id !== 'spooky-harvest');
-      localStorage.setItem('unlocked-achievements', JSON.stringify(filtered));
-    }
-    
     const hasVisited = localStorage.getItem('achievement-993-reality');
     const hasViewed = localStorage.getItem('achievements-viewed');
-    const savedAchievementsUpdated = localStorage.getItem('unlocked-achievements');
+    const savedAchievements = localStorage.getItem('unlocked-achievements');
     const savedPumpkins = localStorage.getItem('found-pumpkins');
     
     if (hasViewed) {
@@ -135,8 +126,8 @@ const Index = () => {
       setFoundPumpkins(new Set(pumpkinsArray));
     }
     
-    if (savedAchievementsUpdated) {
-      setUnlockedAchievements(JSON.parse(savedAchievementsUpdated));
+    if (savedAchievements) {
+      setUnlockedAchievements(JSON.parse(savedAchievements));
     } else if (!hasVisited) {
       setTimeout(() => {
         const achievement = baseAchievements[0];
