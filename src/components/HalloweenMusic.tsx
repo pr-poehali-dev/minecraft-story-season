@@ -12,17 +12,20 @@ const HalloweenMusic = ({ isPlaying }: HalloweenMusicProps) => {
 
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_4a26719f55.mp3');
+      audioRef.current = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
       audioRef.current.loop = true;
-      audioRef.current.volume = 0.2;
+      audioRef.current.volume = 0.15;
+      audioRef.current.crossOrigin = 'anonymous';
     }
 
     const playAudio = async () => {
       if (audioRef.current && isPlaying && hasInteracted) {
         try {
+          audioRef.current.currentTime = 0;
           await audioRef.current.play();
+          console.log('Музыка запущена');
         } catch (error) {
-          console.log('Автовоспроизведение заблокировано браузером');
+          console.error('Ошибка воспроизведения:', error);
         }
       } else if (audioRef.current && !isPlaying) {
         audioRef.current.pause();
