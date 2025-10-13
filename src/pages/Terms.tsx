@@ -32,21 +32,32 @@ const Terms = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-all duration-500 ${
+    <div className={`min-h-screen transition-all duration-500 relative overflow-hidden ${
       isDarkTheme 
-        ? 'bg-gradient-to-b from-gray-900 to-gray-800' 
+        ? 'bg-gradient-to-b from-gray-900 via-purple-900/20 to-gray-800' 
         : 'bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20'
     } ${
       isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
     }`}>
+      {isDarkTheme && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 left-10 text-4xl animate-float">🎃</div>
+          <div className="absolute top-32 right-20 text-3xl animate-float" style={{ animationDelay: '1s' }}>👻</div>
+          <div className="absolute bottom-40 left-1/4 text-5xl animate-float" style={{ animationDelay: '2s' }}>🦇</div>
+          <div className="absolute top-1/3 right-1/3 text-4xl animate-float" style={{ animationDelay: '1.5s' }}>🕷️</div>
+          <div className="absolute bottom-20 right-10 text-3xl animate-float" style={{ animationDelay: '0.5s' }}>💀</div>
+        </div>
+      )}
       <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 ${
         isDarkTheme
-          ? 'bg-gray-900/95 border-gray-700'
+          ? 'bg-gray-900/95 border-orange-500 spooky-glow'
           : 'bg-minecraft-stone/95 border-minecraft-brown'
       }`}>
         <div className="container mx-auto px-2 sm:px-4 py-3">
           <div className="flex items-center justify-between gap-2">
-            <h1 className="font-pixel text-[10px] sm:text-xs md:text-sm text-white">ТЕРМИНЫ</h1>
+            <h1 className={`font-pixel text-[10px] sm:text-xs md:text-sm transition-colors ${
+              isDarkTheme ? 'text-orange-400' : 'text-white'
+            }`}>ТЕРМИНЫ</h1>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsDarkTheme(!isDarkTheme)}
@@ -74,31 +85,33 @@ const Terms = () => {
       <section className="min-h-screen py-12 sm:py-16 md:py-20 px-4 pt-20 sm:pt-24 md:pt-32">
         <div className="container mx-auto max-w-4xl">
           <h2 className={`font-pixel text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-center mb-8 sm:mb-12 px-2 transition-colors ${
-            isDarkTheme ? 'text-white' : 'text-minecraft-stone'
+            isDarkTheme ? 'text-orange-400 spooky-glow' : 'text-minecraft-stone'
           }`}>
             ТЕРМИНЫ СЮЖЕТНЫХ СЕЗОНОВ
           </h2>
 
           <Card className={`relative border-4 sm:border-6 lg:border-8 mb-6 sm:mb-8 transition-all overflow-hidden ${
             isDarkTheme
-              ? 'bg-gray-900 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]'
+              ? 'bg-gray-900 border-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.6)] spooky-glow'
               : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)]'
           }`}>
             <div className={`absolute top-0 left-0 right-0 h-2 ${
-              isDarkTheme ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500' : 'bg-yellow-500'
+              isDarkTheme ? 'bg-gradient-to-r from-orange-500 via-purple-500 to-orange-500' : 'bg-yellow-500'
             }`}></div>
             <CardContent className="p-4 sm:p-6 md:p-8">
               <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 border-2 sm:border-4 flex items-center justify-center flex-shrink-0 ${
                   isDarkTheme
-                    ? 'bg-yellow-900/50 border-yellow-500'
+                    ? 'bg-orange-900/50 border-orange-500'
                     : 'bg-minecraft-sand border-minecraft-stone'
                 }`}>
-                  <Icon name="Gem" size={24} className="text-yellow-500 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                  <Icon name="Gem" size={24} className={`sm:w-7 sm:h-7 md:w-8 md:h-8 ${
+                    isDarkTheme ? 'text-orange-400' : 'text-yellow-500'
+                  }`} />
                 </div>
                 <div className="flex-1 w-full">
                   <h3 className={`font-pixel text-base sm:text-lg md:text-xl mb-3 sm:mb-4 transition-colors ${
-                    isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                    isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
                   }`}>
                     СКИНТ
                   </h3>
@@ -119,11 +132,11 @@ const Terms = () => {
               
               <div className={`mt-4 sm:mt-6 p-3 sm:p-4 border-2 rounded transition-colors ${
                 isDarkTheme 
-                  ? 'bg-yellow-500/10 border-yellow-500/30' 
+                  ? 'bg-orange-500/10 border-orange-500/30' 
                   : 'bg-minecraft-sand/20 border-minecraft-sand'
               }`}>
                 <p className={`font-pixel text-[10px] sm:text-xs mb-2 transition-colors ${
-                  isDarkTheme ? 'text-yellow-400' : 'text-minecraft-brown'
+                  isDarkTheme ? 'text-orange-400' : 'text-minecraft-brown'
                 }`}>
                   ПОЯВЛЕНИЕ В СЕЗОНАХ:
                 </p>
@@ -138,24 +151,26 @@ const Terms = () => {
 
           <Card id="iskra" className={`relative border-4 sm:border-6 lg:border-8 mb-6 sm:mb-8 transition-all overflow-hidden ${
             isDarkTheme
-              ? 'bg-gray-900 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+              ? 'bg-gray-900 border-purple-500 shadow-[0_0_30px_rgba(168,85,247,0.6)] spooky-glow'
               : 'bg-white border-minecraft-stone shadow-[6px_6px_0px_rgba(0,0,0,0.3)]'
           }`}>
             <div className={`absolute top-0 left-0 right-0 h-2 ${
-              isDarkTheme ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-500' : 'bg-minecraft-grass'
+              isDarkTheme ? 'bg-gradient-to-r from-purple-500 via-orange-500 to-purple-500' : 'bg-minecraft-grass'
             }`}></div>
             <CardContent className="p-4 sm:p-6 md:p-8">
               <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 border-2 sm:border-4 flex items-center justify-center flex-shrink-0 ${
                   isDarkTheme
-                    ? 'bg-green-900/50 border-green-500'
+                    ? 'bg-purple-900/50 border-purple-500'
                     : 'bg-minecraft-grass border-minecraft-stone'
                 }`}>
-                  <Icon name="Sparkles" size={24} className="text-white sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                  <Icon name="Sparkles" size={24} className={`sm:w-7 sm:h-7 md:w-8 md:h-8 ${
+                    isDarkTheme ? 'text-purple-300' : 'text-white'
+                  }`} />
                 </div>
                 <div className="flex-1 w-full">
                   <h3 className={`font-pixel text-base sm:text-lg md:text-xl mb-3 sm:mb-4 transition-colors ${
-                    isDarkTheme ? 'text-minecraft-grass' : 'text-minecraft-grass'
+                    isDarkTheme ? 'text-purple-400' : 'text-minecraft-grass'
                   }`}>
                     ИСКРА
                   </h3>
@@ -183,10 +198,12 @@ const Terms = () => {
               
               <div className={`mt-4 sm:mt-6 p-3 sm:p-4 border-2 rounded transition-colors ${
                 isDarkTheme 
-                  ? 'bg-minecraft-grass/10 border-minecraft-grass/30' 
+                  ? 'bg-purple-500/10 border-purple-500/30' 
                   : 'bg-minecraft-grass/20 border-minecraft-grass'
               }`}>
-                <p className="font-pixel text-[10px] sm:text-xs text-minecraft-grass mb-2">
+                <p className={`font-pixel text-[10px] sm:text-xs mb-2 transition-colors ${
+                  isDarkTheme ? 'text-purple-400' : 'text-minecraft-grass'
+                }`}>
                   ПОЯВЛЕНИЕ В СЕЗОНАХ:
                 </p>
                 <p className={`font-sans text-xs sm:text-sm transition-colors ${
@@ -201,7 +218,11 @@ const Terms = () => {
           <div className="text-center px-4">
             <Button
               onClick={handleNavigateBack}
-              className="font-pixel text-[10px] sm:text-xs bg-minecraft-brown text-white hover:bg-minecraft-brown/80 border-2 sm:border-4 border-black px-4 sm:px-6 py-3 sm:py-4 h-auto"
+              className={`font-pixel text-[10px] sm:text-xs text-white border-2 sm:border-4 border-black px-4 sm:px-6 py-3 sm:py-4 h-auto transition-all ${
+                isDarkTheme
+                  ? 'bg-orange-600 hover:bg-orange-500 spooky-glow'
+                  : 'bg-minecraft-brown hover:bg-minecraft-brown/80'
+              }`}
             >
               <Icon name="Home" size={14} className="mr-1 sm:mr-2 sm:w-4 sm:h-4" />
               ВЕРНУТЬСЯ
@@ -212,7 +233,7 @@ const Terms = () => {
 
       <footer className={`border-t-2 sm:border-t-4 py-6 sm:py-8 px-4 transition-colors duration-500 ${
         isDarkTheme 
-          ? 'bg-gray-900 border-gray-700' 
+          ? 'bg-gray-900 border-orange-500' 
           : 'bg-minecraft-stone border-minecraft-brown'
       }`}>
         <div className="container mx-auto text-center">
