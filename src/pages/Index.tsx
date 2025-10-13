@@ -147,12 +147,11 @@ const Index = () => {
     if (savedAchievements) {
       setUnlockedAchievements(JSON.parse(savedAchievements));
       
-      if (isHalloweenPeriod && !hasSeenScreamerBefore) {
+      if (isHalloweenPeriod) {
         const randomDelay = 2000;
         setTimeout(() => {
           setShowScreamer(true);
           setHasSeenScreamer(true);
-          localStorage.setItem('halloween-screamer-seen', 'true');
           
           setTimeout(() => {
             setShowScreamer(false);
@@ -185,12 +184,11 @@ const Index = () => {
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setTimeout(() => setShowAchievement(false), 5000);
         
-        if (isHalloweenPeriod && !hasSeenScreamerBefore) {
+        if (isHalloweenPeriod) {
           const randomDelay = 8000;
           setTimeout(() => {
             setShowScreamer(true);
             setHasSeenScreamer(true);
-            localStorage.setItem('halloween-screamer-seen', 'true');
             
             setTimeout(() => {
               setShowScreamer(false);
