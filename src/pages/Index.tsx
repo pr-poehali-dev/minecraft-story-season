@@ -63,6 +63,12 @@ const Index = () => {
       title: "Жуткая Жатва",
       description: "Нашли все тыквы на сайте!",
       icon: "Ghost"
+    },
+    {
+      id: "halloween-2024",
+      title: "С жутким Хэллоуином",
+      description: "Сладость или гадость?",
+      icon: "Ghost"
     }
   ];
 
@@ -116,6 +122,7 @@ const Index = () => {
     const hasViewed = localStorage.getItem('achievements-viewed');
     const savedAchievements = localStorage.getItem('unlocked-achievements');
     const savedPumpkins = localStorage.getItem('found-pumpkins');
+    const hasHalloweenAchievement = localStorage.getItem('achievement-halloween-2024');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
@@ -126,8 +133,30 @@ const Index = () => {
       setFoundPumpkins(new Set(pumpkinsArray));
     }
     
+    const now = new Date();
+    const month = now.getMonth();
+    const day = now.getDate();
+    const isHalloweenPeriod = month === 9 && day >= 25;
+    
     if (savedAchievements) {
-      setUnlockedAchievements(JSON.parse(savedAchievements));
+      const achievements = JSON.parse(savedAchievements);
+      
+      if (isHalloweenPeriod && !hasHalloweenAchievement && !achievements.includes('halloween-2024')) {
+        setTimeout(() => {
+          const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
+          if (halloweenAchievement) {
+            setCurrentAchievement(halloweenAchievement);
+            setShowAchievement(true);
+            const newUnlocked = [...achievements, 'halloween-2024'];
+            setUnlockedAchievements(newUnlocked);
+            localStorage.setItem('achievement-halloween-2024', 'true');
+            localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+            setTimeout(() => setShowAchievement(false), 5000);
+          }
+        }, 4000);
+      } else {
+        setUnlockedAchievements(achievements);
+      }
     } else if (!hasVisited) {
       setTimeout(() => {
         const achievement = baseAchievements[0];
@@ -138,6 +167,21 @@ const Index = () => {
         localStorage.setItem('achievement-993-reality', 'true');
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
         setTimeout(() => setShowAchievement(false), 5000);
+        
+        if (isHalloweenPeriod) {
+          setTimeout(() => {
+            const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
+            if (halloweenAchievement) {
+              setCurrentAchievement(halloweenAchievement);
+              setShowAchievement(true);
+              const withHalloween = [...newUnlocked, 'halloween-2024'];
+              setUnlockedAchievements(withHalloween);
+              localStorage.setItem('achievement-halloween-2024', 'true');
+              localStorage.setItem('unlocked-achievements', JSON.stringify(withHalloween));
+              setTimeout(() => setShowAchievement(false), 5000);
+            }
+          }, 8000);
+        }
       }, 2000);
     } else {
       setUnlockedAchievements(['993-reality']);
