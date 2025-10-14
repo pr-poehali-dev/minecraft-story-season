@@ -42,6 +42,7 @@ const Index = () => {
   const [showQuestsPage, setShowQuestsPage] = useState(false);
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isMaxHorrorMode, setIsMaxHorrorMode] = useState(false);
 
   // Countdown timer for Halloween event start
   useEffect(() => {
@@ -111,6 +112,12 @@ const Index = () => {
       title: "Покоритель проклятых земель",
       description: "Выполнили все хэллоуинские квесты!",
       icon: "Skull"
+    },
+    {
+      id: "midnight-guardian",
+      title: "Полуночный Стражник/2025",
+      description: "Включили режим максимального хоррора",
+      icon: "Moon"
     }
   ];
 
@@ -608,6 +615,19 @@ const Index = () => {
         {/* Floating pumpkins */}
         <div className="absolute bottom-1/3 left-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '2.5s'}}>🎃</div>
         <div className="absolute bottom-1/2 right-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '3s'}}>🎃</div>
+        
+        {/* Max Horror Mode Effects */}
+        {isMaxHorrorMode && isDarkTheme && (
+          <>
+            <div className="absolute top-1/4 right-1/4 text-6xl opacity-60 animate-pulse" style={{textShadow: '0 0 20px red'}}>💀</div>
+            <div className="absolute bottom-1/3 left-1/4 text-5xl opacity-50 animate-bounce" style={{animationDelay: '0.5s', textShadow: '0 0 15px darkred'}}>🩸</div>
+            <div className="absolute top-2/3 right-1/3 text-4xl opacity-40 halloween-swing" style={{animationDelay: '1s', textShadow: '0 0 10px purple'}}>🕷️</div>
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px)',
+              animation: 'horror-pulse 2s ease-in-out infinite'
+            }}></div>
+          </>
+        )}
       </div>
       <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 relative ${
         isDarkTheme 
@@ -677,6 +697,35 @@ const Index = () => {
                   🎃 {foundPumpkins.size}/8
                 </div>
               )}
+              {isDarkTheme && (
+                <button
+                  onClick={() => {
+                    setIsMaxHorrorMode(!isMaxHorrorMode);
+                    if (!isMaxHorrorMode && !unlockedAchievements.includes('midnight-guardian')) {
+                      setTimeout(() => {
+                        const achievement = baseAchievements.find(a => a.id === 'midnight-guardian');
+                        if (achievement) {
+                          setCurrentAchievement(achievement);
+                          setShowAchievement(true);
+                          const newUnlocked = [...unlockedAchievements, 'midnight-guardian'];
+                          setUnlockedAchievements(newUnlocked);
+                          localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+                          setTimeout(() => setShowAchievement(false), 5000);
+                        }
+                      }, 1000);
+                    }
+                  }}
+                  disabled={showMemorial}
+                  className={`font-pixel text-xs p-2 border-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                    isMaxHorrorMode
+                      ? 'bg-red-600 text-white border-red-700 hover:bg-red-500 spooky-glow animate-pulse'
+                      : 'bg-purple-800 text-orange-300 border-purple-700 hover:bg-purple-700'
+                  }`}
+                  title="Максимальный хоррор"
+                >
+                  <Icon name="Skull" size={14} />
+                </button>
+              )}
               <button
                 onClick={() => {
                   setIsDarkTheme(!isDarkTheme);
@@ -723,6 +772,15 @@ const Index = () => {
       </nav>
 
       <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden">
+        {isMaxHorrorMode && isDarkTheme && (
+          <>
+            <div className="absolute inset-0 bg-black/40 pointer-events-none z-[5]"></div>
+            <div className="absolute inset-0 pointer-events-none z-[6]" style={{
+              background: 'radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.7) 100%)',
+              animation: 'pulse 3s ease-in-out infinite'
+            }}></div>
+          </>
+        )}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none bg-cover bg-center opacity-30"
           style={{
