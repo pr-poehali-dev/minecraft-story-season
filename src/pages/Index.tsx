@@ -1572,10 +1572,16 @@ const Index = () => {
             <div className={`text-4xl sm:text-5xl ${foundPumpkins.has(5) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
           </div>
           
-          <h2 className={`font-pixel text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-8 sm:mb-12 transition-colors px-4 ${
+          <h2 className={`font-pixel text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-8 sm:mb-12 transition-colors px-4 relative ${
             isDarkTheme ? 'text-orange-400' : 'text-minecraft-stone'
           }`}>
             ГАЛЕРЕЯ
+            <span 
+              className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-[0.02] hover:opacity-100 transition-opacity duration-[3000ms] cursor-default select-none font-pixel text-[4px] tracking-[0.3em]"
+              title="..."
+            >
+              ВРЕМЕННОЙ•КОНТИНУУМ
+            </span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto">
             {gallery.map((image, index) => (
