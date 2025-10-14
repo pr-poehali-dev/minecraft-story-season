@@ -41,6 +41,9 @@ const Index = () => {
   const [showQuestComplete, setShowQuestComplete] = useState(false);
   const [showQuestsPage, setShowQuestsPage] = useState(false);
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
+  const [showAdventCalendar, setShowAdventCalendar] = useState(false);
+  const [isAdventClosing, setIsAdventClosing] = useState(false);
+  const [openedDays, setOpenedDays] = useState<Set<number>>(new Set());
 
   const baseAchievements = [
     {
@@ -638,6 +641,23 @@ const Index = () => {
                 {completedQuests.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[8px] rounded-full w-3 h-3 flex items-center justify-center">
                     {completedQuests.length}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => setShowAdventCalendar(true)}
+                disabled={showMemorial}
+                className={`font-pixel text-xs p-2 border-2 rounded transition-colors relative disabled:opacity-50 disabled:cursor-not-allowed ${
+                  isDarkTheme 
+                    ? 'bg-red-600 text-white border-red-500 hover:bg-red-500 spooky-glow' 
+                    : 'bg-red-600 text-white border-red-500 hover:bg-red-500'
+                }`}
+                title="Адвент-календарь"
+              >
+                <Icon name="Calendar" size={14} />
+                {openedDays.size > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-green-500 text-white text-[8px] rounded-full w-3 h-3 flex items-center justify-center">
+                    {openedDays.size}
                   </span>
                 )}
               </button>
@@ -2556,6 +2576,163 @@ const Index = () => {
           </div>
         );
       })()}
+
+      {showAdventCalendar && (
+        <div 
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+            isAdventClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
+          }`}
+          onClick={() => {
+            setIsAdventClosing(true);
+            setTimeout(() => {
+              setShowAdventCalendar(false);
+              setIsAdventClosing(false);
+            }, 300);
+          }}
+        >
+          <div 
+            className={`border-4 max-w-6xl w-full max-h-[90vh] overflow-y-auto transition-transform duration-300 ${
+              isAdventClosing ? 'scale-90' : 'scale-100 animate-scale-in'
+            } ${
+              isDarkTheme
+                ? 'bg-gradient-to-br from-red-950 via-green-950 to-gray-900 border-red-600 shadow-[0_0_40px_rgba(220,38,38,0.6)]'
+                : 'bg-gradient-to-br from-red-100 via-green-100 to-white border-red-800 shadow-[12px_12px_0px_rgba(0,0,0,0.5)]'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 sm:p-6 md:p-8">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className={`font-pixel text-xl sm:text-2xl md:text-3xl mb-2 transition-colors ${
+                    isDarkTheme ? 'text-red-400' : 'text-red-800'
+                  }`}>
+                    🎄 Адвент-календарь
+                  </h3>
+                  <p className={`font-sans text-sm transition-colors ${
+                    isDarkTheme ? 'text-gray-400' : 'text-gray-600'
+                  }`}>
+                    Открывай день за днём и получай сюрпризы!
+                  </p>
+                </div>
+                <button 
+                  onClick={() => {
+                    setIsAdventClosing(true);
+                    setTimeout(() => {
+                      setShowAdventCalendar(false);
+                      setIsAdventClosing(false);
+                    }, 300);
+                  }}
+                  className={`transition-colors p-1 ${
+                    isDarkTheme ? 'text-gray-400 hover:text-red-400' : 'text-gray-600 hover:text-red-800'
+                  }`}
+                >
+                  <Icon name="X" size={24} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4">
+                {Array.from({length: 24}, (_, i) => {
+                  const day = i + 1;
+                  const isOpened = openedDays.has(day);
+                  const today = new Date().getDate();
+                  const currentMonth = new Date().getMonth();
+                  const canOpen = currentMonth === 11 && day <= today;
+                  
+                  return (
+                    <button
+                      key={day}
+                      onClick={() => {
+                        if (canOpen && !isOpened) {
+                          setOpenedDays(prev => new Set([...prev, day]));
+                        }
+                      }}
+                      disabled={!canOpen || isOpened}
+                      className={`relative aspect-square border-4 transition-all duration-300 ${
+                        isOpened 
+                          ? isDarkTheme
+                            ? 'bg-green-900 border-green-600 shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+                            : 'bg-green-200 border-green-800 shadow-lg'
+                          : canOpen
+                            ? isDarkTheme
+                              ? 'bg-red-800 border-red-600 hover:bg-red-700 cursor-pointer hover:scale-105 shadow-[0_0_15px_rgba(220,38,38,0.4)]'
+                              : 'bg-red-600 border-red-800 hover:bg-red-500 cursor-pointer hover:scale-105 shadow-lg'
+                            : isDarkTheme
+                              ? 'bg-gray-800 border-gray-700 opacity-50 cursor-not-allowed'
+                              : 'bg-gray-300 border-gray-500 opacity-50 cursor-not-allowed'
+                      }`}
+                    >
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className={`font-pixel text-2xl sm:text-3xl md:text-4xl mb-1 ${
+                          isOpened 
+                            ? 'text-white'
+                            : canOpen
+                              ? 'text-white'
+                              : isDarkTheme ? 'text-gray-600' : 'text-gray-500'
+                        }`}>
+                          {day}
+                        </span>
+                        <span className="text-xl sm:text-2xl">
+                          {isOpened ? '🎁' : canOpen ? '🎄' : '🔒'}
+                        </span>
+                      </div>
+                      {isOpened && (
+                        <div className="absolute -top-2 -right-2 bg-yellow-500 rounded-full w-6 h-6 flex items-center justify-center">
+                          <span className="text-xs">✓</span>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className={`mt-6 p-4 border-4 ${
+                isDarkTheme
+                  ? 'bg-gray-900 border-gray-700'
+                  : 'bg-white border-gray-300'
+              }`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">🎁</span>
+                    <span className={`font-pixel text-sm sm:text-base ${
+                      isDarkTheme ? 'text-gray-300' : 'text-gray-800'
+                    }`}>
+                      Открыто подарков:
+                    </span>
+                  </div>
+                  <span className={`font-pixel text-xl sm:text-2xl ${
+                    isDarkTheme ? 'text-red-400' : 'text-red-800'
+                  }`}>
+                    {openedDays.size}/24
+                  </span>
+                </div>
+                <div className={`mt-2 h-2 rounded-full overflow-hidden ${
+                  isDarkTheme ? 'bg-gray-800' : 'bg-gray-200'
+                }`}>
+                  <div 
+                    className="h-full bg-gradient-to-r from-red-600 to-green-600 transition-all duration-500"
+                    style={{width: `${(openedDays.size / 24) * 100}%`}}
+                  />
+                </div>
+              </div>
+
+              {openedDays.size === 24 && (
+                <div className={`mt-4 p-4 border-4 text-center ${
+                  isDarkTheme
+                    ? 'bg-gradient-to-r from-red-900 to-green-900 border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.5)]'
+                    : 'bg-gradient-to-r from-red-200 to-green-200 border-yellow-700 shadow-xl'
+                }`}>
+                  <span className="text-4xl mb-2 block">🎉</span>
+                  <p className={`font-pixel text-lg ${
+                    isDarkTheme ? 'text-yellow-300' : 'text-yellow-900'
+                  }`}>
+                    С Новым Годом! Все подарки открыты!
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {showScreamer && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black animate-fade-in">
