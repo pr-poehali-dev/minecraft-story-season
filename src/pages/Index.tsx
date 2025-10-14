@@ -41,6 +41,33 @@ const Index = () => {
   const [showQuestComplete, setShowQuestComplete] = useState(false);
   const [showQuestsPage, setShowQuestsPage] = useState(false);
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  // Countdown timer for Halloween update
+  useEffect(() => {
+    const halloweenDate = new Date('2025-10-31T00:00:00');
+    
+    const updateCountdown = () => {
+      const now = new Date();
+      const diff = halloweenDate.getTime() - now.getTime();
+      
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        setCountdown({ days, hours, minutes, seconds });
+      } else {
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+    
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const baseAchievements = [
     {
@@ -709,11 +736,16 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto text-center relative z-10">
-          <div className="absolute top-4 right-4 flex items-center gap-2 opacity-30 hover:opacity-100 transition-opacity duration-500">
-            <span className="text-2xl">🎃</span>
-            <span className={`font-pixel text-xs ${isDarkTheme ? 'text-orange-400' : 'text-orange-600'}`}>
-              HW25
-            </span>
+          <div className="absolute top-4 right-4 flex flex-col items-end gap-1 opacity-70 hover:opacity-100 transition-opacity duration-500">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🎃</span>
+              <span className={`font-pixel text-xs ${isDarkTheme ? 'text-orange-400' : 'text-orange-600'}`}>
+                HW25
+              </span>
+            </div>
+            <div className={`font-pixel text-[10px] text-right ${isDarkTheme ? 'text-orange-300' : 'text-orange-500'}`}>
+              {countdown.days}д {countdown.hours}ч {countdown.minutes}м {countdown.seconds}с
+            </div>
           </div>
           <div className="mb-8 animate-fade-in">
             <h2 className={`font-pixel text-xl sm:text-3xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 drop-shadow-lg transition-colors px-2 ${
