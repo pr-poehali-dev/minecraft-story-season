@@ -45,7 +45,7 @@ const Index = () => {
 
   // Countdown timer for Halloween update
   useEffect(() => {
-    const halloweenDate = new Date('2025-10-31T00:00:00');
+    const halloweenDate = new Date('2025-10-24T00:00:00');
     
     const updateCountdown = () => {
       const now = new Date();
