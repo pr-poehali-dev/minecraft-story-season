@@ -43,9 +43,9 @@ const Index = () => {
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  // Countdown timer for Halloween update
+  // Countdown timer for Halloween event start
   useEffect(() => {
-    const halloweenDate = new Date('2025-10-24T00:00:00');
+    const halloweenDate = new Date('2025-10-25T00:00:00');
     
     const updateCountdown = () => {
       const now = new Date();
