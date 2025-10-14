@@ -709,6 +709,12 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto text-center relative z-10">
+          <div className="absolute top-4 right-4 flex items-center gap-2 opacity-30 hover:opacity-100 transition-opacity duration-500">
+            <span className="text-2xl">🎃</span>
+            <span className={`font-pixel text-xs ${isDarkTheme ? 'text-orange-400' : 'text-orange-600'}`}>
+              HW25
+            </span>
+          </div>
           <div className="mb-8 animate-fade-in">
             <h2 className={`font-pixel text-xl sm:text-3xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 drop-shadow-lg transition-colors px-2 ${
               isDarkTheme ? 'text-orange-400 spooky-glow' : 'text-minecraft-stone'
