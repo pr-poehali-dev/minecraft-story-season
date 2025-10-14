@@ -922,6 +922,14 @@ const Index = () => {
               <div className="absolute right-0 -top-8 z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform" onClick={() => handlePumpkinClick(6)}>
                 <div className={`text-3xl sm:text-4xl ${foundPumpkins.has(6) ? 'opacity-30 grayscale' : ''}`}>🎃</div>
               </div>
+              <div 
+                className="absolute left-4 -bottom-2 opacity-5 hover:opacity-100 transition-opacity duration-1000 cursor-pointer group"
+                title="???"
+              >
+                <div className="text-[6px] font-pixel text-red-600 group-hover:text-green-600 transition-colors">
+                  🎄 12.2025
+                </div>
+              </div>
               <div className={`h-1 flex-1 max-w-xs transition-colors ${
                 isDarkTheme ? 'bg-green-400' : 'bg-minecraft-grass'
               }`}></div>
