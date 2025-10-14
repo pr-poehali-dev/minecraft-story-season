@@ -2522,7 +2522,7 @@ const Index = () => {
         const now = new Date();
         const month = now.getMonth();
         const day = now.getDate();
-        const isHalloweenPeriod = true; // Режим тестирования
+        const isHalloweenPeriod = (month === 9 && day >= 25) || (month === 10 && day === 1);
         
         if (!isHalloweenPeriod) return null;
         
