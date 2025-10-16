@@ -42,6 +42,7 @@ const Index = () => {
   const [showQuestsPage, setShowQuestsPage] = useState(false);
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isMaxHorrorMode, setIsMaxHorrorMode] = useState(false);
 
   // Countdown timer for Halloween event start
   useEffect(() => {
@@ -111,6 +112,12 @@ const Index = () => {
       title: "Покоритель проклятых земель",
       description: "Выполнили все хэллоуинские квесты!",
       icon: "Skull"
+    },
+    {
+      id: "midnight-guardian",
+      title: "Полуночный Стражник/2025",
+      description: "Включили режим максимального хоррора",
+      icon: "Moon"
     }
   ];
 
@@ -608,6 +615,19 @@ const Index = () => {
         {/* Floating pumpkins */}
         <div className="absolute bottom-1/3 left-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '2.5s'}}>🎃</div>
         <div className="absolute bottom-1/2 right-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '3s'}}>🎃</div>
+        
+        {/* Max Horror Mode Effects */}
+        {isMaxHorrorMode && isDarkTheme && (
+          <>
+            <div className="absolute top-1/4 right-1/4 text-6xl opacity-60 animate-pulse" style={{textShadow: '0 0 20px red'}}>💀</div>
+            <div className="absolute bottom-1/3 left-1/4 text-5xl opacity-50 animate-bounce" style={{animationDelay: '0.5s', textShadow: '0 0 15px darkred'}}>🩸</div>
+            <div className="absolute top-2/3 right-1/3 text-4xl opacity-40 halloween-swing" style={{animationDelay: '1s', textShadow: '0 0 10px purple'}}>🕷️</div>
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px)',
+              animation: 'horror-pulse 2s ease-in-out infinite'
+            }}></div>
+          </>
+        )}
       </div>
       <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 relative ${
         isDarkTheme 
