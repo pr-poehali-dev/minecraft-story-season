@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/theme";
 import HalloweenMusic from "@/components/HalloweenMusic";
+import HorrorEffects from "@/components/HorrorEffects";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -867,57 +868,11 @@ const Index = () => {
 
       <section id="home" className={`min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden ${isMaxHorrorMode && isDarkTheme ? 'max-horror-mode' : ''}`}>
         {isMaxHorrorMode && isDarkTheme && (
-          <>
-            {horrorEffects.skulls.map(skull => (
-              <div
-                key={skull.id}
-                className="absolute text-4xl opacity-50 animate-float"
-                style={{
-                  left: `${skull.x}%`,
-                  top: `${skull.y}%`,
-                  fontSize: `${skull.size}px`,
-                  transform: `rotate(${skull.rotation}deg)`,
-                  animation: 'float-down 8s linear forwards, spin 4s linear infinite',
-                  textShadow: '0 0 20px rgba(255,0,0,0.8)'
-                }}
-              >
-                💀
-              </div>
-            ))}
-            {horrorEffects.bloodDrops.map(drop => (
-              <div
-                key={drop.id}
-                className="absolute text-2xl opacity-60"
-                style={{
-                  left: `${drop.x}%`,
-                  top: `${drop.y}%`,
-                  animation: `drip 5s linear forwards ${drop.delay}s`,
-                  textShadow: '0 0 10px rgba(139,0,0,0.9)'
-                }}
-              >
-                🩸
-              </div>
-            ))}
-            {horrorEffects.spiders.map(spider => (
-              <div
-                key={spider.id}
-                className="absolute text-3xl opacity-40"
-                style={{
-                  left: `${spider.x}%`,
-                  top: `${spider.y}%`,
-                  animation: `spider-crawl ${spider.speed}s linear forwards`,
-                  textShadow: '0 0 15px rgba(128,0,128,0.7)'
-                }}
-              >
-                🕷️
-              </div>
-            ))}
-            <div className="absolute inset-0 bg-black/30 pointer-events-none z-[5]"></div>
-            <div className="absolute inset-0 pointer-events-none z-[6]" style={{
-              background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px)',
-              animation: 'flicker 0.15s infinite'
-            }}></div>
-          </>
+          <HorrorEffects 
+            skulls={horrorEffects.skulls}
+            bloodDrops={horrorEffects.bloodDrops}
+            spiders={horrorEffects.spiders}
+          />
         )}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none bg-cover bg-center opacity-30"
@@ -995,9 +950,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="seasons" className={`min-h-screen py-12 sm:py-16 px-4 relative transition-colors duration-500 ${
+      <section id="seasons" className={`min-h-screen py-12 sm:py-16 px-4 relative transition-colors duration-500 overflow-hidden ${
         isDarkTheme ? 'bg-purple-900/40 shadow-2xl' : 'bg-minecraft-stone/10'
       }`}>
+        {isMaxHorrorMode && isDarkTheme && (
+          <HorrorEffects 
+            skulls={horrorEffects.skulls}
+            bloodDrops={horrorEffects.bloodDrops}
+            spiders={horrorEffects.spiders}
+          />
+        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1311,9 +1273,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="download" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
+      <section id="download" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 overflow-hidden ${
         isDarkTheme ? 'bg-purple-900/40' : 'bg-minecraft-stone/10'
       }`}>
+        {isMaxHorrorMode && isDarkTheme && (
+          <HorrorEffects 
+            skulls={horrorEffects.skulls}
+            bloodDrops={horrorEffects.bloodDrops}
+            spiders={horrorEffects.spiders}
+          />
+        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1505,9 +1474,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="about" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
+      <section id="about" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 overflow-hidden ${
         isDarkTheme ? 'bg-transparent' : 'bg-transparent'
       }`}>
+        {isMaxHorrorMode && isDarkTheme && (
+          <HorrorEffects 
+            skulls={horrorEffects.skulls}
+            bloodDrops={horrorEffects.bloodDrops}
+            spiders={horrorEffects.spiders}
+          />
+        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1552,9 +1528,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
+      <section id="team" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 overflow-hidden ${
         isDarkTheme ? 'bg-purple-900/40' : 'bg-minecraft-stone/10'
       }`}>
+        {isMaxHorrorMode && isDarkTheme && (
+          <HorrorEffects 
+            skulls={horrorEffects.skulls}
+            bloodDrops={horrorEffects.bloodDrops}
+            spiders={horrorEffects.spiders}
+          />
+        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1790,9 +1773,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="gallery" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
+      <section id="gallery" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 overflow-hidden ${
         isDarkTheme ? 'bg-purple-900/40' : 'bg-transparent'
       }`}>
+        {isMaxHorrorMode && isDarkTheme && (
+          <HorrorEffects 
+            skulls={horrorEffects.skulls}
+            bloodDrops={horrorEffects.bloodDrops}
+            spiders={horrorEffects.spiders}
+          />
+        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -2820,34 +2810,7 @@ const Index = () => {
         </div>
       )}
 
-      {showAchievement && currentAchievement && (
-        <div className="fixed top-20 right-2 sm:right-4 z-[200] max-w-[280px] sm:max-w-[320px] animate-[slideInRight_0.5s_ease-out]">
-          <div className={`border-4 p-3 sm:p-4 shadow-2xl ${
-            currentAchievement.isOrange 
-              ? 'bg-orange-900 border-orange-500 spooky-glow shadow-[0_0_40px_rgba(249,115,22,0.8)]' 
-              : 'bg-purple-900 border-purple-500 spooky-glow'
-          }`}>
-            <div className="flex items-center gap-2 sm:gap-3 mb-2">
-              <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 flex items-center justify-center flex-shrink-0 ${
-                currentAchievement.isOrange
-                  ? 'bg-orange-600 border-orange-700'
-                  : 'bg-purple-600 border-purple-700'
-              }`}>
-                <Icon name={currentAchievement.icon} size={20} className="text-white sm:w-6 sm:h-6" />
-              </div>
-              <div className="min-w-0">
-                <p className={`font-pixel text-[8px] sm:text-xs ${
-                  currentAchievement.isOrange ? 'text-orange-300' : 'text-purple-300'
-                }`}>ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО!</p>
-                <h4 className="font-pixel text-[10px] sm:text-sm text-white truncate">{currentAchievement.title}</h4>
-              </div>
-            </div>
-            <p className="font-sans text-[10px] sm:text-xs text-white/90 mt-2">
-              {currentAchievement.description}
-            </p>
-          </div>
-        </div>
-      )}
+
 
       <HalloweenMusic isPlaying={isDarkTheme} />
     </div>
