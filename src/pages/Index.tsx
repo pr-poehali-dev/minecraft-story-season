@@ -43,6 +43,11 @@ const Index = () => {
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isMaxHorrorMode, setIsMaxHorrorMode] = useState(false);
+  const [horrorEffects, setHorrorEffects] = useState({
+    skulls: [] as { id: number; x: number; y: number; size: number; rotation: number }[],
+    bloodDrops: [] as { id: number; x: number; y: number; delay: number }[],
+    spiders: [] as { id: number; x: number; y: number; speed: number }[]
+  });
 
   // Countdown timer for Halloween event start
   useEffect(() => {
@@ -117,7 +122,8 @@ const Index = () => {
       id: "midnight-guardian",
       title: "Полуночный Стражник/2025",
       description: "Включили режим максимального хоррора",
-      icon: "Moon"
+      icon: "Moon",
+      isOrange: true
     }
   ];
 
@@ -418,6 +424,81 @@ const Index = () => {
   }, [unlockedAchievements]);
 
   useEffect(() => {
+    if (isMaxHorrorMode) {
+      const skullInterval = setInterval(() => {
+        setHorrorEffects(prev => ({
+          ...prev,
+          skulls: [
+            ...prev.skulls,
+            {
+              id: Date.now(),
+              x: Math.random() * 100,
+              y: -10,
+              size: 20 + Math.random() * 30,
+              rotation: Math.random() * 360
+            }
+          ].slice(-15)
+        }));
+      }, 2000);
+
+      const bloodInterval = setInterval(() => {
+        setHorrorEffects(prev => ({
+          ...prev,
+          bloodDrops: [
+            ...prev.bloodDrops,
+            {
+              id: Date.now(),
+              x: Math.random() * 100,
+              y: 0,
+              delay: Math.random() * 2
+            }
+          ].slice(-20)
+        }));
+      }, 1500);
+
+      const spiderInterval = setInterval(() => {
+        setHorrorEffects(prev => ({
+          ...prev,
+          spiders: [
+            ...prev.spiders,
+            {
+              id: Date.now(),
+              x: Math.random() * 100,
+              y: -5,
+              speed: 3 + Math.random() * 5
+            }
+          ].slice(-10)
+        }));
+      }, 3000);
+
+      return () => {
+        clearInterval(skullInterval);
+        clearInterval(bloodInterval);
+        clearInterval(spiderInterval);
+      };
+    } else {
+      setHorrorEffects({ skulls: [], bloodDrops: [], spiders: [] });
+    }
+  }, [isMaxHorrorMode]);
+
+  const toggleMaxHorrorMode = () => {
+    const newMode = !isMaxHorrorMode;
+    setIsMaxHorrorMode(newMode);
+    
+    if (newMode && !unlockedAchievements.includes('midnight-guardian')) {
+      setTimeout(() => {
+        const achievement = baseAchievements.find(a => a.id === 'midnight-guardian');
+        setCurrentAchievement(achievement);
+        setShowAchievement(true);
+        const newUnlocked = [...unlockedAchievements, 'midnight-guardian'];
+        setUnlockedAchievements(newUnlocked);
+        localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        setTimeout(() => setShowAchievement(false), 5000);
+      }, 500);
+    }
+  };
+
+  useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         handleCloseModal();
@@ -699,33 +780,19 @@ const Index = () => {
               )}
               {isDarkTheme && (
                 <button
-                  onClick={() => {
-                    setIsMaxHorrorMode(!isMaxHorrorMode);
-                    if (!isMaxHorrorMode && !unlockedAchievements.includes('midnight-guardian')) {
-                      setTimeout(() => {
-                        const achievement = baseAchievements.find(a => a.id === 'midnight-guardian');
-                        if (achievement) {
-                          setCurrentAchievement(achievement);
-                          setShowAchievement(true);
-                          const newUnlocked = [...unlockedAchievements, 'midnight-guardian'];
-                          setUnlockedAchievements(newUnlocked);
-                          localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-                          setTimeout(() => setShowAchievement(false), 5000);
-                        }
-                      }, 1000);
-                    }
-                  }}
+                  onClick={toggleMaxHorrorMode}
                   disabled={showMemorial}
-                  className={`font-pixel text-xs p-2 border-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`font-pixel text-xs p-2 border-2 rounded transition-all relative disabled:opacity-50 disabled:cursor-not-allowed ${
                     isMaxHorrorMode
-                      ? 'bg-red-600 text-white border-red-700 hover:bg-red-500 spooky-glow animate-pulse'
-                      : 'bg-purple-800 text-orange-300 border-purple-700 hover:bg-purple-700'
+                      ? 'bg-red-600 text-white border-red-500 animate-pulse shadow-[0_0_20px_rgba(220,38,38,0.8)]'
+                      : 'bg-gray-700 text-purple-300 border-gray-600 hover:bg-gray-600'
                   }`}
-                  title="Максимальный хоррор"
+                  title={isMaxHorrorMode ? 'Выключить режим хоррора' : 'Режим максимального хоррора'}
                 >
-                  <Icon name="Skull" size={14} />
+                  <Icon name={isMaxHorrorMode ? "Skull" : "Moon"} size={14} />
                 </button>
               )}
+
               <button
                 onClick={() => {
                   setIsDarkTheme(!isDarkTheme);
@@ -771,13 +838,57 @@ const Index = () => {
         </div>
       </nav>
 
-      <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden">
+      <section id="home" className={`min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden ${isMaxHorrorMode && isDarkTheme ? 'max-horror-mode' : ''}`}>
         {isMaxHorrorMode && isDarkTheme && (
           <>
-            <div className="absolute inset-0 bg-black/40 pointer-events-none z-[5]"></div>
+            {horrorEffects.skulls.map(skull => (
+              <div
+                key={skull.id}
+                className="absolute text-4xl opacity-50 animate-float"
+                style={{
+                  left: `${skull.x}%`,
+                  top: `${skull.y}%`,
+                  fontSize: `${skull.size}px`,
+                  transform: `rotate(${skull.rotation}deg)`,
+                  animation: 'float-down 8s linear forwards, spin 4s linear infinite',
+                  textShadow: '0 0 20px rgba(255,0,0,0.8)'
+                }}
+              >
+                💀
+              </div>
+            ))}
+            {horrorEffects.bloodDrops.map(drop => (
+              <div
+                key={drop.id}
+                className="absolute text-2xl opacity-60"
+                style={{
+                  left: `${drop.x}%`,
+                  top: `${drop.y}%`,
+                  animation: `drip 5s linear forwards ${drop.delay}s`,
+                  textShadow: '0 0 10px rgba(139,0,0,0.9)'
+                }}
+              >
+                🩸
+              </div>
+            ))}
+            {horrorEffects.spiders.map(spider => (
+              <div
+                key={spider.id}
+                className="absolute text-3xl opacity-40"
+                style={{
+                  left: `${spider.x}%`,
+                  top: `${spider.y}%`,
+                  animation: `spider-crawl ${spider.speed}s linear forwards`,
+                  textShadow: '0 0 15px rgba(128,0,128,0.7)'
+                }}
+              >
+                🕷️
+              </div>
+            ))}
+            <div className="absolute inset-0 bg-black/30 pointer-events-none z-[5]"></div>
             <div className="absolute inset-0 pointer-events-none z-[6]" style={{
-              background: 'radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.7) 100%)',
-              animation: 'pulse 3s ease-in-out infinite'
+              background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px)',
+              animation: 'flicker 0.15s infinite'
             }}></div>
           </>
         )}
@@ -2678,6 +2789,35 @@ const Index = () => {
                 БУ!
               </h1>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showAchievement && currentAchievement && (
+        <div className="fixed top-20 right-2 sm:right-4 z-[200] max-w-[280px] sm:max-w-[320px] animate-[slideInRight_0.5s_ease-out]">
+          <div className={`border-4 p-3 sm:p-4 shadow-2xl ${
+            currentAchievement.isOrange 
+              ? 'bg-orange-900 border-orange-500 spooky-glow shadow-[0_0_40px_rgba(249,115,22,0.8)]' 
+              : 'bg-purple-900 border-purple-500 spooky-glow'
+          }`}>
+            <div className="flex items-center gap-2 sm:gap-3 mb-2">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 border-2 flex items-center justify-center flex-shrink-0 ${
+                currentAchievement.isOrange
+                  ? 'bg-orange-600 border-orange-700'
+                  : 'bg-purple-600 border-purple-700'
+              }`}>
+                <Icon name={currentAchievement.icon} size={20} className="text-white sm:w-6 sm:h-6" />
+              </div>
+              <div className="min-w-0">
+                <p className={`font-pixel text-[8px] sm:text-xs ${
+                  currentAchievement.isOrange ? 'text-orange-300' : 'text-purple-300'
+                }`}>ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО!</p>
+                <h4 className="font-pixel text-[10px] sm:text-sm text-white truncate">{currentAchievement.title}</h4>
+              </div>
+            </div>
+            <p className="font-sans text-[10px] sm:text-xs text-white/90 mt-2">
+              {currentAchievement.description}
+            </p>
           </div>
         </div>
       )}
