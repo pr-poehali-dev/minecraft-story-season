@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getInitialTheme, saveTheme, listenToSystemThemeChanges } from "@/utils/theme";
 import HalloweenMusic from "@/components/HalloweenMusic";
-import HorrorEffects from "@/components/HorrorEffects";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -43,12 +42,6 @@ const Index = () => {
   const [showQuestsPage, setShowQuestsPage] = useState(false);
   const [isQuestsClosing, setIsQuestsClosing] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [isMaxHorrorMode, setIsMaxHorrorMode] = useState(false);
-  const [horrorEffects, setHorrorEffects] = useState({
-    skulls: [] as { id: number; x: number; y: number; size: number; rotation: number }[],
-    bloodDrops: [] as { id: number; x: number; y: number; delay: number }[],
-    spiders: [] as { id: number; x: number; y: number; speed: number }[]
-  });
 
   // Countdown timer for Halloween event start
   useEffect(() => {
@@ -105,29 +98,19 @@ const Index = () => {
       id: "spooky-harvest",
       title: "Жуткая Жатва",
       description: "Нашли все тыквы на сайте!",
-      icon: "Ghost",
-      isOrange: true
+      icon: "Ghost"
     },
     {
       id: "halloween-2024",
       title: "С жутким Хэллоуином",
       description: "Сладость или гадость?",
-      icon: "Ghost",
-      isOrange: true
+      icon: "Ghost"
     },
     {
       id: "cursed-lands-conqueror",
       title: "Покоритель проклятых земель",
       description: "Выполнили все хэллоуинские квесты!",
-      icon: "Skull",
-      isOrange: true
-    },
-    {
-      id: "midnight-guardian",
-      title: "Полуночный Стражник/2025",
-      description: "Включили режим максимального хоррора",
-      icon: "Moon",
-      isOrange: true
+      icon: "Skull"
     }
   ];
 
@@ -193,7 +176,6 @@ const Index = () => {
     const savedPumpkins = localStorage.getItem('found-pumpkins');
     const hasSeenScreamerBefore = localStorage.getItem('halloween-screamer-seen');
     const savedQuests = localStorage.getItem('completed-quests');
-    const savedHorrorMode = localStorage.getItem('max-horror-mode');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
@@ -210,10 +192,6 @@ const Index = () => {
     
     if (savedQuests) {
       setCompletedQuests(JSON.parse(savedQuests));
-    }
-    
-    if (savedHorrorMode) {
-      setIsMaxHorrorMode(JSON.parse(savedHorrorMode));
     }
     
     const now = new Date();
@@ -236,16 +214,15 @@ const Index = () => {
             
             setTimeout(() => {
               const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
-              const achievements = JSON.parse(localStorage.getItem('unlocked-achievements') || '[]');
-              const hasHalloweenAchievement = localStorage.getItem('achievement-halloween-2024');
-              
-              if (halloweenAchievement && !achievements.includes('halloween-2024') && !hasHalloweenAchievement) {
+              if (halloweenAchievement) {
                 setCurrentAchievement(halloweenAchievement);
                 setShowAchievement(true);
-                const newUnlocked = [...achievements, 'halloween-2024'];
-                setUnlockedAchievements(newUnlocked);
-                localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-                localStorage.setItem('achievement-halloween-2024', 'true');
+                const achievements = JSON.parse(localStorage.getItem('unlocked-achievements') || '[]');
+                if (!achievements.includes('halloween-2024')) {
+                  const newUnlocked = [...achievements, 'halloween-2024'];
+                  setUnlockedAchievements(newUnlocked);
+                  localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+                }
                 setTimeout(() => setShowAchievement(false), 5000);
               }
             }, 500);
@@ -275,15 +252,12 @@ const Index = () => {
               
               setTimeout(() => {
                 const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
-                const hasHalloweenAchievement = localStorage.getItem('achievement-halloween-2024');
-                
-                if (halloweenAchievement && !hasHalloweenAchievement) {
+                if (halloweenAchievement) {
                   setCurrentAchievement(halloweenAchievement);
                   setShowAchievement(true);
                   const withHalloween = [...newUnlocked, 'halloween-2024'];
                   setUnlockedAchievements(withHalloween);
                   localStorage.setItem('unlocked-achievements', JSON.stringify(withHalloween));
-                  localStorage.setItem('achievement-halloween-2024', 'true');
                   setTimeout(() => setShowAchievement(false), 5000);
                 }
               }, 500);
@@ -300,8 +274,7 @@ const Index = () => {
     const allSeasons = [...startSeasons, ...mainSeasons, ...sideSeasons, ...inDevelopmentSeasons];
     if (viewedSeasons.size === allSeasons.length && viewedSeasons.size > 0) {
       const hasInfinityAchievement = unlockedAchievements.includes('infinity-limit');
-      const hasInStorage = localStorage.getItem('achievement-infinity-limit');
-      if (!hasInfinityAchievement && !hasInStorage) {
+      if (!hasInfinityAchievement) {
         setTimeout(() => {
           const achievement = baseAchievements[1];
           setCurrentAchievement(achievement);
@@ -309,7 +282,6 @@ const Index = () => {
           const newUnlocked = [...unlockedAchievements, 'infinity-limit'];
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-          localStorage.setItem('achievement-infinity-limit', 'true');
           setHasViewedAchievements(false);
           setTimeout(() => setShowAchievement(false), 5000);
         }, 500);
@@ -320,8 +292,7 @@ const Index = () => {
   useEffect(() => {
     if (viewedImages.size >= 3) {
       const hasGalleryAchievement = unlockedAchievements.includes('tretyakov-gallery');
-      const hasInStorage = localStorage.getItem('achievement-tretyakov-gallery');
-      if (!hasGalleryAchievement && !hasInStorage) {
+      if (!hasGalleryAchievement) {
         setTimeout(() => {
           const achievement = baseAchievements[2];
           setCurrentAchievement(achievement);
@@ -329,7 +300,6 @@ const Index = () => {
           const newUnlocked = [...unlockedAchievements, 'tretyakov-gallery'];
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-          localStorage.setItem('achievement-tretyakov-gallery', 'true');
           setHasViewedAchievements(false);
           setTimeout(() => setShowAchievement(false), 5000);
         }, 500);
@@ -338,8 +308,7 @@ const Index = () => {
   }, [viewedImages]);
 
   useEffect(() => {
-    const hasInStorage = localStorage.getItem('achievement-supreme-power');
-    if (viewedCharacters.size === 3 && !unlockedAchievements.includes('supreme-power') && !hasInStorage) {
+    if (viewedCharacters.size === 3 && !unlockedAchievements.includes('supreme-power')) {
       setTimeout(() => {
         const achievement = baseAchievements.find(a => a.id === 'supreme-power');
         setCurrentAchievement(achievement);
@@ -347,7 +316,6 @@ const Index = () => {
         const newUnlocked = [...unlockedAchievements, 'supreme-power'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-        localStorage.setItem('achievement-supreme-power', 'true');
         setHasViewedAchievements(false);
         setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
@@ -356,8 +324,7 @@ const Index = () => {
 
   useEffect(() => {
     const totalPumpkins = 8;
-    const hasInStorage = localStorage.getItem('achievement-spooky-harvest');
-    if (foundPumpkins.size === totalPumpkins && !unlockedAchievements.includes('spooky-harvest') && !hasInStorage) {
+    if (foundPumpkins.size === totalPumpkins && !unlockedAchievements.includes('spooky-harvest')) {
       setTimeout(() => {
         const achievement = baseAchievements.find(a => a.id === 'spooky-harvest');
         setCurrentAchievement(achievement);
@@ -365,7 +332,6 @@ const Index = () => {
         const newUnlocked = [...unlockedAchievements, 'spooky-harvest'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-        localStorage.setItem('achievement-spooky-harvest', 'true');
         setHasViewedAchievements(false);
         setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
@@ -386,8 +352,7 @@ const Index = () => {
         setShowQuestComplete(true);
         setTimeout(() => setShowQuestComplete(false), 5000);
         
-        const hasInStorage = localStorage.getItem('achievement-cursed-lands-conqueror');
-        if (newCompleted.length === dailyQuests.length && !unlockedAchievements.includes('cursed-lands-conqueror') && !hasInStorage) {
+        if (newCompleted.length === dailyQuests.length && !unlockedAchievements.includes('cursed-lands-conqueror')) {
           setTimeout(() => {
             const finalAchievement = baseAchievements.find(a => a.id === 'cursed-lands-conqueror');
             if (finalAchievement) {
@@ -396,7 +361,6 @@ const Index = () => {
               const withFinal = [...unlockedAchievements, 'cursed-lands-conqueror'];
               setUnlockedAchievements(withFinal);
               localStorage.setItem('unlocked-achievements', JSON.stringify(withFinal));
-              localStorage.setItem('achievement-cursed-lands-conqueror', 'true');
               setTimeout(() => setShowAchievement(false), 5000);
             }
           }, 6000);
@@ -432,117 +396,19 @@ const Index = () => {
     const hasAllBase = requiredAchievements.every(id => unlockedAchievements.includes(id));
     const hasAnyHalloween = halloweenAchievements.some(id => unlockedAchievements.includes(id));
     const hasSecret = unlockedAchievements.includes('story-seasons-master');
-    const hasInStorage = localStorage.getItem('achievement-story-seasons-master');
     
-    if (hasAllBase && !hasSecret && !hasAnyHalloween && !hasInStorage) {
+    if (hasAllBase && !hasSecret && !hasAnyHalloween) {
       setTimeout(() => {
         setCurrentAchievement(secretAchievement);
         setShowAchievement(true);
         const newUnlocked = [...unlockedAchievements, 'story-seasons-master'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-        localStorage.setItem('achievement-story-seasons-master', 'true');
         setHasViewedAchievements(false);
         setTimeout(() => setShowAchievement(false), 5000);
       }, 1000);
     }
   }, [unlockedAchievements]);
-
-  useEffect(() => {
-    if (isMaxHorrorMode) {
-      const skullInterval = setInterval(() => {
-        const newSkull = {
-          id: Date.now(),
-          x: Math.random() * 100,
-          y: -10,
-          size: 20 + Math.random() * 30,
-          rotation: Math.random() * 360
-        };
-        
-        setHorrorEffects(prev => ({
-          ...prev,
-          skulls: [...prev.skulls, newSkull]
-        }));
-        
-        setTimeout(() => {
-          setHorrorEffects(prev => ({
-            ...prev,
-            skulls: prev.skulls.filter(s => s.id !== newSkull.id)
-          }));
-        }, 8000);
-      }, 2000);
-
-      const bloodInterval = setInterval(() => {
-        const newDrop = {
-          id: Date.now(),
-          x: Math.random() * 100,
-          y: 0,
-          delay: Math.random() * 2
-        };
-        
-        setHorrorEffects(prev => ({
-          ...prev,
-          bloodDrops: [...prev.bloodDrops, newDrop]
-        }));
-        
-        setTimeout(() => {
-          setHorrorEffects(prev => ({
-            ...prev,
-            bloodDrops: prev.bloodDrops.filter(d => d.id !== newDrop.id)
-          }));
-        }, 7000);
-      }, 1500);
-
-      const spiderInterval = setInterval(() => {
-        const newSpider = {
-          id: Date.now(),
-          x: Math.random() * 100,
-          y: -5,
-          speed: 3 + Math.random() * 5
-        };
-        
-        setHorrorEffects(prev => ({
-          ...prev,
-          spiders: [...prev.spiders, newSpider]
-        }));
-        
-        setTimeout(() => {
-          setHorrorEffects(prev => ({
-            ...prev,
-            spiders: prev.spiders.filter(s => s.id !== newSpider.id)
-          }));
-        }, 8000);
-      }, 3000);
-
-      return () => {
-        clearInterval(skullInterval);
-        clearInterval(bloodInterval);
-        clearInterval(spiderInterval);
-      };
-    } else {
-      setHorrorEffects({ skulls: [], bloodDrops: [], spiders: [] });
-    }
-  }, [isMaxHorrorMode]);
-
-  const toggleMaxHorrorMode = () => {
-    const newMode = !isMaxHorrorMode;
-    setIsMaxHorrorMode(newMode);
-    localStorage.setItem('max-horror-mode', JSON.stringify(newMode));
-    
-    const hasAchievementInStorage = localStorage.getItem('achievement-midnight-guardian');
-    if (newMode && !unlockedAchievements.includes('midnight-guardian') && !hasAchievementInStorage) {
-      setTimeout(() => {
-        const achievement = baseAchievements.find(a => a.id === 'midnight-guardian');
-        setCurrentAchievement(achievement);
-        setShowAchievement(true);
-        const newUnlocked = [...unlockedAchievements, 'midnight-guardian'];
-        setUnlockedAchievements(newUnlocked);
-        localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-        localStorage.setItem('achievement-midnight-guardian', 'true');
-        setTimeout(() => setShowAchievement(false), 5000);
-      }, 500);
-    }
-  };
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -742,19 +608,6 @@ const Index = () => {
         {/* Floating pumpkins */}
         <div className="absolute bottom-1/3 left-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '2.5s'}}>🎃</div>
         <div className="absolute bottom-1/2 right-1/4 text-3xl halloween-float opacity-15" style={{animationDelay: '3s'}}>🎃</div>
-        
-        {/* Max Horror Mode Effects */}
-        {isMaxHorrorMode && isDarkTheme && (
-          <>
-            <div className="absolute top-1/4 right-1/4 text-6xl opacity-60 animate-pulse" style={{textShadow: '0 0 20px red'}}>💀</div>
-            <div className="absolute bottom-1/3 left-1/4 text-5xl opacity-50 animate-bounce" style={{animationDelay: '0.5s', textShadow: '0 0 15px darkred'}}>🩸</div>
-            <div className="absolute top-2/3 right-1/3 text-4xl opacity-40 halloween-swing" style={{animationDelay: '1s', textShadow: '0 0 10px purple'}}>🕷️</div>
-            <div className="absolute inset-0 pointer-events-none" style={{
-              background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px)',
-              animation: 'horror-pulse 2s ease-in-out infinite'
-            }}></div>
-          </>
-        )}
       </div>
       <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b-4 shadow-lg transition-colors duration-500 relative ${
         isDarkTheme 
@@ -824,21 +677,6 @@ const Index = () => {
                   🎃 {foundPumpkins.size}/8
                 </div>
               )}
-              {isDarkTheme && (
-                <button
-                  onClick={toggleMaxHorrorMode}
-                  disabled={showMemorial}
-                  className={`font-pixel text-xs p-2 border-2 rounded transition-all relative disabled:opacity-50 disabled:cursor-not-allowed ${
-                    isMaxHorrorMode
-                      ? 'bg-red-600 text-white border-red-500 animate-pulse shadow-[0_0_20px_rgba(220,38,38,0.8)]'
-                      : 'bg-gray-700 text-purple-300 border-gray-600 hover:bg-gray-600'
-                  }`}
-                  title={isMaxHorrorMode ? 'Выключить режим хоррора' : 'Режим максимального хоррора'}
-                >
-                  <Icon name={isMaxHorrorMode ? "Skull" : "Moon"} size={14} />
-                </button>
-              )}
-
               <button
                 onClick={() => {
                   setIsDarkTheme(!isDarkTheme);
@@ -884,14 +722,7 @@ const Index = () => {
         </div>
       </nav>
 
-      <section id="home" className={`min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden ${isMaxHorrorMode && isDarkTheme ? 'max-horror-mode' : ''}`}>
-        {isMaxHorrorMode && isDarkTheme && (
-          <HorrorEffects 
-            skulls={horrorEffects.skulls}
-            bloodDrops={horrorEffects.bloodDrops}
-            spiders={horrorEffects.spiders}
-          />
-        )}
+      <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 relative overflow-hidden">
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none bg-cover bg-center opacity-30"
           style={{
@@ -968,16 +799,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="seasons" className={`min-h-screen py-12 sm:py-16 px-4 relative transition-colors duration-500 overflow-hidden ${
+      <section id="seasons" className={`min-h-screen py-12 sm:py-16 px-4 relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-purple-900/40 shadow-2xl' : 'bg-minecraft-stone/10'
       }`}>
-        {isMaxHorrorMode && isDarkTheme && (
-          <HorrorEffects 
-            skulls={horrorEffects.skulls}
-            bloodDrops={horrorEffects.bloodDrops}
-            spiders={horrorEffects.spiders}
-          />
-        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1291,16 +1115,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="download" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 overflow-hidden ${
+      <section id="download" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-purple-900/40' : 'bg-minecraft-stone/10'
       }`}>
-        {isMaxHorrorMode && isDarkTheme && (
-          <HorrorEffects 
-            skulls={horrorEffects.skulls}
-            bloodDrops={horrorEffects.bloodDrops}
-            spiders={horrorEffects.spiders}
-          />
-        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1492,16 +1309,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="about" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 overflow-hidden ${
+      <section id="about" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 flex items-center relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-transparent' : 'bg-transparent'
       }`}>
-        {isMaxHorrorMode && isDarkTheme && (
-          <HorrorEffects 
-            skulls={horrorEffects.skulls}
-            bloodDrops={horrorEffects.bloodDrops}
-            spiders={horrorEffects.spiders}
-          />
-        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1546,16 +1356,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 overflow-hidden ${
+      <section id="team" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-purple-900/40' : 'bg-minecraft-stone/10'
       }`}>
-        {isMaxHorrorMode && isDarkTheme && (
-          <HorrorEffects 
-            skulls={horrorEffects.skulls}
-            bloodDrops={horrorEffects.bloodDrops}
-            spiders={horrorEffects.spiders}
-          />
-        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1645,7 +1448,7 @@ const Index = () => {
 
           {selectedMember !== null && (
             <div 
-              className={`fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-[150] transition-opacity duration-300 ${
+              className={`fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
                 isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
               }`}
               onClick={handleCloseModal}
@@ -1791,16 +1594,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="gallery" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 overflow-hidden ${
+      <section id="gallery" className={`min-h-screen py-10 sm:py-14 md:py-16 px-4 relative transition-colors duration-500 ${
         isDarkTheme ? 'bg-purple-900/40' : 'bg-transparent'
       }`}>
-        {isMaxHorrorMode && isDarkTheme && (
-          <HorrorEffects 
-            skulls={horrorEffects.skulls}
-            bloodDrops={horrorEffects.bloodDrops}
-            spiders={horrorEffects.spiders}
-          />
-        )}
         <div 
           className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20"
           style={{
@@ -1857,7 +1653,7 @@ const Index = () => {
 
       {selectedImage && (
         <div 
-          className={`fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
+          className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
             isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           }`}
           onClick={handleCloseModal}
@@ -1912,7 +1708,7 @@ const Index = () => {
         
         return (
           <div 
-            className={`fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${
+            className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${
               isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
             }`}
             onClick={handleCloseModal}
@@ -2033,7 +1829,7 @@ const Index = () => {
                     key={achievement.id}
                     className={`border-2 sm:border-4 p-3 sm:p-4 md:p-6 transition-all ${
                       isUnlocked 
-                        ? (achievement as any).isOrange
+                        ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
                           ? 'bg-orange-500/20 border-orange-500' 
                           : 'bg-minecraft-grass/20 border-minecraft-grass'
                         : 'bg-gray-900/50 border-gray-700 opacity-50'
@@ -2042,7 +1838,7 @@ const Index = () => {
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
                         isUnlocked 
-                          ? (achievement as any).isOrange
+                          ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
                             ? 'bg-orange-500 border-black'
                             : 'bg-minecraft-grass border-black'
                           : 'bg-gray-800 border-gray-600'
@@ -2056,7 +1852,7 @@ const Index = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-pixel text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 break-words ${
                           isUnlocked 
-                            ? (achievement as any).isOrange
+                            ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
                               ? 'text-orange-500' 
                               : 'text-minecraft-grass'
                             : 'text-gray-400'
@@ -2233,7 +2029,7 @@ const Index = () => {
 
       {showCharacter && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-[150] transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
             isCharacterClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           }`}
           onClick={() => {
@@ -2402,7 +2198,7 @@ const Index = () => {
 
       {showCharacter2 && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-[150] transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
             isCharacter2Closing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           }`}
           onClick={() => {
@@ -2571,7 +2367,7 @@ const Index = () => {
 
       {showCharacter3 && (
         <div 
-          className={`fixed inset-0 z-[150] flex items-center justify-center p-4 transition-opacity duration-300 ${
+          className={`fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-300 ${
             isCharacter3Closing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           } ${
             isDarkTheme ? 'bg-black/90' : 'bg-minecraft-stone/90'
@@ -2827,8 +2623,6 @@ const Index = () => {
           </div>
         </div>
       )}
-
-
 
       <HalloweenMusic isPlaying={isDarkTheme} />
     </div>

@@ -10,12 +10,6 @@ const Terms = () => {
   const navigate = useNavigate();
   const [isDarkTheme, setIsDarkTheme] = useState(getInitialTheme);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMaxHorrorMode, setIsMaxHorrorMode] = useState(false);
-  const [horrorEffects, setHorrorEffects] = useState({
-    skulls: [] as { id: number; x: number; y: number; size: number; rotation: number }[],
-    bloodDrops: [] as { id: number; x: number; y: number; delay: number }[],
-    spiders: [] as { id: number; x: number; y: number; speed: number }[]
-  });
 
   useEffect(() => {
     const unsubscribe = listenToSystemThemeChanges((isDark) => {
@@ -31,63 +25,7 @@ const Terms = () => {
 
   useEffect(() => {
     setIsVisible(true);
-    const savedHorrorMode = localStorage.getItem('max-horror-mode');
-    if (savedHorrorMode) {
-      setIsMaxHorrorMode(JSON.parse(savedHorrorMode));
-    }
   }, []);
-
-  useEffect(() => {
-    if (!isMaxHorrorMode) {
-      setHorrorEffects({ skulls: [], bloodDrops: [], spiders: [] });
-      return;
-    }
-
-    const createSkulls = () => {
-      const newSkulls = Array.from({ length: 15 }, (_, i) => ({
-        id: Date.now() + i,
-        x: Math.random() * 100,
-        y: -10,
-        size: 20 + Math.random() * 30,
-        rotation: Math.random() * 360
-      }));
-      setHorrorEffects(prev => ({ ...prev, skulls: newSkulls }));
-    };
-
-    const createBloodDrops = () => {
-      const newDrops = Array.from({ length: 20 }, (_, i) => ({
-        id: Date.now() + i,
-        x: Math.random() * 100,
-        y: -5,
-        delay: Math.random() * 2
-      }));
-      setHorrorEffects(prev => ({ ...prev, bloodDrops: newDrops }));
-    };
-
-    const createSpiders = () => {
-      const newSpiders = Array.from({ length: 10 }, (_, i) => ({
-        id: Date.now() + i,
-        x: -10,
-        y: Math.random() * 100,
-        speed: 10 + Math.random() * 20
-      }));
-      setHorrorEffects(prev => ({ ...prev, spiders: newSpiders }));
-    };
-
-    createSkulls();
-    createBloodDrops();
-    createSpiders();
-
-    const skullInterval = setInterval(createSkulls, 8000);
-    const bloodInterval = setInterval(createBloodDrops, 5000);
-    const spiderInterval = setInterval(createSpiders, 12000);
-
-    return () => {
-      clearInterval(skullInterval);
-      clearInterval(bloodInterval);
-      clearInterval(spiderInterval);
-    };
-  }, [isMaxHorrorMode]);
 
   const handleNavigateBack = () => {
     setIsVisible(false);
@@ -101,55 +39,8 @@ const Terms = () => {
         : 'bg-gradient-to-b from-minecraft-sky to-minecraft-grass/20'
     } ${
       isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-    } ${isMaxHorrorMode ? 'animate-glitch' : ''}`}>
-      {isMaxHorrorMode && (
-        <>
-          <div className="fixed inset-0 pointer-events-none overflow-hidden z-[100]">
-            {horrorEffects.skulls.map(skull => (
-              <div
-                key={skull.id}
-                className="absolute text-6xl animate-fall opacity-80"
-                style={{
-                  left: `${skull.x}%`,
-                  top: `${skull.y}%`,
-                  fontSize: `${skull.size}px`,
-                  transform: `rotate(${skull.rotation}deg)`,
-                  animation: 'fall 8s linear forwards'
-                }}
-              >
-                💀
-              </div>
-            ))}
-            {horrorEffects.bloodDrops.map(drop => (
-              <div
-                key={drop.id}
-                className="absolute w-2 h-8 bg-red-600 opacity-70 animate-blood-drop"
-                style={{
-                  left: `${drop.x}%`,
-                  top: `${drop.y}%`,
-                  animationDelay: `${drop.delay}s`
-                }}
-              />
-            ))}
-            {horrorEffects.spiders.map(spider => (
-              <div
-                key={spider.id}
-                className="absolute text-4xl animate-crawl opacity-90"
-                style={{
-                  left: `${spider.x}%`,
-                  top: `${spider.y}%`,
-                  animation: `crawl ${spider.speed}s linear forwards`
-                }}
-              >
-                🕷️
-              </div>
-            ))}
-          </div>
-          <div className="fixed inset-0 pointer-events-none z-[99] bg-black/30 animate-pulse-slow" />
-          <div className="fixed inset-0 pointer-events-none z-[98] bg-gradient-to-b from-red-900/20 via-transparent to-red-900/20 animate-flicker" />
-        </>
-      )}
-      {isDarkTheme && !isMaxHorrorMode && (
+    }`}>
+      {isDarkTheme && (
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-10 left-10 text-4xl animate-float">🎃</div>
           <div className="absolute top-32 right-20 text-3xl animate-float" style={{ animationDelay: '1s' }}>👻</div>
