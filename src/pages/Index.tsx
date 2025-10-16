@@ -192,6 +192,7 @@ const Index = () => {
     const savedPumpkins = localStorage.getItem('found-pumpkins');
     const hasSeenScreamerBefore = localStorage.getItem('halloween-screamer-seen');
     const savedQuests = localStorage.getItem('completed-quests');
+    const savedHorrorMode = localStorage.getItem('max-horror-mode');
     
     if (hasViewed) {
       setHasViewedAchievements(true);
@@ -208,6 +209,10 @@ const Index = () => {
     
     if (savedQuests) {
       setCompletedQuests(JSON.parse(savedQuests));
+    }
+    
+    if (savedHorrorMode) {
+      setIsMaxHorrorMode(JSON.parse(savedHorrorMode));
     }
     
     const now = new Date();
@@ -487,6 +492,7 @@ const Index = () => {
   const toggleMaxHorrorMode = () => {
     const newMode = !isMaxHorrorMode;
     setIsMaxHorrorMode(newMode);
+    localStorage.setItem('max-horror-mode', JSON.stringify(newMode));
     
     if (newMode && !unlockedAchievements.includes('midnight-guardian')) {
       setTimeout(() => {
