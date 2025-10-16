@@ -104,19 +104,22 @@ const Index = () => {
       id: "spooky-harvest",
       title: "Жуткая Жатва",
       description: "Нашли все тыквы на сайте!",
-      icon: "Ghost"
+      icon: "Ghost",
+      isOrange: true
     },
     {
       id: "halloween-2024",
       title: "С жутким Хэллоуином",
       description: "Сладость или гадость?",
-      icon: "Ghost"
+      icon: "Ghost",
+      isOrange: true
     },
     {
       id: "cursed-lands-conqueror",
       title: "Покоритель проклятых земель",
       description: "Выполнили все хэллоуинские квесты!",
-      icon: "Skull"
+      icon: "Skull",
+      isOrange: true
     },
     {
       id: "midnight-guardian",
@@ -1998,7 +2001,7 @@ const Index = () => {
                     key={achievement.id}
                     className={`border-2 sm:border-4 p-3 sm:p-4 md:p-6 transition-all ${
                       isUnlocked 
-                        ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
+                        ? (achievement as any).isOrange
                           ? 'bg-orange-500/20 border-orange-500' 
                           : 'bg-minecraft-grass/20 border-minecraft-grass'
                         : 'bg-gray-900/50 border-gray-700 opacity-50'
@@ -2007,7 +2010,7 @@ const Index = () => {
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border-2 flex items-center justify-center flex-shrink-0 ${
                         isUnlocked 
-                          ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
+                          ? (achievement as any).isOrange
                             ? 'bg-orange-500 border-black'
                             : 'bg-minecraft-grass border-black'
                           : 'bg-gray-800 border-gray-600'
@@ -2021,7 +2024,7 @@ const Index = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-pixel text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 break-words ${
                           isUnlocked 
-                            ? achievement.id === 'spooky-harvest' || achievement.id === 'halloween-2024' || achievement.id === 'cursed-lands-conqueror'
+                            ? (achievement as any).isOrange
                               ? 'text-orange-500' 
                               : 'text-minecraft-grass'
                             : 'text-gray-400'
