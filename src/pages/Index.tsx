@@ -451,49 +451,67 @@ const Index = () => {
   useEffect(() => {
     if (isMaxHorrorMode) {
       const skullInterval = setInterval(() => {
+        const newSkull = {
+          id: Date.now(),
+          x: Math.random() * 100,
+          y: -10,
+          size: 20 + Math.random() * 30,
+          rotation: Math.random() * 360
+        };
+        
         setHorrorEffects(prev => ({
           ...prev,
-          skulls: [
-            ...prev.skulls,
-            {
-              id: Date.now(),
-              x: Math.random() * 100,
-              y: -10,
-              size: 20 + Math.random() * 30,
-              rotation: Math.random() * 360
-            }
-          ].slice(-15)
+          skulls: [...prev.skulls, newSkull]
         }));
+        
+        setTimeout(() => {
+          setHorrorEffects(prev => ({
+            ...prev,
+            skulls: prev.skulls.filter(s => s.id !== newSkull.id)
+          }));
+        }, 8000);
       }, 2000);
 
       const bloodInterval = setInterval(() => {
+        const newDrop = {
+          id: Date.now(),
+          x: Math.random() * 100,
+          y: 0,
+          delay: Math.random() * 2
+        };
+        
         setHorrorEffects(prev => ({
           ...prev,
-          bloodDrops: [
-            ...prev.bloodDrops,
-            {
-              id: Date.now(),
-              x: Math.random() * 100,
-              y: 0,
-              delay: Math.random() * 2
-            }
-          ].slice(-20)
+          bloodDrops: [...prev.bloodDrops, newDrop]
         }));
+        
+        setTimeout(() => {
+          setHorrorEffects(prev => ({
+            ...prev,
+            bloodDrops: prev.bloodDrops.filter(d => d.id !== newDrop.id)
+          }));
+        }, 7000);
       }, 1500);
 
       const spiderInterval = setInterval(() => {
+        const newSpider = {
+          id: Date.now(),
+          x: Math.random() * 100,
+          y: -5,
+          speed: 3 + Math.random() * 5
+        };
+        
         setHorrorEffects(prev => ({
           ...prev,
-          spiders: [
-            ...prev.spiders,
-            {
-              id: Date.now(),
-              x: Math.random() * 100,
-              y: -5,
-              speed: 3 + Math.random() * 5
-            }
-          ].slice(-10)
+          spiders: [...prev.spiders, newSpider]
         }));
+        
+        setTimeout(() => {
+          setHorrorEffects(prev => ({
+            ...prev,
+            spiders: prev.spiders.filter(s => s.id !== newSpider.id)
+          }));
+        }, 8000);
       }, 3000);
 
       return () => {
@@ -1627,7 +1645,7 @@ const Index = () => {
 
           {selectedMember !== null && (
             <div 
-              className={`fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+              className={`fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-[150] transition-opacity duration-300 ${
                 isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
               }`}
               onClick={handleCloseModal}
@@ -1839,7 +1857,7 @@ const Index = () => {
 
       {selectedImage && (
         <div 
-          className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
+          className={`fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4 transition-opacity duration-300 ${
             isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           }`}
           onClick={handleCloseModal}
@@ -1894,7 +1912,7 @@ const Index = () => {
         
         return (
           <div 
-            className={`fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${
+            className={`fixed inset-0 z-[150] bg-black/90 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${
               isClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
             }`}
             onClick={handleCloseModal}
@@ -2215,7 +2233,7 @@ const Index = () => {
 
       {showCharacter && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-[150] transition-opacity duration-300 ${
             isCharacterClosing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           }`}
           onClick={() => {
@@ -2384,7 +2402,7 @@ const Index = () => {
 
       {showCharacter2 && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-[150] transition-opacity duration-300 ${
             isCharacter2Closing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           }`}
           onClick={() => {
@@ -2553,7 +2571,7 @@ const Index = () => {
 
       {showCharacter3 && (
         <div 
-          className={`fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-300 ${
+          className={`fixed inset-0 z-[150] flex items-center justify-center p-4 transition-opacity duration-300 ${
             isCharacter3Closing ? 'opacity-0' : 'opacity-100 animate-fade-in'
           } ${
             isDarkTheme ? 'bg-black/90' : 'bg-minecraft-stone/90'
