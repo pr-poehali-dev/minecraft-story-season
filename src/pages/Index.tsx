@@ -235,15 +235,16 @@ const Index = () => {
             
             setTimeout(() => {
               const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
-              if (halloweenAchievement) {
+              const achievements = JSON.parse(localStorage.getItem('unlocked-achievements') || '[]');
+              const hasHalloweenAchievement = localStorage.getItem('achievement-halloween-2024');
+              
+              if (halloweenAchievement && !achievements.includes('halloween-2024') && !hasHalloweenAchievement) {
                 setCurrentAchievement(halloweenAchievement);
                 setShowAchievement(true);
-                const achievements = JSON.parse(localStorage.getItem('unlocked-achievements') || '[]');
-                if (!achievements.includes('halloween-2024')) {
-                  const newUnlocked = [...achievements, 'halloween-2024'];
-                  setUnlockedAchievements(newUnlocked);
-                  localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
-                }
+                const newUnlocked = [...achievements, 'halloween-2024'];
+                setUnlockedAchievements(newUnlocked);
+                localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+                localStorage.setItem('achievement-halloween-2024', 'true');
                 setTimeout(() => setShowAchievement(false), 5000);
               }
             }, 500);
@@ -273,12 +274,15 @@ const Index = () => {
               
               setTimeout(() => {
                 const halloweenAchievement = baseAchievements.find(a => a.id === 'halloween-2024');
-                if (halloweenAchievement) {
+                const hasHalloweenAchievement = localStorage.getItem('achievement-halloween-2024');
+                
+                if (halloweenAchievement && !hasHalloweenAchievement) {
                   setCurrentAchievement(halloweenAchievement);
                   setShowAchievement(true);
                   const withHalloween = [...newUnlocked, 'halloween-2024'];
                   setUnlockedAchievements(withHalloween);
                   localStorage.setItem('unlocked-achievements', JSON.stringify(withHalloween));
+                  localStorage.setItem('achievement-halloween-2024', 'true');
                   setTimeout(() => setShowAchievement(false), 5000);
                 }
               }, 500);
@@ -295,7 +299,8 @@ const Index = () => {
     const allSeasons = [...startSeasons, ...mainSeasons, ...sideSeasons, ...inDevelopmentSeasons];
     if (viewedSeasons.size === allSeasons.length && viewedSeasons.size > 0) {
       const hasInfinityAchievement = unlockedAchievements.includes('infinity-limit');
-      if (!hasInfinityAchievement) {
+      const hasInStorage = localStorage.getItem('achievement-infinity-limit');
+      if (!hasInfinityAchievement && !hasInStorage) {
         setTimeout(() => {
           const achievement = baseAchievements[1];
           setCurrentAchievement(achievement);
@@ -303,6 +308,7 @@ const Index = () => {
           const newUnlocked = [...unlockedAchievements, 'infinity-limit'];
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+          localStorage.setItem('achievement-infinity-limit', 'true');
           setHasViewedAchievements(false);
           setTimeout(() => setShowAchievement(false), 5000);
         }, 500);
@@ -313,7 +319,8 @@ const Index = () => {
   useEffect(() => {
     if (viewedImages.size >= 3) {
       const hasGalleryAchievement = unlockedAchievements.includes('tretyakov-gallery');
-      if (!hasGalleryAchievement) {
+      const hasInStorage = localStorage.getItem('achievement-tretyakov-gallery');
+      if (!hasGalleryAchievement && !hasInStorage) {
         setTimeout(() => {
           const achievement = baseAchievements[2];
           setCurrentAchievement(achievement);
@@ -321,6 +328,7 @@ const Index = () => {
           const newUnlocked = [...unlockedAchievements, 'tretyakov-gallery'];
           setUnlockedAchievements(newUnlocked);
           localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+          localStorage.setItem('achievement-tretyakov-gallery', 'true');
           setHasViewedAchievements(false);
           setTimeout(() => setShowAchievement(false), 5000);
         }, 500);
@@ -329,7 +337,8 @@ const Index = () => {
   }, [viewedImages]);
 
   useEffect(() => {
-    if (viewedCharacters.size === 3 && !unlockedAchievements.includes('supreme-power')) {
+    const hasInStorage = localStorage.getItem('achievement-supreme-power');
+    if (viewedCharacters.size === 3 && !unlockedAchievements.includes('supreme-power') && !hasInStorage) {
       setTimeout(() => {
         const achievement = baseAchievements.find(a => a.id === 'supreme-power');
         setCurrentAchievement(achievement);
@@ -337,6 +346,7 @@ const Index = () => {
         const newUnlocked = [...unlockedAchievements, 'supreme-power'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        localStorage.setItem('achievement-supreme-power', 'true');
         setHasViewedAchievements(false);
         setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
@@ -345,7 +355,8 @@ const Index = () => {
 
   useEffect(() => {
     const totalPumpkins = 8;
-    if (foundPumpkins.size === totalPumpkins && !unlockedAchievements.includes('spooky-harvest')) {
+    const hasInStorage = localStorage.getItem('achievement-spooky-harvest');
+    if (foundPumpkins.size === totalPumpkins && !unlockedAchievements.includes('spooky-harvest') && !hasInStorage) {
       setTimeout(() => {
         const achievement = baseAchievements.find(a => a.id === 'spooky-harvest');
         setCurrentAchievement(achievement);
@@ -353,6 +364,7 @@ const Index = () => {
         const newUnlocked = [...unlockedAchievements, 'spooky-harvest'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        localStorage.setItem('achievement-spooky-harvest', 'true');
         setHasViewedAchievements(false);
         setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
@@ -373,7 +385,8 @@ const Index = () => {
         setShowQuestComplete(true);
         setTimeout(() => setShowQuestComplete(false), 5000);
         
-        if (newCompleted.length === dailyQuests.length && !unlockedAchievements.includes('cursed-lands-conqueror')) {
+        const hasInStorage = localStorage.getItem('achievement-cursed-lands-conqueror');
+        if (newCompleted.length === dailyQuests.length && !unlockedAchievements.includes('cursed-lands-conqueror') && !hasInStorage) {
           setTimeout(() => {
             const finalAchievement = baseAchievements.find(a => a.id === 'cursed-lands-conqueror');
             if (finalAchievement) {
@@ -382,6 +395,7 @@ const Index = () => {
               const withFinal = [...unlockedAchievements, 'cursed-lands-conqueror'];
               setUnlockedAchievements(withFinal);
               localStorage.setItem('unlocked-achievements', JSON.stringify(withFinal));
+              localStorage.setItem('achievement-cursed-lands-conqueror', 'true');
               setTimeout(() => setShowAchievement(false), 5000);
             }
           }, 6000);
@@ -417,14 +431,16 @@ const Index = () => {
     const hasAllBase = requiredAchievements.every(id => unlockedAchievements.includes(id));
     const hasAnyHalloween = halloweenAchievements.some(id => unlockedAchievements.includes(id));
     const hasSecret = unlockedAchievements.includes('story-seasons-master');
+    const hasInStorage = localStorage.getItem('achievement-story-seasons-master');
     
-    if (hasAllBase && !hasSecret && !hasAnyHalloween) {
+    if (hasAllBase && !hasSecret && !hasAnyHalloween && !hasInStorage) {
       setTimeout(() => {
         setCurrentAchievement(secretAchievement);
         setShowAchievement(true);
         const newUnlocked = [...unlockedAchievements, 'story-seasons-master'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        localStorage.setItem('achievement-story-seasons-master', 'true');
         setHasViewedAchievements(false);
         setTimeout(() => setShowAchievement(false), 5000);
       }, 1000);
@@ -494,7 +510,8 @@ const Index = () => {
     setIsMaxHorrorMode(newMode);
     localStorage.setItem('max-horror-mode', JSON.stringify(newMode));
     
-    if (newMode && !unlockedAchievements.includes('midnight-guardian')) {
+    const hasAchievementInStorage = localStorage.getItem('achievement-midnight-guardian');
+    if (newMode && !unlockedAchievements.includes('midnight-guardian') && !hasAchievementInStorage) {
       setTimeout(() => {
         const achievement = baseAchievements.find(a => a.id === 'midnight-guardian');
         setCurrentAchievement(achievement);
@@ -502,6 +519,7 @@ const Index = () => {
         const newUnlocked = [...unlockedAchievements, 'midnight-guardian'];
         setUnlockedAchievements(newUnlocked);
         localStorage.setItem('unlocked-achievements', JSON.stringify(newUnlocked));
+        localStorage.setItem('achievement-midnight-guardian', 'true');
         setTimeout(() => setShowAchievement(false), 5000);
       }, 500);
     }
